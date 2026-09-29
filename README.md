@@ -144,7 +144,7 @@ The task board lives in Notion.
 |---|---|---|
 | Docker | Desktop or Colima | runs MariaDB |
 | Python | 3.11 | the `citehop` package |
-| Node.js | 20+ | the Next.js frontend in `web/` |
+| Node.js | 22+ | the Next.js frontend in `web/` |
 | MariaDB Connector/C | any recent | builds the `mariadb` Python driver |
 | git | any | |
 

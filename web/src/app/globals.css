@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* Tokens from design/assets/tokens.json (handoff 1.0). Change both together. */
+@theme {
+  --color-paper: #090f1c;
+  --color-surface: #111c2e;
+  --color-ink: #e4edf8;
+  --color-muted: #98abc3;
+  --color-sidebar: #0c1525;
+  --color-teal: #78e4f1;
+  --color-line: #273950;
+  --color-focus: #ffbb75;
+
+  --color-kw: #87e1f0;
+  --color-kw-bg: #17384a;
+  --color-vec: #c5b1ff;
+  --color-vec-bg: #2a2446;
+  --color-cite: #81e7cd;
+  --color-cite-bg: #153b37;
+  --color-concept: #f2ca84;
+  --color-concept-bg: #3b3023;
+  --color-author: #96bbff;
+  --color-author-bg: #1e2f51;
+
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+
+  --radius-card: 8px;
+  --radius-control: 4px;
+  --radius-chip: 3px;
+
+  --breakpoint-full: 1100px;  /* prototype "compact" boundary */
+  --breakpoint-wide: 760px;  /* prototype "mobile" boundary */
+}
+
+@layer base {
+  body {
+    @apply bg-paper font-sans text-ink text-sm leading-[1.55];
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}

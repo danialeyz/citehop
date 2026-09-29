@@ -16,7 +16,7 @@ The browser cannot run `citehop.search` or embed a query with bge-base-en-v1.5. 
 
 | Layer | Tech | Location | Owns |
 | --- | --- | --- | --- |
-| Frontend | Next.js (App Router), React, TypeScript strict, Tailwind CSS v4 | `web/` | Rendering, routing, UI state |
+| Frontend | Next.js 16 (App Router), React 19, TypeScript strict, Tailwind CSS v4, Node 22+ | `web/` | Rendering, routing, UI state |
 | API | FastAPI (confirmed 2026-09-29) | `citehop/api.py` | HTTP boundary, view-model adapters, validation, error mapping |
 | Domain | Python | `citehop/search.py`, `evaluate.py`, graph module | Retrieval, fusion, graph walks, metrics |
 | Data | MariaDB 11.8.9 | Docker | Everything persistent |
@@ -120,20 +120,20 @@ Query, method, seed, depth and split live in the URL so Back, reload and sharing
   --radius-control: 4px;
   --radius-chip: 3px;
 
-  --breakpoint-compact: 1100px;
-  --breakpoint-mobile: 760px;
+  --breakpoint-wide: 760px;   /* prototype "mobile" boundary */
+  --breakpoint-full: 1100px;  /* prototype "compact" boundary */
 }
 ```
 
 - Use these utilities (`bg-surface`, `text-muted`, `border-line`, `rounded-card`) instead of raw hex values in components.
-- The prototype is desktop-first (`max-width` queries). Tailwind is mobile-first, so build the 390 px layout as the base and add `mobile:` and `compact:` variants upward. Check both widths against `screenshots/`.
+- The prototype is desktop-first (`max-width` queries). Tailwind is mobile-first, so build the 390 px layout as the base, then add `wide:` (760 px and up) and `full:` (1100 px and up). Check both widths against `screenshots/`.
 - If tokens change, update tokens.json and globals.css in the same commit.
 
 ## Implementation rules
 
-1. **Types come from the contract.** Generate `lib/types.ts` from `contracts/search-view.schema.json` (for example with `json-schema-to-typescript`). Do not hand-write a second copy.
+1. **Types come from the contract.** `npm run gen:types` generates `src/lib/types.ts` from `contracts/search-view.schema.json` with json-schema-to-typescript (`--maxItems -1`, so the 20-result cap is checked by the API, not encoded as tuples). Do not hand-write a second copy.
 2. **BIGINT ids are strings end to end.** `corpusid`, `author_id` and node ids are strings in JSON and TypeScript. Never `Number()` or `parseInt` them.
-3. **No raw HTML from data.** React escapes text by default. `dangerouslySetInnerHTML` is banned for titles, abstracts, authors, queries and evidence. Add a lint rule for it.
+3. **No raw HTML from data.** React escapes text by default. `dangerouslySetInnerHTML` is banned; ESLint enforces `react/no-danger` as an error.
 4. **Server first.** Pages fetch in Server Components. Use Client Components only for interaction: the method selector, graph viewport, settings form, split select.
 5. **Stale responses.** The search client sends `request_id` and drops responses that are not the latest (docs/09).
 6. **Graph viewport.** A client component that renders SVG from the API's nodes and edges. Positions are presentation only. No continuous force simulation after layout; respect `prefers-reduced-motion`. The readable connection list is a real `<details>` or list rendered from the same data.
@@ -145,8 +145,8 @@ Query, method, seed, depth and split live in the URL so Back, reload and sharing
 | Check | Command (in `web/`) |
 | --- | --- |
 | Lint | `npm run lint` |
-| Types | `npx tsc --noEmit` |
-| Unit | `npx vitest run` |
+| Types | `npm run typecheck` |
+| Unit | `npm test` (Vitest) |
 | Build | `npm run build` |
 | E2E and captures | Playwright against `next start`, same viewports as `scripts/capture.mjs` |
 
