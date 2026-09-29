@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "citehop"
+version = "0.1.0"
+description = "Scientific paper search in MariaDB: FULLTEXT + vectors + a knowledge graph"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+packages = ["citehop"]
+
+[tool.pytest.ini_options]
+markers = ["db: needs a running MariaDB (make db-up)"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
