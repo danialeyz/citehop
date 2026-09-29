@@ -1,0 +1,223 @@
+{
+  "status": "passed",
+  "created_at": "2026-09-29T19:49:03.935Z",
+  "sources": {
+    "prototype/index.html": "c3288753968d8c5c247eaffb52cd716b76e481974133083f894cb42deb4a9200",
+    "prototype/styles.css": "b9e01f75d7243cbf57b533301472ee3293414dfb130de6c9aa412b3f0940621e",
+    "prototype/app.js": "5780599aa6e39dda9912c6308cdbc6af361a32a79ed4bbf9fecda65d0c50f57f"
+  },
+  "browser": "151.0.7922.34",
+  "device_scale_factor": 1,
+  "reduced_motion": "reduce",
+  "captures": [
+    {
+      "file": "desktop-search.png",
+      "route": "search",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1214
+      }
+    },
+    {
+      "file": "desktop-results.png",
+      "route": "results",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1297
+      }
+    },
+    {
+      "file": "desktop-graph.png",
+      "route": "graph",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1111
+      }
+    },
+    {
+      "file": "desktop-paper-1.png",
+      "route": "paper-1",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1050
+      }
+    },
+    {
+      "file": "desktop-experiments.png",
+      "route": "experiments",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1427
+      }
+    },
+    {
+      "file": "desktop-settings.png",
+      "route": "settings",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1129
+      }
+    },
+    {
+      "file": "desktop-loading.png",
+      "route": "loading",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1050
+      }
+    },
+    {
+      "file": "desktop-empty.png",
+      "route": "empty",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1050
+      }
+    },
+    {
+      "file": "desktop-error.png",
+      "route": "error",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1050
+      }
+    },
+    {
+      "file": "desktop-missing.png",
+      "route": "missing",
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "document": {
+        "viewportWidth": 1440,
+        "documentWidth": 1440,
+        "height": 1050
+      }
+    },
+    {
+      "file": "mobile-search.png",
+      "route": "search",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 2159
+      }
+    },
+    {
+      "file": "mobile-results.png",
+      "route": "results",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 2448
+      }
+    },
+    {
+      "file": "mobile-graph.png",
+      "route": "graph",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 1737
+      }
+    },
+    {
+      "file": "mobile-paper-1.png",
+      "route": "paper-1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 1920
+      }
+    },
+    {
+      "file": "mobile-experiments.png",
+      "route": "experiments",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 2134
+      }
+    },
+    {
+      "file": "mobile-settings.png",
+      "route": "settings",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "document": {
+        "viewportWidth": 390,
+        "documentWidth": 390,
+        "height": 2022
+      }
+    }
+  ],
+  "errors": []
+}

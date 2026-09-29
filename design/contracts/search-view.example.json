@@ -1,0 +1,33 @@
+{
+  "query": "Illustrative retrieval question",
+  "method": "citehop",
+  "results": [
+    {
+      "paper": {
+        "corpusid": "9007199254740993",
+        "title": "Fictional fixture: connected literature retrieval",
+        "abstract": "This is a fictional test record for frontend development.",
+        "year": null,
+        "n_cited_by": null,
+        "authors": [],
+        "venue": null
+      },
+      "rank": 1,
+      "score": null,
+      "found_via": [
+        "kw",
+        "vec"
+      ],
+      "graph_only": false,
+      "explanation": {
+        "score_definition": null,
+        "contributions": null,
+        "paths": null
+      }
+    }
+  ],
+  "returned_count": 1,
+  "latency_ms": null,
+  "partial": false,
+  "unavailable_methods": []
+}

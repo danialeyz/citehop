@@ -1,0 +1,265 @@
+{
+  "type": "object",
+  "required": [
+    "query",
+    "method",
+    "results",
+    "returned_count",
+    "latency_ms",
+    "partial",
+    "unavailable_methods"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "query": {
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "enum": [
+        "keyword",
+        "vector",
+        "fused",
+        "citehop"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "paper",
+          "rank",
+          "score",
+          "found_via",
+          "graph_only",
+          "explanation"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "paper": {
+            "type": "object",
+            "required": [
+              "corpusid",
+              "title",
+              "abstract",
+              "year",
+              "n_cited_by",
+              "authors",
+              "venue"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "corpusid": {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "abstract": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "year": {
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "n_cited_by": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "authors": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "author_id",
+                    "name",
+                    "position"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "author_id": {
+                      "type": "string",
+                      "pattern": "^[0-9]+$"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "position": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              },
+              "venue": {
+                "oneOf": [
+                  {
+                    "type": "null"
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "venue_id",
+                      "name"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "venue_id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "score": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "found_via": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "kw",
+                "vec",
+                "cite",
+                "concept",
+                "author"
+              ]
+            },
+            "uniqueItems": true
+          },
+          "graph_only": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "explanation": {
+            "type": "object",
+            "required": [
+              "score_definition",
+              "contributions",
+              "paths"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "score_definition": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "contributions": {
+                "type": [
+                  "object",
+                  "null"
+                ],
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "paths": {
+                "type": [
+                  "array",
+                  "null"
+                ],
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "nodes",
+                    "edges"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "nodes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "edges": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "source",
+                          "target",
+                          "relation"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                          "source": {
+                            "type": "string"
+                          },
+                          "target": {
+                            "type": "string"
+                          },
+                          "relation": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "maxItems": 20
+    },
+    "returned_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 20
+    },
+    "latency_ms": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "partial": {
+      "type": "boolean"
+    },
+    "unavailable_methods": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "keyword",
+          "vector",
+          "fused",
+          "citehop"
+        ]
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposed CiteHop search presentation model",
+  "description": "Presentation adapter contract, not an existing API or raw LitSearch mapping."
+}

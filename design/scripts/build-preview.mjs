@@ -1,0 +1,10 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const read=p=>readFile(path.join(root,p),'utf8');
+const [html,css,js]=await Promise.all(['prototype/index.html','prototype/styles.css','prototype/app.js'].map(read));
+if(!html.includes('<link rel="stylesheet" href="styles.css">')||!html.includes('<script src="app.js"></script>'))throw new Error('Canonical entry markers changed. Update the generator explicitly.');
+const result=html.replace('<link rel="stylesheet" href="styles.css">',()=>`<style>${css}</style>`).replace('<script src="app.js"></script>',()=>`<script>${js}</script>`);
+await writeFile(path.join(root,'CITEHOP_PREVIEW.html'),result);
+console.log('Built CITEHOP_PREVIEW.html from canonical source.');

@@ -1,0 +1,13 @@
+{
+  "name": "citehop-design-handoff",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Design-only preview and browser capture tooling; not app runtime",
+  "scripts": {
+    "build": "node scripts/build-preview.mjs",
+    "capture": "node scripts/build-preview.mjs && node scripts/capture.mjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" },
+  "engines": { "node": ">=20" }
+}

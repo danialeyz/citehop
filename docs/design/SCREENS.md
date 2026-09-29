@@ -1,5 +1,8 @@
 # CiteHop screens
 
+> [!WARNING]
+> **Superseded.** This is the v0.1 light sketch. The approved design is handoff 1.0 in [`/design`](../../design/README.md). Do not implement from this folder.
+
 One section per route in the prototype. Each lists what the screen shows, how it behaves, and where the real data comes from.
 Table and column names match `sql/schema.sql` and `sql/kg_schema.sql`. Function names match the stubs in `citehop/`.
 

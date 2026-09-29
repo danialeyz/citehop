@@ -214,7 +214,8 @@ citehop/
 ├── data/           local data, gitignored except NOTES.md
 ├── results/        plots and run outputs
 ├── docs/           architecture, data model, decisions, experiments, results, traps
-│   └── design/     UI prototype, screen specs, design system, agent instructions
+│   └── design/     superseded v0.1 UI sketch
+├── design/         approved UI handoff 1.0: prototype, specs, contracts, captures
 └── assets/         logo
 ```
 
@@ -234,7 +235,7 @@ Docs marked *(Phase E)* are written in bootstrap Phase E. Links go live then.
 | RESULTS *(Phase E)* | you want the numbers and the command behind each |
 | GLOSSARY *(Phase E)* | a word like HNSW, RRF or nDCG trips you up |
 | CONTRIBUTING *(Phase E)* | you open a branch or a PR |
-| [design/](docs/design/README.md) | you build the demo app or the graph explorer |
+| [design/](design/README.md) | you build the demo app or the graph explorer |
 | CLAUDE.md *(Phase E)* | you work with Claude Code |
 
 ---

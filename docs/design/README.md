@@ -1,5 +1,8 @@
 # CiteHop design
 
+> [!WARNING]
+> **Superseded.** This is the v0.1 light sketch. The approved design is handoff 1.0 in [`/design`](../../design/README.md). Do not implement from this folder.
+
 This folder holds the UI design for the CiteHop demo app (card #28) and the graph explorer (card #28.5).
 Everything here is a sketch. Paper titles, authors, graph links and scores in it are fictional fixtures.
 

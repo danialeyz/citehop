@@ -1,5 +1,8 @@
 # Agent instructions: building the CiteHop UI
 
+> [!WARNING]
+> **Superseded.** This is the v0.1 light sketch. The approved design is handoff 1.0 in [`/design`](../../design/README.md). Do not implement from this folder.
+
 For Claude Code and any other coding agent that touches the demo app (`app/`, card #28) or the graph explorer (card #28.5).
 Read this file in full before writing UI code. The project-wide rules in `CLAUDE.md` still apply. This file adds to them and never overrides them.
 
