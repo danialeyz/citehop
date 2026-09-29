@@ -222,18 +222,20 @@ citehop/
 
 ## Docs
 
+Docs marked *(Phase E)* are written in bootstrap Phase E. Links go live then.
+
 | Doc | Read it when |
 |---|---|
-| [ARCHITECTURE](docs/ARCHITECTURE.md) | you want the big picture: build once vs every search |
-| [DATA_MODEL](docs/DATA_MODEL.md) | you touch a table or write SQL |
-| [TRAPS](docs/TRAPS.md) | before any SQL work. Seriously. |
-| [DECISIONS](docs/DECISIONS.md) | you wonder "why did we do it this way?" |
-| [EXPERIMENTS](docs/EXPERIMENTS.md) | you run or read the A to L ablation |
-| [RESULTS](docs/RESULTS.md) | you want the numbers and the command behind each |
-| [GLOSSARY](docs/GLOSSARY.md) | a word like HNSW, RRF or nDCG trips you up |
-| [CONTRIBUTING](docs/CONTRIBUTING.md) | you open a branch or a PR |
+| ARCHITECTURE *(Phase E)* | you want the big picture: build once vs every search |
+| DATA_MODEL *(Phase E)* | you touch a table or write SQL |
+| TRAPS *(Phase E)* | before any SQL work. Seriously. |
+| DECISIONS *(Phase E)* | you wonder "why did we do it this way?" |
+| EXPERIMENTS *(Phase E)* | you run or read the A to L ablation |
+| RESULTS *(Phase E)* | you want the numbers and the command behind each |
+| GLOSSARY *(Phase E)* | a word like HNSW, RRF or nDCG trips you up |
+| CONTRIBUTING *(Phase E)* | you open a branch or a PR |
 | [design/](docs/design/README.md) | you build the demo app or the graph explorer |
-| [CLAUDE.md](CLAUDE.md) | you work with Claude Code |
+| CLAUDE.md *(Phase E)* | you work with Claude Code |
 
 ---
 

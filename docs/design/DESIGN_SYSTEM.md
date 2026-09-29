@@ -2,7 +2,7 @@
 
 Two themes exist. Light comes from `citehop-preview-v0.1.html` (exact values from its CSS).
 Dark comes from `desktop-search-dark.png` (values sampled from pixels, so treat them as close, not exact).
-Which theme ships is open decision UI-1 in [AGENT_INSTRUCTIONS.md](AGENT_INSTRUCTIONS.md#open-decisions).
+Which theme ships is open decision UI-1 in [AGENT_INSTRUCTIONS.md](AGENT_INSTRUCTIONS.md#5-open-decisions).
 
 ## 1. Colour tokens
 

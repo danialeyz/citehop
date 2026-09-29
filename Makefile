@@ -16,7 +16,8 @@ db-down:         ## stop MariaDB (data kept)
 	$(COMPOSE) down
 
 db-reset:        ## DELETE all data and start fresh (asks first)
-	@read -p "Delete the database volume? [y/N] " a && [ "$$a" = "y" ] && $(COMPOSE) down -v && $(COMPOSE) up -d --wait
+	@read -p "Delete the database volume? [y/N] " a; \
+	if [ "$$a" = "y" ]; then $(COMPOSE) down -v && $(COMPOSE) up -d --wait; else echo "Cancelled."; fi
 
 db-shell:        ## open a mariadb prompt
 	$(COMPOSE) exec db mariadb -ucitehop -pcitehop citehop

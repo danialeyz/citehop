@@ -10,7 +10,7 @@ Legend for the **Source** column:
 | `static` | fixed copy, fine to hard-code |
 | `db` | read from MariaDB at runtime |
 | `fn` | returned by a `citehop` Python function |
-| `open` | not decided yet; see [AGENT_INSTRUCTIONS.md](AGENT_INSTRUCTIONS.md#open-decisions) |
+| `open` | not decided yet; see [AGENT_INSTRUCTIONS.md](AGENT_INSTRUCTIONS.md#5-open-decisions) |
 
 ## Shell (every screen)
 

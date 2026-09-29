@@ -50,4 +50,6 @@ for r in search results graph paper-1 experiments settings loading empty error m
   "$C" --headless=new --hide-scrollbars --window-size=1440,1400 --virtual-time-budget=2000 \
     --screenshot="$PWD/docs/design/screens/light-$r.png" "file://$F#$r"
 done
+"$C" --headless=new --hide-scrollbars --window-size=390,1500 --virtual-time-budget=2000 \
+  --screenshot="$PWD/docs/design/screens/light-search-mobile.png" "file://$F#search"
 ```

@@ -3,6 +3,9 @@
 For Claude Code and any other coding agent that touches the demo app (`app/`, card #28) or the graph explorer (card #28.5).
 Read this file in full before writing UI code. The project-wide rules in `CLAUDE.md` still apply. This file adds to them and never overrides them.
 
+> [!NOTE]
+> `CLAUDE.md` and `docs/DECISIONS.md` are written in bootstrap Phase E. Until then, "rule N" in this file means rule N in section 2 of the bootstrap handout (`CITEHOP_BOOTSTRAP.md`).
+
 ## 1. Read order
 
 1. `CLAUDE.md` (project rules 1 to 13).
