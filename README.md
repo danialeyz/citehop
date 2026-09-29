@@ -215,9 +215,8 @@ citehop/
 ├── data/           local data, gitignored except NOTES.md
 ├── results/        plots and run outputs
 ├── docs/           architecture, data model, decisions, experiments, results, traps
-│   └── design/     superseded v0.1 UI sketch
 ├── design/         approved UI handoff 1.0: prototype, specs, contracts, captures
-└── assets/         logo
+└── assets/         logo (mark from design/assets/logo.svg)
 ```
 
 ---

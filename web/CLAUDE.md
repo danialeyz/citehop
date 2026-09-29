@@ -3,7 +3,7 @@
 Stack: React + TypeScript (strict) + Next.js (App Router) + Tailwind CSS v4. Decided 2026-09-29, replacing Streamlit.
 
 Before writing any code here, read `design/docs/13-FRONTEND-ARCHITECTURE.md`, then `design/AGENT_PROMPT.md`, `design/AGENTS.md` and the other numbered docs in `design/docs/`.
-The approved design is handoff 1.0 in `design/`. `docs/design/` is a superseded v0.1 sketch. Do not implement from it.
+The approved design is handoff 1.0 in `design/`.
 
 The short version:
 - Canonical visual source: `design/prototype/`. Current captures: `design/screenshots/`. Never target `design/reference-boards/`.

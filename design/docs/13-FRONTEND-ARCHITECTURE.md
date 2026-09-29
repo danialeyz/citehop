@@ -17,7 +17,7 @@ The browser cannot run `citehop.search` or embed a query with bge-base-en-v1.5. 
 | Layer | Tech | Location | Owns |
 | --- | --- | --- | --- |
 | Frontend | Next.js (App Router), React, TypeScript strict, Tailwind CSS v4 | `web/` | Rendering, routing, UI state |
-| API | FastAPI (proposed) | `citehop/api.py` | HTTP boundary, view-model adapters, validation, error mapping |
+| API | FastAPI (confirmed 2026-09-29) | `citehop/api.py` | HTTP boundary, view-model adapters, validation, error mapping |
 | Domain | Python | `citehop/search.py`, `evaluate.py`, graph module | Retrieval, fusion, graph walks, metrics |
 | Data | MariaDB 11.8.9 | Docker | Everything persistent |
 
@@ -33,7 +33,7 @@ Rules:
 - Only the API connects to MariaDB. Next.js never holds DB credentials and never imports a MariaDB driver.
 - Next.js calls the API from server code (Server Components, Route Handlers, Server Actions). The API URL is a server-only env var `CITEHOP_API_URL`. Nothing secret gets a `NEXT_PUBLIC_` prefix.
 - The API returns the view models in docs/04 and `contracts/`. It does not return raw rows or vector bytes.
-- FastAPI is a proposal. Any Python HTTP framework that serves the same contract is acceptable; record the final choice in DECISIONS.md.
+- FastAPI was confirmed by the owner on 2026-09-29. Add `fastapi` and `uvicorn` to requirements.txt in the API card.
 
 ## Proposed API surface
 
@@ -156,7 +156,7 @@ Add a Node job to `.github/workflows/ci.yml` running lint, types, unit tests and
 
 | Item | Needs |
 | --- | --- |
-| API framework | Confirm FastAPI and add it to `requirements.txt` in its own card |
+| API framework | Confirmed FastAPI. Add `fastapi` and `uvicorn` to `requirements.txt` in the API card |
 | Hosting | Local only for the course demo unless decided otherwise |
-| `streamlit` in `requirements-ml.txt` | Remove when the bootstrap handout is updated; it is part of the handout's exact file list |
+| `streamlit` in `requirements-ml.txt` | Removed 2026-09-29. This deviates from section 4.6 of the bootstrap handout |
 | Card #28 wording | The Notion card still says Streamlit; update it to point here |
