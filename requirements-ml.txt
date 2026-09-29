@@ -1,0 +1,4 @@
+-r requirements.txt
+sentence-transformers>=3.0
+streamlit>=1.36
+matplotlib>=3.8
