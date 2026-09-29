@@ -214,6 +214,7 @@ citehop/
 ├── data/           local data, gitignored except NOTES.md
 ├── results/        plots and run outputs
 ├── docs/           architecture, data model, decisions, experiments, results, traps
+│   └── design/     UI prototype, screen specs, design system, agent instructions
 └── assets/         logo
 ```
 
@@ -231,6 +232,7 @@ citehop/
 | [RESULTS](docs/RESULTS.md) | you want the numbers and the command behind each |
 | [GLOSSARY](docs/GLOSSARY.md) | a word like HNSW, RRF or nDCG trips you up |
 | [CONTRIBUTING](docs/CONTRIBUTING.md) | you open a branch or a PR |
+| [design/](docs/design/README.md) | you build the demo app or the graph explorer |
 | [CLAUDE.md](CLAUDE.md) | you work with Claude Code |
 
 ---
