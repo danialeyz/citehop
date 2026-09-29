@@ -37,6 +37,7 @@ The old print-rendered PNGs did not match the HTML. They are retained only in `r
 | docs/05–07 | Build plan, approval, validation record |
 | docs/08–11 | Components, state rules, backlog, content standards |
 | docs/12-CAPTURE-AND-PARITY.md | Exact browser capture workflow |
+| docs/13-FRONTEND-ARCHITECTURE.md | Next.js stack decision, API boundary, routes, Tailwind tokens |
 | scripts/ | Standalone build and browser capture scripts |
 | screenshots/ | Destination for verified browser PNGs and manifest |
 | reference-boards/ | Superseded print-rendered PNGs; do not implement from these |
@@ -57,6 +58,6 @@ This is design tooling only. It does not add Node or Playwright to the Python ap
 
 ## Scope and truthfulness
 
-The app remains Streamlit/Python/MariaDB unless a separate architecture change is approved. The handoff covers search, results, paper detail, graph exploration, experiments and development settings. All prototype papers, authors, graph links and provenance are fictional. No search, experiment or database integration has run.
+The frontend is React + TypeScript + Next.js + Tailwind CSS over a Python API and MariaDB (decision recorded in docs/13-FRONTEND-ARCHITECTURE.md; it replaces the earlier Streamlit plan). The handoff covers search, results, paper detail, graph exploration, experiments and development settings. All prototype papers, authors, graph links and provenance are fictional. No search, experiment or database integration has run.
 
 A–L meanings, score semantics and several parameter decisions are absent from the attached document. Those are backend blockers, not an invitation to invent requirements. Implement the available UI and honest unknown states while those definitions are resolved.

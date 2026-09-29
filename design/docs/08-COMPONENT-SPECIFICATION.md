@@ -31,6 +31,6 @@ The reference's spatial positions are illustrative and carry no similarity meani
 
 Selected-node details must update without discarding the query. Provide a readable connection list as a first-class alternative. Production panning and zooming require reset and keyboard alternatives; they are not implemented by the reference fixture.
 
-## Streamlit fidelity
+## Implementation fidelity
 
-Match color, type hierarchy, spacing, content order and responsive intent first. Native Streamlit controls may differ at the pixel level from browser-native HTML controls. Document any visual deviation and compare it to the approved structure. Do not disguise framework constraints with screenshots masquerading as interactive controls.
+Each component above becomes one React component in web/src/components/. Match color, type hierarchy, spacing, content order and responsive intent first. React renders native HTML controls, so pixel parity with the prototype is the target. Document any visual deviation and compare it to the approved structure. Do not disguise framework constraints with screenshots masquerading as interactive controls.

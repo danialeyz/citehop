@@ -144,6 +144,7 @@ The task board lives in Notion.
 |---|---|---|
 | Docker | Desktop or Colima | runs MariaDB |
 | Python | 3.11 | the `citehop` package |
+| Node.js | 20+ | the Next.js frontend in `web/` |
 | MariaDB Connector/C | any recent | builds the `mariadb` Python driver |
 | git | any | |
 
@@ -210,7 +211,7 @@ citehop/
 ├── scripts/        one-off tools, like inspect_litsearch.py
 ├── tests/          unit tests and DB tests (marker: db)
 ├── notebooks/      Colab embedding notebook
-├── app/            Streamlit demo
+├── web/            Next.js + TypeScript + Tailwind frontend
 ├── data/           local data, gitignored except NOTES.md
 ├── results/        plots and run outputs
 ├── docs/           architecture, data model, decisions, experiments, results, traps

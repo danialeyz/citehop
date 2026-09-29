@@ -3,7 +3,7 @@
 ## Build order for the approved design
 
 1. Confirm bootstrap completion and read repository CLAUDE.md. Do not replay phases A–G against an existing repo.
-2. Implement visual tokens and app shell in the planned Streamlit app. Keep widget keys stable across reruns.
+2. Implement visual tokens (Tailwind @theme) and the app shell in the Next.js app in web/ (docs/13).
 3. Implement query entry and the four method choices with a mock adapter. Make fixture mode explicit.
 4. Implement results and paper detail using real schema-shaped view models. Support null fields.
 5. Integrate keyword/vector/fused/citehop only when those cards are complete. Remove fictional fixtures from production paths.
@@ -15,20 +15,21 @@
 
 | Path | Responsibility |
 | --- | --- |
-| app/streamlit_app.py | Application entry point |
-| app/ui/theme.py | Design token mapping and supported theme setup |
-| app/ui/search_view.py | Composer and result rendering |
-| app/ui/paper_view.py | Metadata and evidence |
-| app/ui/graph_view.py | Graph renderer and readable edge list |
-| app/ui/experiment_view.py | Read-only metrics and comparison table |
-| app/ui/settings_view.py | Development parameter controls |
-| app/adapters/search_adapter.py | Convert backend output to UI view models |
-| app/adapters/graph_adapter.py | Bounded graph neighborhood view model |
-| app/adapters/evaluation_adapter.py | Measured-run data; no invented values |
+| web/src/app/layout.tsx | App shell, navigation, skip link |
+| web/src/app/globals.css | Tailwind @theme tokens from assets/tokens.json |
+| web/src/app/page.tsx, search/ | Composer and result rendering |
+| web/src/app/papers/[corpusid]/ | Metadata and evidence |
+| web/src/app/graph/ | Graph viewport and readable edge list |
+| web/src/app/experiments/ | Read-only metrics and comparison table |
+| web/src/app/settings/ | Development parameter controls |
+| web/src/lib/api.ts, types.ts | Typed server-side API client; types generated from contracts/ |
+| citehop/api.py | Python API: adapters to view models, validation, error mapping |
 
 This organization is a proposal for later cards. Avoid creating empty abstractions just to match the tree. Use the smallest maintainable structure for the course project.
 
-## Streamlit guidance
+## Superseded: Streamlit guidance
+
+The stack is now Next.js (docs/13). This section is kept for history only.
 
 Use native form submission and session state for query, selected method, paper ID and settings. Keep results in session state until a new successful query replaces them. Do not rerun expensive retrieval because a user expands an evidence panel.
 
@@ -36,7 +37,7 @@ Map colors and type to supported Streamlit theme settings. Use native containers
 
 The graph can be a contained custom component if native rendering cannot satisfy node inspection. Pass only sanitized schema-shaped data and selected-node events. Keep a native text/list alternative. Never put database access or secrets in component JavaScript.
 
-An independent SPA is an optional future architecture decision, not authorized by this package. It would require a separately specified backend API and deployment plan.
+That decision was made on 2026-09-29: the frontend is Next.js with a Python API. See docs/13 for the API boundary.
 
 ## Interaction acceptance
 

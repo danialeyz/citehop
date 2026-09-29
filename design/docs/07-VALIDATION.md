@@ -23,7 +23,7 @@ Pending local acceptance:
 - Execute npm run capture with Chromium in the development environment.
 - Inspect the PNGs and capture manifest from the same source revision.
 - Verify real keyboard interactions, focus visibility, 200% zoom and accessibility.
-- Test actual Streamlit and MariaDB integration when backend cards are complete.
+- Test actual Next.js, Python API and MariaDB integration when backend cards are complete.
 
 The capture script was syntax-checked but could not be run end-to-end here. No claim of browser parity, WCAG conformance or production readiness is made.
 
@@ -49,4 +49,4 @@ Observations from inspection:
 Still pending:
 - Owner review of the captures (step 6 of docs/12).
 - Real keyboard, focus, 200% zoom and contrast checks.
-- Streamlit and MariaDB integration once backend cards land.
+- Next.js, Python API and MariaDB integration once backend cards land.

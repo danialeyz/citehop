@@ -15,7 +15,7 @@ The original bootstrap remains authoritative for backend behavior. This package 
 - Keep fixtures explicitly fictional. No fabricated scores, latency, benchmark gains, extracted quotes or corpus load counts.
 - Approval covers visual design, not unknown A–L definitions or score semantics.
 - Do not store secrets, real datasets, node_modules or browser binaries in this folder.
-- Follow repository-level checks and instructions when implementing app/.
+- Follow repository-level checks and instructions when implementing web/ (Next.js, see docs/13-FRONTEND-ARCHITECTURE.md).
 
 ## Completion
 

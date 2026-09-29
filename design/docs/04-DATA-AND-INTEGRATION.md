@@ -4,9 +4,9 @@
 
 Keep retrieval inside the existing Python and MariaDB project. The prototype does not introduce a second database, vector store or graph service. Browser clients must never receive DB credentials or raw vector bytes.
 
-The source plans `app/streamlit_app.py` for #28. Implement the shell and result display there first. Keep search logic in `citehop/search.py`, graph queries in approved SQL/Python modules and evaluation in `citehop/evaluate.py`. Do not embed SQL in layout templates.
+The source planned `app/streamlit_app.py` for #28. That is superseded: the frontend is Next.js in `web/`, and a Python API in `citehop/api.py` serves these view models (docs/13). Keep search logic in `citehop/search.py`, graph queries in approved SQL/Python modules and evaluation in `citehop/evaluate.py`. Do not embed SQL in layout templates.
 
-The structures below are proposed view models, not claims about existing APIs. An adapter must build them from approved backend results. No HTTP endpoints are specified by the handout. In Streamlit these may be Python dataclasses or dictionaries.
+The structures below are proposed view models, not claims about existing APIs. An adapter must build them from approved backend results. The handout specifies no HTTP endpoints; docs/13 proposes them. The API serializes these view models as JSON, and TypeScript types are generated from contracts/.
 
 ## Search input
 

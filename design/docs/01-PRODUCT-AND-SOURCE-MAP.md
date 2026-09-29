@@ -39,7 +39,7 @@ No authentication, collaboration, saved library, subscriptions, AI chat, generat
 | Graph-only relevance | Separate research metric | Requires qrels and candidate sets |
 | p50/p95 latency | Separate measurement area | Never fabricate timings |
 | 1,000 bootstrap resamples / 95% interval | Evaluation methodology card | Paired comparison against C |
-| Streamlit app | Streamlit implementation path | HTML is reference, not a stack change |
+| Demo app (#28) | Next.js + TypeScript + Tailwind in web/ over a Python API | Stack changed from Streamlit on 2026-09-29; see docs/13 |
 
 ## Unknowns that must remain explicit
 

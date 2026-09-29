@@ -2,7 +2,7 @@
 
 ## Navigation and state
 
-Prototype routes are hashes in `prototype/index.html`. Production may map these to Streamlit pages or session state. Preserve query, mode, selected paper and scroll position across navigation. Use stable paper IDs, not list indexes, outside the fixture.
+Prototype routes are hashes in `prototype/index.html`. Production maps these to Next.js routes with state in the URL (see docs/13). Preserve query, mode, selected paper and scroll position across navigation. Use stable paper IDs, not list indexes, outside the fixture.
 
 | Route | Screen | Main action | Secondary action |
 | --- | --- | --- | --- |
