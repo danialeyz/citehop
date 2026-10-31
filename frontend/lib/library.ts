@@ -61,8 +61,14 @@ export function parseBack(value: string | string[] | undefined): ListState {
   return parseListState(Object.fromEntries(new URLSearchParams(first(value) ?? "")));
 }
 
-export function graphHref(articleId: number): string {
-  return `/graph?article=${articleId}`;
+/** Graph deep link: seed article plus optional search context to highlight its sources. */
+export function graphHref(articleId: number, search?: { q: string; method: "keyword" | "vector" }): string {
+  const query = new URLSearchParams({ article: String(articleId) });
+  if (search?.q) {
+    query.set("q", search.q);
+    query.set("method", search.method);
+  }
+  return `/graph?${query}`;
 }
 
 export function pageCount(total: number, pageSize: number): number {

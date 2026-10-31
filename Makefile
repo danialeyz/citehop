@@ -33,7 +33,8 @@ api-types: ## regenerate OpenAPI JSON and frontend/lib/api/schema.d.ts after API
 	npm --prefix frontend run api:types
 frontend: ## run Next.js on localhost
 	npm --prefix frontend run dev -- --port $(FRONTEND_PORT)
-frontend-check: ## lint, typecheck and production build
+frontend-check: ## unit tests, lint, typecheck and production build
+	npm --prefix frontend test
 	npm --prefix frontend run lint
 	npm --prefix frontend run typecheck
 	npm --prefix frontend run build

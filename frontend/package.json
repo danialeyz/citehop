@@ -11,9 +11,11 @@
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "api:types": "openapi-typescript lib/api/openapi.json -o lib/api/schema.d.ts"
+    "api:types": "openapi-typescript lib/api/openapi.json -o lib/api/schema.d.ts",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test \"lib/**/*.test.ts\""
   },
   "dependencies": {
+    "@xyflow/react": "12.12.0",
     "next": "16.4.3",
     "openapi-fetch": "0.17.0",
     "react": "19.3.1",

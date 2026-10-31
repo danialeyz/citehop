@@ -50,7 +50,7 @@ Pinned C02 snapshot `deb00bb7…`, MariaDB 11.8.9 and Neo4j 5.26.32 Community in
 - A separate check, not using the importer's own validation, compared every article (ID, revision, title), link and membership in Neo4j with MariaDB. They matched exactly.
 - Loading the smoke subset made the graph `stale`, and queries were refused. Reimporting deleted 427 nodes and 1,810 edges, leaving 10 / 119 / 39 / 169, which again matched MariaDB. Reloading the full corpus and reimporting restored the full counts.
 
-Known limitation (from C02/C03): hidden Wikipedia maintenance categories are stored as ordinary categories. For example, `Articles with short description` is on all 100 articles, so it becomes a hub. Node and edge caps still bound it, but C12 should not present such categories as topics until C02 keeps the `hidden` flag.
+Known limitation (from C02/C03): hidden Wikipedia maintenance categories are stored as ordinary categories. For example, `Articles with short description` is on all 100 articles, so it becomes a hub. Node and edge caps still bound it, but C12 should not present such categories as topics until C02 keeps the `hidden` flag. The C12 explorer leaves them out by default by matching their names ([GRAPH_EXPLORER.md](GRAPH_EXPLORER.md)).
 
 ## Tests
 
