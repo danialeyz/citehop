@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/icons";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition, type FormEvent } from "react";
 
@@ -74,6 +75,7 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
   const [navigating, startTransition] = useTransition();
   const committedKey = searchKey(committed);
 
+  const [showAllExamples, setShowAllExamples] = useState(false);
   const [query, setQuery] = useState(committed.q);
   const [method, setMethod] = useState<Method>(committed.method);
   const [filterDraft, setFilterDraft] = useState<FilterDraft>(toDraft(committed.filters));
@@ -221,8 +223,8 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
 
   return (
     <>
-      <form onSubmit={submit} role="search" aria-label="Search the corpus" className="rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:p-5">
-        <label htmlFor="q" className="sr-only">Question</label>
+      <form onSubmit={submit} role="search" aria-label="Search the corpus" className="search-composer">
+        <label htmlFor="q" className="mb-4 flex items-center gap-2 text-sm font-medium"><Icon name="spark" className="text-accent" width="17" height="17" /> Where will your curiosity take you?</label>
         <div className="flex flex-col gap-3 lg:flex-row">
           <input
             id="q"
@@ -234,11 +236,11 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
             }}
             maxLength={1000}
             autoComplete="off"
-            placeholder="e.g. Who coined the term machine learning?"
-            className={`${inputClass} !py-3 !text-lg`}
+            placeholder="Ask anything about machine learning…"
+            className={`${inputClass} !bg-page/60 !py-4 !text-base`}
           />
           <button type="submit" disabled={busy} className={`${buttonPrimary} shrink-0 whitespace-nowrap !px-6 !py-3 !text-base`}>
-            {busy ? "Searching…" : "Find sources"}
+            {busy ? "Searching…" : "Find sources"}<Icon name="arrow" width="18" height="18" />
           </button>
         </div>
 
@@ -258,7 +260,7 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
             </div>
           </fieldset>
           <p className="text-sm text-muted">
-            {method === "keyword" ? "Exact words, MariaDB FULLTEXT." : "Similar meaning, MariaDB native vectors."}
+            {method === "keyword" ? "Find the exact words." : "Follow the meaning, beyond exact words."}
           </p>
         </div>
 
@@ -294,20 +296,21 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
       </form>
 
       {examples && examples.length > 0 && (
-        <details open={!committed.q || undefined} className="mt-4">
-          <summary className="cursor-pointer text-sm text-muted hover:text-ink">Sample questions from the dev set</summary>
-          <ul className="mt-3 grid gap-2 md:grid-cols-2">
-            {examples.map((ex) => (
+        <details open={!committed.q || undefined} className="sample-section mt-8">
+          <summary className="cursor-pointer text-sm text-muted hover:text-ink">A spark for your next question <span className="ml-2 text-[10px] uppercase tracking-wider opacity-70">Dev samples</span></summary>
+          <ul className="mt-4 grid gap-3 xl:grid-cols-3">
+            {(showAllExamples ? examples : examples.slice(0, 3)).map((ex, index) => (
               <li key={ex.id}>
                 <button
                   type="button"
                   onClick={() => runExample(ex)}
-                  className="flex h-full w-full flex-col items-start gap-2 rounded-xl border border-line bg-strip p-3 text-left text-[15px] text-ink hover:border-accent"
+                  className="sample-card group"
                 >
-                  <span className="[overflow-wrap:anywhere]">{ex.question}</span>
+                  <span className="mb-1 flex w-full items-center justify-between font-mono text-[10px] text-muted"><span>QUESTION {String(index + 1).padStart(2, "0")}</span><Icon name="arrow" width="16" height="16" className="text-accent transition-transform group-hover:translate-x-1" /></span>
+                  <span className="flex-1 [overflow-wrap:anywhere]">{ex.question}</span>
                   <span className="flex flex-wrap gap-1.5">
                     <Chip tone={ex.reviewStatus === "approved" ? "accent" : "neutral"}>
-                      {ex.reviewStatus === "approved" ? "Reviewed" : "Draft · not yet human-reviewed"}
+                      {ex.reviewStatus === "approved" ? "Reviewed" : "Not yet reviewed"}
                     </Chip>
                     {filterLabels(ex.filters).map((l) => <Chip key={l}>{l}</Chip>)}
                   </span>
@@ -315,7 +318,10 @@ export function SearchWorkspace({ initial, examples }: { initial: SearchState; e
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-xs text-muted">Clicking a sample retrieves sources only. Some dev questions are deliberately unanswerable from this corpus.</p>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <p className="max-w-xl text-[11px] leading-5 text-muted">Samples retrieve sources only. Some questions deliberately go beyond the corpus.</p>
+            {examples.length > 3 && <button type="button" onClick={() => setShowAllExamples((value) => !value)} aria-expanded={showAllExamples} className="text-xs font-medium text-accent hover:text-accent-soft">{showAllExamples ? "Show fewer" : `View all ${examples.length} questions`} <span aria-hidden>↗</span></button>}
+          </div>
         </details>
       )}
 

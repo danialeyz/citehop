@@ -1,8 +1,8 @@
 export const NAV_ITEMS = [
-  { href: "/", label: "Search", glyph: "⌕" },
-  { href: "/library", label: "Library", glyph: "▤" },
-  { href: "/graph", label: "Graph", glyph: "⌘" },
-  { href: "/dashboard", label: "Dashboard", glyph: "▥" },
+  { href: "/", label: "Search", icon: "search" },
+  { href: "/library", label: "Library", icon: "library" },
+  { href: "/graph", label: "Graph", icon: "graph" },
+  { href: "/dashboard", label: "Dashboard", icon: "dashboard" },
 ] as const;
 
 export function isActive(pathname: string, href: string): boolean {
