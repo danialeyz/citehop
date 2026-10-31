@@ -3,7 +3,7 @@ PY = .venv/bin/python
 API_PORT ?= 8000
 FRONTEND_PORT ?= 3000
 
-.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph test-model graph-import graph-status venv-ml embed-smoke embed embed-status lint locks
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph test-model graph-import graph-status venv-ml embed-smoke embed embed-status rag-validate lint locks
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
 venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
@@ -50,8 +50,10 @@ embed: ## chunk + embed every loaded article (resumable; skips current work)
 	$(PY) -m citehop.embed run
 embed-status: ## chunk coverage and stale rows for the active configuration
 	$(PY) -m citehop.embed status
+rag-validate: ## live search + generation check (3 generator calls; needs venv-ml and embedded corpus)
+	$(PY) scripts/validate_rag.py
 lint: ## Python lint
-	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py
+	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py scripts/validate_rag.py
 locks: ## explicitly refresh Python lock and pip exports after dependency changes
 	uv lock
 	uv export --no-dev --no-emit-project -o requirements.txt
