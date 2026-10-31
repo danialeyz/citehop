@@ -1,0 +1,152 @@
+{
+  "base_url": "http://127.0.0.1:3019/api/v1",
+  "health": {
+    "status_code": 200,
+    "body": {
+      "status": "ok",
+      "services": {
+        "mariadb": "ready",
+        "neo4j": "ready"
+      }
+    }
+  },
+  "search": {
+    "status_code": 200,
+    "corpus_version": "corpus:2",
+    "timings": {
+      "embedding_ms": 1252.6,
+      "retrieval_ms": 35.8,
+      "total_ms": 2549.4
+    },
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "b3166a092a45a942b0442d16b67cacee8b4a631379389c7e222cb44a0686a374",
+        "article_id": 1363880,
+        "title": "Random forest",
+        "score": 0.77954532984279
+      },
+      {
+        "rank": 2,
+        "chunk_id": "d748db41ecf7f33f24b7316441933d0d73f0b16598d4645fa99ea8cda581546f",
+        "article_id": 1363880,
+        "title": "Random forest",
+        "score": 0.7016489391800084
+      },
+      {
+        "rank": 3,
+        "chunk_id": "9b53c62a95c6296690c054282fb4cade44de5035068ce8e2d3a5030a9b7e7799",
+        "article_id": 233488,
+        "title": "Machine learning",
+        "score": 0.6892077806146145
+      },
+      {
+        "rank": 4,
+        "chunk_id": "ce97969f4ed8412e05572208e7047950db22ffaf896e85ad94c384f7258e1a0a",
+        "article_id": 233488,
+        "title": "Machine learning",
+        "score": 0.6880110526486691
+      },
+      {
+        "rank": 5,
+        "chunk_id": "d74c752da09b688b6fc79cd223c29768b924246f9a0bd608fc43fef2190085d6",
+        "article_id": 172777,
+        "title": "Perceptron",
+        "score": 0.6678476010400266
+      }
+    ]
+  },
+  "answer": {
+    "status_code": 200,
+    "status": "answered",
+    "text": "Tin Kam Ho created the first algorithm for random decision forests in 1995 [S1].",
+    "citation_map": {
+      "S1": "b3166a092a45a942b0442d16b67cacee8b4a631379389c7e222cb44a0686a374"
+    },
+    "reason": null,
+    "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+    "generation_ms": 7264.2,
+    "usage": {
+      "context_tokens_estimated": 1669,
+      "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+      "prompt_tokens": 1558,
+      "output_tokens": 22,
+      "finish_reason": "stop"
+    }
+  },
+  "article": {
+    "status_code": 200,
+    "title": "Random forest",
+    "passages": 17,
+    "links": {
+      "outgoing": 9,
+      "incoming": 9
+    }
+  },
+  "neighborhood": {
+    "status_code": 200,
+    "seed": "article:1363880",
+    "graph_version": "corpus:2",
+    "truncated": true,
+    "limits": {
+      "max_nodes": 20,
+      "max_edges": 100
+    },
+    "counts": {
+      "nodes": 20,
+      "edges": 97
+    }
+  },
+  "path": {
+    "status_code": 200,
+    "found": true,
+    "directed": true,
+    "graph_version": "corpus:2",
+    "titles": [
+      "Random forest",
+      "Bootstrap aggregating"
+    ]
+  },
+  "stats": {
+    "status_code": 200,
+    "body": {
+      "corpus": {
+        "corpus_version": "corpus:2",
+        "articles": 100,
+        "smoke_articles": 10,
+        "distinct_categories": 456,
+        "category_memberships": 1101,
+        "article_links": 917,
+        "chunks": 1776,
+        "embedding_configs": [
+          {
+            "chunk_config": "f19b156fec90a21af279bc335c6cee40754f31cca7a3389324f2c96da2bf3f0b",
+            "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+            "chunks": 1776,
+            "articles_covered": 100,
+            "token_count_min": 51,
+            "token_count_max": 300
+          }
+        ]
+      },
+      "graph": {
+        "status": "ready",
+        "source_version": "corpus:2",
+        "imported_version": "corpus:2",
+        "imported_at": "2026-10-31T16:26:02+00:00",
+        "counts": {
+          "articles": 100,
+          "categories": 456,
+          "links": 917,
+          "memberships": 1101
+        },
+        "detail": null
+      }
+    }
+  },
+  "runs": {
+    "status_code": 200,
+    "count": 1,
+    "invalid": 0
+  }
+}

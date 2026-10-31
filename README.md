@@ -333,7 +333,7 @@ make api                    # terminal 1: http://127.0.0.1:8000/docs
 make frontend               # terminal 2: http://127.0.0.1:3000
 ```
 
-`GET /api/v1/health` works directly on port 8000 and through Next on port 3000. HTTP 200 / `status: ok` reports API liveness; `services.mariadb` and `services.neo4j` independently report `ready`/`unavailable`, without exception details or credentials. It performs read-only database probes. No feature routes exist yet. Blocking probes run in FastAPI's thread pool.
+`GET /api/v1/health` works directly on port 8000 and through Next on port 3000. HTTP 200 / `status: ok` reports API liveness; `services.mariadb` and `services.neo4j` independently report `ready`/`unavailable`, without exception details or credentials. It performs read-only database probes. Blocking probes run in FastAPI's thread pool. The C09 feature routes, error codes, and typed frontend client are documented in [docs/API.md](docs/API.md).
 
 Next's `/api/*` rewrite forwards to FastAPI. `API_UPSTREAM` in `frontend/.env.local` is server-only and may also be used by future server-rendered API calls. Never put database/model secrets in frontend files or `NEXT_PUBLIC_*`. Only root `.env` contains database credentials; all environment files except examples are ignored. No model credentials are required for C01.
 
@@ -365,7 +365,7 @@ uv build                           # wheel/sdist include citehop.api
 citehop/
 ├── frontend/            Next.js, React, Tailwind scaffold (screens planned)
 ├── citehop/             DB helpers, health probes, SQL runner
-│   ├── api/             FastAPI app (health only; routes planned)
+│   ├── api/             FastAPI routes and Pydantic schemas (docs/API.md)
 │   └── ...              acquire, corpus, chunking, embed, graph; planned: search, rag, evaluate
 ├── docker/              Compose: MariaDB 11.8.9 + Neo4j Community
 ├── sql/                 trusted SQL scripts (schema in C03)
