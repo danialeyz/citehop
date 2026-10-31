@@ -51,7 +51,7 @@ embed: ## chunk + embed every loaded article (resumable; skips current work)
 embed-status: ## chunk coverage and stale rows for the active configuration
 	$(PY) -m citehop.embed status
 lint: ## Python lint
-	.venv/bin/ruff check citehop tests scripts/check_persistence.py
+	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py
 locks: ## explicitly refresh Python lock and pip exports after dependency changes
 	uv lock
 	uv export --no-dev --no-emit-project -o requirements.txt
