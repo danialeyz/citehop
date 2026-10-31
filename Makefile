@@ -1,7 +1,7 @@
 COMPOSE = docker compose -f docker/docker-compose.yml
 PY = python
 
-.PHONY: help venv db-up db-down db-reset db-shell check schema kg-schema test test-db lint inspect
+.PHONY: help venv db-up db-down db-reset db-shell check schema kg-schema test test-db test-graph graph-import graph-status lint inspect
 
 help:            ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
@@ -32,10 +32,19 @@ kg-schema:       ## create the knowledge graph tables and view (safe to rerun)
 	$(PY) -m citehop.apply_sql sql/kg_schema.sql
 
 test:            ## unit tests, no DB
-	pytest -m "not db"
+	pytest -m "not db and not neo4j"
 
 test-db:         ## integration tests, needs make db-up
 	pytest -m db
+
+test-graph:      ## Neo4j tests; needs CITEHOP_TEST_NEO4J_URI/_PASSWORD for a DISPOSABLE instance
+	pytest -m neo4j
+
+graph-import:    ## rebuild the Neo4j graph from MariaDB (explicit, never automatic)
+	$(PY) -m citehop.graph import
+
+graph-status:    ## graph ready/stale/rebuilding/unavailable plus versions
+	$(PY) -m citehop.graph status
 
 lint:            ## ruff
 	ruff check citehop tests scripts

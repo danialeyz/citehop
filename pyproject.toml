@@ -8,11 +8,14 @@ version = "0.1.0"
 description = "Scientific paper search in MariaDB: FULLTEXT + vectors + a knowledge graph"
 requires-python = ">=3.11"
 
-[tool.setuptools]
-packages = ["citehop"]
+[tool.setuptools.packages.find]
+include = ["citehop*"]
 
 [tool.pytest.ini_options]
-markers = ["db: needs a running MariaDB (make db-up)"]
+markers = [
+  "db: needs a running MariaDB (make db-up)",
+  "neo4j: needs a disposable Neo4j in CITEHOP_TEST_NEO4J_URI (clears the CiteHop namespace)",
+]
 addopts = "-q"
 
 [tool.ruff]
