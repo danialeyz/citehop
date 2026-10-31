@@ -166,15 +166,32 @@ Docker runs the databases; the API and frontend run on the host. `make db-down` 
 **One frontend. One Python API. Two databases with distinct responsibilities.**
 
 ```mermaid
-flowchart LR
-    UI[Next.js · React · Tailwind] -->|same-origin /api proxy| API[FastAPI]
-    API -->|passages, metadata, FULLTEXT, vectors| SQL[(MariaDB)]
-    API -->|neighborhoods and bounded paths| GRAPH[(Neo4j)]
-    API -->|explicit answer generation| MODEL[Local Ollama model]
-    API -->|saved evaluation runs| RUNS[JSON artifacts]
-    SQL -. explicit versioned import .-> GRAPH
+flowchart TB
+    subgraph CLIENT["Research workspace · Next.js"]
+        SEARCH[Search]
+        LIB[Library]
+        EXPLORER[Graph explorer]
+        DASH[Dashboard]
+    end
+    subgraph SERVER["Application boundary · FastAPI"]
+        API[Validated HTTP requests]
+        RET[Retrieval + SQL filters]
+        RAG[Evidence resolution + citation validation]
+        NAV[Bounded graph queries]
+        EVAL[Saved-run reader]
+        API --> RET & RAG & NAV & EVAL
+    end
+    SEARCH & LIB & EXPLORER & DASH -->|/api/v1| API
+    RET --> SQL[(MariaDB)]
+    RAG -->|exact passages| SQL
+    RAG -->|explicit generation| MODEL[Local Ollama]
+    NAV --> NEO[(Neo4j)]
+    EVAL --> RUNS[Versioned JSON artifacts]
+    SQL -. manual snapshot import .-> NEO
     classDef app fill:#1a1d18,stroke:#c6f27b,color:#f0f2e9
-    class UI,API,SQL,GRAPH,MODEL,RUNS app
+    classDef store fill:#2b3820,stroke:#c6f27b,color:#f0f2e9
+    class SEARCH,LIB,EXPLORER,DASH,API,RET,RAG,NAV,EVAL,MODEL,RUNS app
+    class SQL,NEO store
 ```
 
 | Layer | Implementation |
@@ -192,6 +209,80 @@ MariaDB is the source of truth. Neo4j is a rebuildable projection, so graph outa
 
 **Filtered vector queries intentionally use exact cosine scans.** On the pinned MariaDB version, applying filters to indexed candidates can miss eligible passages. CiteHop applies SQL filters before the result limit; unfiltered vector retrieval can use the native HNSW index. See the [query plans and retrieval rationale](docs/RETRIEVAL.md).
 
+### From pinned articles to searchable evidence
+
+Preparation happens explicitly. Embedding runs resume completed work; graph import validates a snapshot before marking it ready.
+
+```mermaid
+flowchart LR
+    W["Pinned Wikipedia revisions"] --> C["Fetch + verify hashes"]
+    C --> CACHE["Local revision cache"]
+    CACHE --> LOAD["Transactional corpus load"]
+    LOAD --> SQL[("MariaDB articles + links")]
+    SQL --> CHUNK["Exact text spans<br/>300 tokens / 50 overlap"]
+    CHUNK --> BGE["Pinned BGE model"]
+    BGE --> VEC[("Chunks + VECTOR(768)")]
+    SQL --> IMPORT["Manual graph import"]
+    IMPORT --> VALIDATE["Validate nodes, edges, revisions"]
+    VALIDATE --> NEO[("Versioned Neo4j graph")]
+    classDef step fill:#1a1d18,stroke:#c6f27b,color:#f0f2e9
+    class W,C,CACHE,LOAD,SQL,CHUNK,BGE,VEC,IMPORT,VALIDATE,NEO step
+```
+
+### How a query chooses its retrieval path
+
+Keyword search uses FULLTEXT. Meaning search embeds the query once, then selects an indexed or exact path according to the eligible corpus. All paths return ranked passages with source metadata.
+
+```mermaid
+flowchart TB
+    Q["Question + relational filters"] --> M{Search method}
+    M -->|Keyword| K["FULLTEXT relevance<br/>SQL predicates before LIMIT"]
+    M -->|Meaning| B["BGE query embedding"]
+    B --> F{"Filters or mixed<br/>embedding configurations?"}
+    F -->|No| ANN["Native HNSW vector index"]
+    F -->|Yes| EXACT["Exact cosine over eligible rows<br/>IGNORE INDEX"]
+    K & ANN & EXACT --> R["Rank + limit passages"]
+    R --> S["Join article metadata<br/>Return sources + timings"]
+    classDef step fill:#1a1d18,stroke:#c6f27b,color:#f0f2e9
+    class Q,M,K,B,F,ANN,EXACT,R,S step
+```
+
+### From retrieved passages to a cited answer
+
+The browser sends chunk IDs and the corpus version. The API resolves the actual evidence; it does not trust passage text supplied by the browser.
+
+```mermaid
+sequenceDiagram
+    actor Reader
+    participant UI as Research workspace
+    participant API as FastAPI
+    participant DB as MariaDB
+    participant LLM as Local Ollama
+    Reader->>UI: Find sources
+    UI->>API: POST /api/v1/search
+    API->>DB: Ranked retrieval with SQL filters
+    DB-->>API: Passages + source metadata
+    API-->>UI: Sources + corpus version + timings
+    Reader->>UI: Generate answer
+    UI->>API: POST /api/v1/answer (chunk IDs + version)
+    API->>DB: Check version and resolve exact passages
+    alt Missing chunks or changed corpus
+        API-->>UI: Reject stale or missing evidence
+    else Current evidence
+        API->>API: Select whole passages within context budget
+        alt No usable passage
+            API-->>UI: Insufficient evidence (no model call)
+        else Context available
+            API->>LLM: Question + bounded context + source labels
+            LLM-->>API: Answer or abstention
+            API->>API: Validate citation labels and status
+            API-->>UI: Answer status + sources + citation mapping
+        end
+    end
+    Reader->>UI: Open a citation
+    UI-->>Reader: Exact supporting passage + source link
+```
+
 ### Data model
 
 The installed schema is [`sql/corpus_schema.sql`](sql/corpus_schema.sql):
@@ -205,7 +296,91 @@ The installed schema is [`sql/corpus_schema.sql`](sql/corpus_schema.sql):
 | `embedding_configs` | Reproducible chunking and embedding settings |
 | `corpus_versions` | Loaded snapshot identity and counts |
 
+The relationships below use actual schema names; fields are abbreviated. `embedding_config` is an application-level association, not a declared SQL foreign key, and `corpus_versions` tracks snapshots rather than individual article rows.
+
+```mermaid
+erDiagram
+    articles ||--o{ chunks : "current revision contains"
+    articles ||--o{ article_categories : "belongs to"
+    articles ||--o{ article_links : "source of"
+    articles ||--o{ article_links : "target of"
+    articles {
+        int article_id PK
+        bigint revision_id
+        string title
+        string revision_url
+        text text
+        string text_sha256
+    }
+    chunks {
+        string chunk_id PK
+        int article_id FK
+        bigint revision_id FK
+        int char_start
+        int char_end
+        text text
+        vector embedding "768 dimensions"
+        string embedding_config
+    }
+    article_categories {
+        int article_id PK,FK
+        string category_name PK
+    }
+    article_links {
+        int source_article_id PK,FK
+        int target_article_id PK,FK
+    }
+    embedding_configs {
+        string embedding_config PK
+        string chunk_config
+        json config_json
+    }
+    corpus_versions {
+        int version_id PK
+        string content_sha256
+        string source_corpus_id
+        string subset
+    }
+```
+
 Neo4j projects article nodes, category nodes, `LINKS_TO`, and `IN_CATEGORY` relationships. It does not infer agreement or scholarly citations. See the [data model](docs/DATA_MODEL.md) and [graph documentation](docs/GRAPH.md) for constraints and import behavior.
+
+### Two kinds of graph relationship
+
+This is a structural example, not a claim about particular corpus articles. Path finding follows article links only; shared categories do not create path shortcuts.
+
+```mermaid
+flowchart LR
+    A["Article A"] -->|LINKS_TO| B["Article B"]
+    B -->|LINKS_TO| C["Article C"]
+    A -. IN_CATEGORY .-> K(["Category"])
+    C -. IN_CATEGORY .-> K
+    classDef article fill:#1a1d18,stroke:#c6f27b,color:#f0f2e9
+    classDef category fill:#332d20,stroke:#e9c780,color:#f0f2e9
+    class A,B,C article
+    class K category
+```
+
+### Graph freshness is a state, not an assumption
+
+Imports rebuild in place. An interrupted import stays `rebuilding`; neighborhood and path queries are served only in `ready`. Source-version checks may be cached for up to five seconds.
+
+```mermaid
+stateDiagram-v2
+    [*] --> unavailable: No imported graph
+    unavailable --> rebuilding: Start explicit import
+    rebuilding --> rebuilding: Interrupted or invalid import, retry
+    rebuilding --> ready: Validate and record matching version
+    ready --> stale: Corpus changes or source version cannot be read
+    stale --> ready: Source becomes readable and versions match
+    stale --> rebuilding: Reimport current corpus
+    ready --> unavailable: Neo4j unreachable
+    stale --> unavailable: Neo4j unreachable
+    rebuilding --> unavailable: Neo4j unreachable
+    unavailable --> ready: Service returns, complete matching snapshot
+    unavailable --> stale: Service returns, complete old snapshot
+    unavailable --> rebuilding: Service returns, incomplete import
+```
 
 ## Measure the result
 
@@ -218,6 +393,21 @@ The repository includes a [saved provisional run](results/runs/20261031T162301Z-
 - Filtered exact scans and unfiltered indexed retrieval have separate timing summaries.
 - Query embedding, retrieval, and generation timing are kept separate.
 - Run manifests preserve corpus/configuration identity and measurement conditions.
+
+```mermaid
+flowchart TB
+    Q["Frozen questions + corpus/config identity"] --> DEV["Dev · 10 questions"]
+    Q --> TEST["Test · 20 questions"]
+    DEV --> COMPARE["Keyword vs vector vs exact<br/>Recall + ANN/exact overlap"]
+    TEST --> RETRIEVE["Keyword vs vector<br/>Recall + separate timing groups"]
+    TEST --> ANSWERS["10 generated answers<br/>Sources + citation mappings"]
+    COMPARE & RETRIEVE & ANSWERS --> SAVE["Run manifest + raw retrieval + answers"]
+    SAVE --> DASH["Dashboard: measurements + review status"]
+    SAVE --> REVIEW["Human review of labels and grounding"]
+    REVIEW --> CLAIMS["Qualify conclusions against reviewed evidence"]
+    classDef step fill:#1a1d18,stroke:#c6f27b,color:#f0f2e9
+    class Q,DEV,TEST,COMPARE,RETRIEVE,ANSWERS,SAVE,DASH,REVIEW,CLAIMS step
+```
 
 Run `make eval` against a prepared full corpus, with ML dependencies and Ollama available. This performs generation calls and writes a new run under `results/runs/`. Read the [evaluation protocol and provisional findings](docs/EVALUATION.md) and [human review checklist](eval/README.md) before interpreting or publishing results.
 
