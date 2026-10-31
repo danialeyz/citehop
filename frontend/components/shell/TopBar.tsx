@@ -21,7 +21,7 @@ export function TopBar() {
   return (
     <div className="flex flex-col gap-3 border-b border-line px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
       <p className="font-mono text-xs uppercase tracking-[0.16em] text-muted">
-        Workspace <span aria-hidden>/</span> <span className="text-ink">{sectionLabel(pathname)}</span>
+        <span className="normal-case tracking-normal">Research workspace</span> <span aria-hidden className="mx-3 opacity-40">/</span> <span className="text-ink">{sectionLabel(pathname)}</span>
       </p>
       <ServiceStatus />
     </div>
