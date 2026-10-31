@@ -16,6 +16,7 @@
   --color-accent-tint: #153649;
   --color-amber: #f0c674;
   --color-amber-tint: #3a2f1c;
+  --color-source: #b9a5ff; /* retrieved-source highlight in the graph */
   --color-danger: #fca5a5;
   --color-danger-tint: #3b1a22;
 
@@ -54,3 +55,8 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Graph explorer: a selected path's edges get a moving dash (off under reduced motion, above). */
+@keyframes citehop-dash { to { stroke-dashoffset: -16; } }
+.citehop-path-edge { stroke-dasharray: 8 8; animation: citehop-dash 0.9s linear infinite; }
+.react-flow.dark { --xy-background-color: var(--color-page); }

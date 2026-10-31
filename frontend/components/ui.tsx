@@ -6,6 +6,8 @@ export const buttonPrimary =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] bg-accent px-4 py-2 text-sm font-semibold text-page hover:bg-accent-soft disabled:cursor-not-allowed disabled:opacity-60";
 export const buttonSecondary =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-control)] border border-line-strong px-4 py-2 text-sm font-medium text-ink hover:border-accent hover:text-accent-soft";
+export const buttonSmall =
+  "inline-flex items-center gap-1 rounded-[var(--radius-control)] border border-line-strong px-3 py-1.5 text-sm text-ink hover:border-accent hover:text-accent-soft disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:border-line-strong disabled:hover:text-ink";
 export const inputClass =
   "w-full rounded-[var(--radius-control)] border border-line bg-page px-3 py-2 text-base text-ink placeholder:text-muted/70 focus-visible:border-accent";
 
