@@ -10,6 +10,7 @@ MariaDB is the source of truth for the corpus. Neo4j (C04) is derived from these
 | `article_categories` | (`article_id`, `category_name VARCHAR(255)`) | Category membership as returned by Wikipedia. The canonical category ID is the exact name. |
 | `article_links` | (`source_article_id`, `target_article_id`) | Directed internal link between two corpus articles. |
 | `chunks` | `chunk_id CHAR(64)` (ASCII, deterministic ID assigned by C05) | Passage of one article revision: `chunk_config`, `ordinal`, character span, `token_count`, `text`, `embedding VECTOR(768) NOT NULL`, `embedding_config`. |
+| `embedding_configs` | `embedding_config CHAR(64)` | C05: JSON settings behind each `chunk_config`/`embedding_config` hash. See [EMBEDDINGS.md](EMBEDDINGS.md). |
 | `corpus_versions` | `version_id INT UNSIGNED` (auto-increment) | One row per distinct loaded content: content SHA-256, C02 `corpus_id`, subset, counts, timestamp. The current version is the highest `version_id`. |
 
 Titles and category names use `utf8mb4_bin`. The server default collation is accent- and case-insensitive, so it would merge distinct Wikipedia names (for example `Machine Learning` and `Machine learning`). Text columns use the default collation so FULLTEXT search ignores case.
@@ -40,15 +41,15 @@ One transaction reconciles the database to the snapshot:
 3. Give renamed articles a temporary title, update changed articles by ID, and insert new ones, in batches of 25 because article text is large. A title can therefore move between page IDs without overwriting another row. Then insert new categories and links in batches of 500.
 4. Append a `corpus_versions` row if the content hash differs from the latest row.
 
-Loading the smoke snapshot after the full one removes the other 90 articles. An identical rerun writes nothing, and the version stays the same. Any error rolls back the whole load. Embedding configuration changes are handled by C05 through `chunk_config` and `embedding_config`, not by this version table.
+Loading the smoke snapshot after the full one removes the other 90 articles. An identical rerun writes nothing, and the version stays the same. Any error rolls back the whole load. Embedding configuration changes are handled by C05 through `chunk_config` and `embedding_config`, not by this version table ([EMBEDDINGS.md](EMBEDDINGS.md)).
 
 ## Measured counts (pinned C02 snapshot `deb00bb7…`, MariaDB 11.8.9, 2026-10-31)
 
 | Subset | Version | Articles | Category rows | Distinct categories | Links | Orphan link titles dropped | Chunks |
 |---|---|---|---|---|---|---|---|
-| smoke | 1 | 10 | 169 | 119 | 39 | 1,680 | 0 (C05) |
-| full | 2 | 100 | 1,101 | 456 | 917 | 7,587 | 0 (C05) |
+| smoke | 1 | 10 | 169 | 119 | 39 | 1,680 | 269 |
+| full | 2 | 100 | 1,101 | 456 | 917 | 7,587 | 1,776 |
 
-Each subset was loaded twice. The second run had identical counts, wrote nothing, and kept the version. Article text totals 2,175,082 characters (3,630–70,128 per article). Each load took about 0.3 s wall time on the development Mac.
+Chunk counts are for the 300/50 configuration from C05. Each subset was loaded twice. The second run had identical counts, wrote nothing, and kept the version. Article text totals 2,175,082 characters (3,630–70,128 per article). Each load took about 0.3 s wall time on the development Mac.
 
 Known limitation: the stored categories include Wikipedia's hidden maintenance categories (for example `Articles with short description` on all 100 articles). The raw parse output marks them `hidden`, but the C02 record format drops that flag. They should not become graph hubs or filter options until C02 keeps the flag.

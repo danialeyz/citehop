@@ -12,6 +12,11 @@ dependencies = [
   "uvicorn==0.54.0", "neo4j==6.4.1", "sqlparse==0.6.0",
 ]
 
+[project.optional-dependencies]
+# C05 chunking/embedding (BAAI/bge-base-en-v1.5). CPU wheels; weights download to the
+# Hugging Face cache outside the repository.
+ml = ["torch==2.15.0", "transformers==5.22.1"]
+
 [dependency-groups]
 dev = ["pytest==9.2.0", "ruff==0.17.3", "httpx==0.28.1", "build==1.6.1"]
 
@@ -22,6 +27,7 @@ include = ["citehop*"]
 markers = [
   "db: requires local databases",
   "neo4j: needs a disposable Neo4j in CITEHOP_TEST_NEO4J_URI (clears the CiteHop namespace)",
+  "model: needs the ml extra and the pinned BGE model (downloads ~440 MB once)",
 ]
 addopts = "-q"
 
