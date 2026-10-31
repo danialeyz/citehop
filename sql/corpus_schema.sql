@@ -79,3 +79,12 @@ CREATE TABLE IF NOT EXISTS chunks (
     REFERENCES articles (article_id, revision_id) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT chk_chunks_span CHECK (char_end > char_start)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- C05: full settings behind each embedding_config hash (model/tokenizer revision, library
+-- versions, chunk size/overlap, input formatting, pooling, normalization). Rows are immutable.
+CREATE TABLE IF NOT EXISTS embedding_configs (
+  embedding_config CHAR(64) CHARACTER SET ascii NOT NULL PRIMARY KEY,
+  chunk_config     CHAR(64) CHARACTER SET ascii NOT NULL,
+  config_json      JSON NOT NULL,
+  created_at       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

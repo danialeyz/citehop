@@ -194,7 +194,7 @@ flowchart LR
     class SQL,VEC,GRAPH data
 ```
 
-Chunk size and overlap are initial project choices, not measured optima. Ingestion will record tokenizer/model revisions, input formatting, normalization, hashes, and actual token lengths. Changed source text or configuration invalidates stale vectors.
+Chunk size and overlap are initial project choices, not measured optima. Ingestion records tokenizer/model revisions, input formatting, normalization, hashes, and actual token lengths; changed source text or configuration invalidates stale vectors. Details, commands, and measured counts: [docs/EMBEDDINGS.md](docs/EMBEDDINGS.md).
 
 ### Retrieve first; generate deliberately
 
@@ -311,7 +311,7 @@ cd citehop
 - Next.js **16.4.3**, React **19.3.1**, TypeScript **5.9.3**, Tailwind **4.3.3**.
 - FastAPI **0.162.0**, Uvicorn **0.54.0**, MariaDB Python connector **1.1.14**, Neo4j driver **6.4.1**.
 - Docker with Compose; MariaDB **11.8.9**, Neo4j Community **5.26.32**; native Connector/C (tested **3.4.11**).
-- `frontend/package-lock.json` and `uv.lock` lock transitive dependencies. `requirements*.txt` are hashed pip exports; `pyproject.toml` is the Python dependency source. ML dependencies are deferred to C05.
+- `frontend/package-lock.json` and `uv.lock` lock transitive dependencies. `requirements*.txt` are hashed pip exports; `pyproject.toml` is the Python dependency source. ML dependencies (torch 2.15.0, transformers 5.22.1) are the optional `ml` extra: `make venv-ml`; `requirements-ml.txt` is its export.
 
 Versions were checked against official [Next installation](https://nextjs.org/docs/app/getting-started/installation) (Node >=20.9), [Tailwind Next integration](https://tailwindcss.com/docs/installation/framework-guides/nextjs), [FastAPI releases](https://fastapi.tiangolo.com/release-notes/), [MariaDB 11.8.9 release notes](https://mariadb.com/docs/release-notes/community-server/11.8/11.8.9), [Neo4j releases](https://neo4j.com/release-notes/) and [driver compatibility](https://neo4j.com/docs/python-manual/current/install/) (6.x supports Python >=3.10 and Neo4j 5.x). Exact package versions were confirmed through npm/PyPI. See [Node release policy](https://nodejs.org/en/about/previous-releases).
 
@@ -348,6 +348,7 @@ make help
 make test lint frontend-check
 make check                         # live connections + cosine vector query
 make sql FILE=sql/smoke.sql         # temporary VECTOR(3) table, no corpus data
+make venv-ml embed-smoke embed-status  # C05 chunks + BGE vectors (docs/EMBEDDINGS.md)
 make db-shell
 .venv/bin/python scripts/check_persistence.py  # unique test row/node, restart, verify, cleanup
 make db-restart                     # preserves named volumes
@@ -365,7 +366,7 @@ citehop/
 ├── frontend/            Next.js, React, Tailwind scaffold (screens planned)
 ├── citehop/             DB helpers, health probes, SQL runner
 │   ├── api/             FastAPI app (health only; routes planned)
-│   └── ...              planned: ingest, embed, search, rag, graph, evaluate
+│   └── ...              acquire, corpus, chunking, embed, graph; planned: search, rag, evaluate
 ├── docker/              Compose: MariaDB 11.8.9 + Neo4j Community
 ├── sql/                 trusted SQL scripts (schema in C03)
 ├── scripts/             local checks; acquisition tools planned
