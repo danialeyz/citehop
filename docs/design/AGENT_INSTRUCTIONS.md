@@ -1,5 +1,7 @@
 # Agent instructions: building the CiteHop UI
 
+> **Current scope:** The user has selected Next.js/React + Tailwind CSS, FastAPI, MariaDB, and Neo4j. Read [COURSE_UI.md](COURSE_UI.md), [COURSE_TASKS.md](../COURSE_TASKS.md), and [ARCHITECTURE.md](../ARCHITECTURE.md) for current decisions. The historical paper/Streamlit instructions below are superseded where they conflict, including old card IDs, schema, theme/stack questions, and branch workflow. Use the current 14-card plan and prompts. Existing mockups remain visual references; their fictional data must not enter the product. Do not rename the current branch.
+
 For Claude Code and any other coding agent that touches the demo app (`app/`, card #28) or the graph explorer (card #28.5).
 Read this file in full before writing UI code. The project-wide rules in `CLAUDE.md` still apply. This file adds to them and never overrides them.
 
