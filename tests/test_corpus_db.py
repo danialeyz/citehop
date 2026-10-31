@@ -10,7 +10,8 @@ from corpus_fixtures import article, corpus, revise, snapshot_of
 pytestmark = pytest.mark.db
 errors = pytest.importorskip("mariadb")
 SCHEMA = Path(__file__).resolve().parents[1] / "sql" / "corpus_schema.sql"
-TABLES = ("chunks", "article_links", "article_categories", "articles", "corpus_versions")
+TABLES = ("chunks", "article_links", "article_categories", "articles", "corpus_versions",
+          "embedding_configs")
 
 
 @pytest.fixture
