@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Icon } from "@/components/icons";
 import { usePathname } from "next/navigation";
 
 import { NAV_ITEMS, isActive } from "./nav";
@@ -8,7 +9,7 @@ import { NAV_ITEMS, isActive } from "./nav";
 export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   return (
-    <ul className="flex flex-col gap-1">
+    <ul className="flex flex-col gap-2">
       {NAV_ITEMS.map((item) => {
         const active = isActive(pathname, item.href);
         return (
@@ -19,12 +20,13 @@ export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
               aria-current={active ? "page" : undefined}
               className={`relative flex items-center gap-3 rounded-[var(--radius-control)] px-3 py-2.5 text-[15px] transition-colors ${
                 active
-                  ? "bg-accent-tint font-medium text-accent-soft before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-full before:bg-accent"
+                  ? "bg-accent-tint font-medium text-accent-soft"
                   : "text-muted hover:bg-panel hover:text-ink"
               }`}
             >
-              <span aria-hidden className="w-5 text-center font-mono">{item.glyph}</span>
+              <Icon name={item.icon} />
               {item.label}
+              {active && <span aria-hidden className="ml-auto size-1.5 rounded-full bg-accent" />}
             </Link>
           </li>
         );

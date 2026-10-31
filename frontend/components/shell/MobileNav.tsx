@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { BrandMark } from "@/components/icons";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -12,8 +12,8 @@ export function MobileNav() {
     <div className="border-b border-line bg-rail md:hidden">
       <div className="flex h-14 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2 rounded-md" aria-label="CiteHop home">
-          <Image src="/logo-mark.svg" alt="" width={28} height={28} />
-          <span className="text-lg font-semibold tracking-[-0.03em]">CiteHop</span>
+          <BrandMark />
+          <span className="text-lg font-semibold tracking-[-0.03em]">citehop.</span>
         </Link>
         <button
           type="button"

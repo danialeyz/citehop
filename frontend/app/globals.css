@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
-/* CiteHop dark tokens (docs/design/DESIGN_SYSTEM.md, dark theme). Use these, not raw hex, in components. */
+/* Shared charcoal and citron theme for all research surfaces. */
 @theme {
-  --color-page: #080f1c;
-  --color-rail: #0c1524;
-  --color-panel: #0f1f31;
-  --color-card: #111e32;
-  --color-strip: #0c1828;
-  --color-line: #243b54;
-  --color-line-strong: #34506e;
-  --color-ink: #f1f5f9;
-  --color-muted: #8fa3b8;
-  --color-accent: #77e4f0;
-  --color-accent-soft: #9aeff6;
-  --color-accent-tint: #153649;
-  --color-amber: #f0c674;
-  --color-amber-tint: #3a2f1c;
+  --color-page: #101210;
+  --color-rail: #141613;
+  --color-panel: #1a1d18;
+  --color-card: #1b1e19;
+  --color-strip: #171a15;
+  --color-line: #2d3329;
+  --color-line-strong: #454e3d;
+  --color-ink: #f0f2e9;
+  --color-muted: #9da693;
+  --color-accent: #c6f27b;
+  --color-accent-soft: #dbffa8;
+  --color-accent-tint: #2b3820;
+  --color-amber: #e9c780;
+  --color-amber-tint: #332d20;
   --color-source: #b9a5ff; /* retrieved-source highlight in the graph */
   --color-danger: #fca5a5;
   --color-danger-tint: #3b1a22;
@@ -60,3 +60,43 @@ body {
 @keyframes citehop-dash { to { stroke-dashoffset: -16; } }
 .citehop-path-edge { stroke-dasharray: 8 8; animation: citehop-dash 0.9s linear infinite; }
 .react-flow.dark { --xy-background-color: var(--color-page); }
+
+::selection { background: var(--color-accent); color: var(--color-page); }
+@layer base {
+  button, a, input, summary { -webkit-tap-highlight-color: transparent; }
+  button:not(:disabled), summary { cursor: pointer; }
+  button, a, input { transition: background-color 180ms, border-color 180ms, color 180ms, box-shadow 180ms; }
+}
+body { background-image: radial-gradient(ellipse at 85% 5%, #c6f27b05, transparent 50%); }
+.brand-mark { display: grid; place-items: center; width: 35px; height: 35px; flex-shrink: 0; border-radius: 11px; color: var(--color-page); background: var(--color-accent); transform: rotate(-6deg); }
+.research-intro { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 286px; margin-bottom: 30px; }
+.research-title { font-size: clamp(40px, 4.5vw, 68px); line-height: 1.06; font-weight: 500; letter-spacing: -.065em; }
+.research-title > span { color: var(--color-accent); }
+.research-intro-compact { min-height: auto; margin-bottom: 28px; }
+.research-intro-compact .research-title { font-size: 36px; }
+.research-art { position: relative; width: 360px; height: 260px; flex-shrink: 0; color: var(--color-accent); background: radial-gradient(ellipse, #c6f27b0c, transparent 65%); }
+.orbit { position: absolute; left: 50%; top: 50%; border: 1px solid #c6f27b10; border-radius: 50%; transform: translate(-50%, -50%); }
+.orbit-outer { width: 260px; height: 260px; }
+.orbit-inner { width: 210px; height: 210px; }
+.art-connections { position: absolute; inset: 0; width: 100%; height: 100%; color: #c6f27b55; }
+.art-core { position: absolute; left: 148px; top: 98px; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px; background: var(--color-accent); color: var(--color-page); box-shadow: 0 0 0 9px #c6f27b08, 0 0 45px #c6f27b12; transform: rotate(-8deg); }
+.art-node { position: absolute; display: flex; align-items: center; gap: 9px; padding: 11px 14px; border: 1px solid var(--color-line-strong); border-radius: 11px; background: var(--color-panel); font-size: 11px; box-shadow: 0 8px 20px #0003; }
+.art-node span { color: var(--color-ink); }
+.art-question { left: 30px; top: 48px; transform: rotate(-9deg); }
+.art-source { right: 0; top: 35px; transform: rotate(7deg); }
+.art-answer { left: 27px; bottom: 35px; transform: rotate(-5deg); }
+.art-explore { right: 10px; bottom: 30px; transform: rotate(8deg); }
+.art-caption { position: absolute; bottom: -12px; width: 100%; text-align: center; font-family: var(--font-mono); font-size: 8px; letter-spacing: .23em; color: var(--color-muted); }
+.search-composer { position: relative; border: 1px solid var(--color-line-strong); border-radius: 20px; padding: 24px; background: linear-gradient(125deg, #242a1e, var(--color-panel) 65%); box-shadow: 0 12px 40px #0002, inset 0 1px #f0f2e908; }
+.search-composer:focus-within { border-color: #c6f27b80; box-shadow: 0 12px 40px #0002, 0 0 0 3px #c6f27b06; }
+.sample-card { display: flex; align-items: flex-start; flex-direction: column; gap: 14px; width: 100%; height: 100%; padding: 20px; border: 1px solid var(--color-line); border-radius: 14px; background: var(--color-strip); text-align: left; font-size: 13px; line-height: 1.65; }
+.sample-card:hover { background: var(--color-panel); border-color: var(--color-line-strong); box-shadow: 0 5px 20px #0002; }
+.sample-card .rounded-\[var\(--radius-chip\)\] { font-size: 10px; }
+.explore-section { margin-top: 38px; }
+.explore-card { display: flex; align-items: center; gap: 15px; padding: 19px; border: 1px solid var(--color-line); border-radius: 14px; }
+.explore-card:hover { border-color: var(--color-line-strong); background: var(--color-strip); }
+.explore-icon { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; background: var(--color-panel); color: var(--color-accent); }
+@media (min-width: 1280px) { .research-intro { margin-bottom: 38px; } }
+@media (max-width: 1150px) { .research-art { transform: scale(.8); transform-origin: right center; width: 300px; margin-left: -35px; } }
+@media (max-width: 1023px) { .research-art { display: none; } .research-intro { min-height: 250px; } .research-intro-compact { min-height: auto; } }
+@media (max-width: 639px) { .research-intro { min-height: auto; padding: 14px 0 4px; margin-bottom: 28px; } .research-title { font-size: 43px; } .research-intro-compact .research-title { font-size: 32px; } .search-composer { padding: 18px; border-radius: 16px; } .sample-card { padding: 18px; } .explore-card { padding: 16px; } }
