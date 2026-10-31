@@ -1,14 +1,13 @@
-# app/: the CiteHop demo UI (cards #28, #28.5)
+# Legacy app directory
 
-Before writing any code here, read `docs/design/AGENT_INSTRUCTIONS.md` in full.
-It links the screen specs, the design system and the clickable prototype.
+The user selected Next.js/React + Tailwind CSS, FastAPI, MariaDB, and Neo4j. New frontend work belongs in `frontend/`; the HTTP API belongs in `citehop/api/`. Do not implement a Streamlit application here.
 
-The short version:
-- The design in `docs/design/` uses fictional fixtures. Never copy its titles, authors, graph or numbers into the app.
-- No number without a run behind it. Show `—` or "Not computed".
-- Search goes through `citehop.search`. No vector or FULLTEXT SQL in this folder.
-- Every result shows one chip per `found_via` value. Graph-only results are highlighted.
-- Graph queries have a depth limit and a node cap.
-- Build loading, empty, error and missing states with every screen.
-- Escape all database text before putting it in HTML.
-- Open decisions (theme, stack, logo, and more) are in section 5 of the instructions. Ask, do not guess.
+Read `docs/COURSE_TASKS.md` for current task IDs, `docs/ARCHITECTURE.md` for ownership/contracts, and `docs/design/COURSE_UI.md` before UI work. Earlier paper-search mockups are visual references only.
+
+- All browser data access goes through FastAPI; no database credentials, SQL, or Cypher in the frontend.
+- MariaDB owns documents, vectors, and relational search. Neo4j powers the derived graph explorer.
+- Preserve exact source passages and real citation mappings. Never use fictional prototype content as product data.
+- Graph limits apply in the backend and visible canvas. Show stale/truncated/unavailable states honestly.
+- No metric without a saved run or live count. Include loading, empty, error, and missing states.
+- The chosen dark navy/cyan direction and existing logo are settled in COURSE_UI.md; do not reopen old stack/theme decisions.
+- Preserve the current branch and unrelated work. Save review screenshots under `.context/`.
