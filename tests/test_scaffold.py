@@ -20,12 +20,6 @@ def test_health_redacts_failure_and_keeps_api_alive(monkeypatch):
     assert "secret" not in response.text
 
 
-def test_no_feature_endpoints():
-    client = TestClient(app)
-    assert client.get("/api/v1/articles").status_code == 404
-    assert set(client.get("/openapi.json").json()["paths"]) == {"/api/v1/health"}
-
-
 def test_sql_handles_quoted_semicolons():
     assert statements("SELECT 'a;b'; SELECT 1;") == ["SELECT 'a;b'", "SELECT 1"]
     assert statements("-- head\nSELECT 1;\n-- note\n/* end */\n") == ["-- head\nSELECT 1"]

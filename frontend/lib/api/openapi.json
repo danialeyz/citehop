@@ -1,0 +1,2943 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CiteHop",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/search": {
+      "post": {
+        "summary": "Search",
+        "operationId": "search_api_v1_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/answer": {
+      "post": {
+        "summary": "Answer",
+        "description": "Answer from stored passages only. Status `provider_error` keeps the resolved sources.",
+        "operationId": "answer_api_v1_answer_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/articles": {
+      "get": {
+        "summary": "Articles",
+        "operationId": "articles_api_v1_articles_get",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Title"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 20,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticlePage"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/articles/{article_id}": {
+      "get": {
+        "summary": "Article",
+        "operationId": "article_api_v1_articles__article_id__get",
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 4294967295,
+              "minimum": 1,
+              "title": "Article Id"
+            }
+          },
+          {
+            "name": "passage_page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1,
+              "default": 1,
+              "title": "Passage Page"
+            }
+          },
+          {
+            "name": "passage_page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "default": 20,
+              "title": "Passage Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/graph/status": {
+      "get": {
+        "summary": "Graph Status",
+        "description": "Always HTTP 200; `status` says whether traversal is available.",
+        "operationId": "graph_status_api_v1_graph_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphStatusOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/graph/neighborhood": {
+      "get": {
+        "summary": "Graph Neighborhood",
+        "operationId": "graph_neighborhood_api_v1_graph_neighborhood_get",
+        "parameters": [
+          {
+            "name": "article_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 4294967295,
+              "minimum": 1,
+              "title": "Article Id"
+            }
+          },
+          {
+            "name": "hops",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 2,
+              "minimum": 1,
+              "default": 1,
+              "title": "Hops"
+            }
+          },
+          {
+            "name": "max_nodes",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Max Nodes"
+            }
+          },
+          {
+            "name": "max_edges",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 100,
+              "title": "Max Edges"
+            }
+          },
+          {
+            "name": "rel_types",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "LINKS_TO and/or IN_CATEGORY; default both",
+              "title": "Rel Types"
+            },
+            "description": "LINKS_TO and/or IN_CATEGORY; default both"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Neighborhood"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/api/v1/graph/path": {
+      "get": {
+        "summary": "Graph Path",
+        "operationId": "graph_path_api_v1_graph_path_get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 4294967295,
+              "minimum": 1,
+              "title": "Source Id"
+            }
+          },
+          {
+            "name": "target_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "maximum": 4294967295,
+              "minimum": 1,
+              "title": "Target Id"
+            }
+          },
+          {
+            "name": "directed",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "description": "false = labeled undirected mode",
+              "default": true,
+              "title": "Directed"
+            },
+            "description": "false = labeled undirected mode"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphPath"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Gateway Timeout"
+          }
+        }
+      }
+    },
+    "/api/v1/stats": {
+      "get": {
+        "summary": "Stats",
+        "operationId": "stats_api_v1_stats_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stats"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs": {
+      "get": {
+        "summary": "List Runs",
+        "operationId": "list_runs_api_v1_runs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}": {
+      "get": {
+        "summary": "Get Run",
+        "description": "Manifest, flat per-question rows (the CSV columns), and answers prepared for review.",
+        "operationId": "get_run_api_v1_runs__run_id__get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 100,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/runs/{run_id}/export": {
+      "get": {
+        "summary": "Export Run",
+        "operationId": "export_run_api_v1_runs__run_id__export_get",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 100,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Columns: question_id, split, repetition, method, answerable, filtered, recall_at_5, articles_found, exhausted, cutoff_reached, top_article_ids, embedding_ms, retrieval_ms, answer_status, generation_ms, review_status",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnswerRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "chunk_ids": {
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$",
+              "description": "64-char hex chunk ID"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Chunk Ids",
+            "description": "Chunk IDs from a search response, in rank order; the server reads the text"
+          },
+          "corpus_version": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Corpus Version",
+            "description": "corpus_version of the search response the chunk IDs came from"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question",
+          "chunk_ids",
+          "corpus_version"
+        ],
+        "title": "AnswerRequest"
+      },
+      "AnswerResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "answered",
+              "insufficient_evidence",
+              "invalid_citations",
+              "provider_error"
+            ],
+            "title": "Status"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text",
+            "description": "Set only when status is answered; plain text"
+          },
+          "citations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Citations",
+            "description": "Labels cited by the answer, in first-use order"
+          },
+          "citation_map": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Citation Map",
+            "description": "Cited label -> chunk_id"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/AnswerSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "omitted": {
+            "items": {
+              "$ref": "#/components/schemas/OmittedPassage"
+            },
+            "type": "array",
+            "title": "Omitted"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "prompt_version": {
+            "type": "string",
+            "title": "Prompt Version"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/AnswerUsage"
+          },
+          "generation_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generation Ms"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated"
+          },
+          "corpus_version": {
+            "type": "string",
+            "title": "Corpus Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "text",
+          "citations",
+          "citation_map",
+          "sources",
+          "reason",
+          "omitted",
+          "model",
+          "prompt_version",
+          "usage",
+          "generation_ms",
+          "truncated",
+          "corpus_version"
+        ],
+        "title": "AnswerResponse"
+      },
+      "AnswerSource": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "chunk_id": {
+            "type": "string",
+            "title": "Chunk Id"
+          },
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "passage": {
+            "type": "string",
+            "title": "Passage"
+          },
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "chunk_id",
+          "article_id",
+          "title",
+          "source_url",
+          "passage",
+          "rank"
+        ],
+        "title": "AnswerSource"
+      },
+      "AnswerUsage": {
+        "properties": {
+          "context_tokens_estimated": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Context Tokens Estimated"
+          },
+          "token_estimator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Token Estimator"
+          },
+          "prompt_tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt Tokens"
+          },
+          "output_tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Tokens"
+          },
+          "finish_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finish Reason"
+          }
+        },
+        "type": "object",
+        "title": "AnswerUsage"
+      },
+      "ArticleDetail": {
+        "properties": {
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "revision_id": {
+            "type": "integer",
+            "title": "Revision Id"
+          },
+          "revision_timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revision Timestamp"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "revision_url": {
+            "type": "string",
+            "title": "Revision Url"
+          },
+          "length_chars": {
+            "type": "integer",
+            "title": "Length Chars"
+          },
+          "is_smoke": {
+            "type": "boolean",
+            "title": "Is Smoke"
+          },
+          "license_url": {
+            "type": "string",
+            "title": "License Url"
+          },
+          "attribution": {
+            "type": "string",
+            "title": "Attribution"
+          },
+          "categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Categories"
+          },
+          "links": {
+            "$ref": "#/components/schemas/LinkCounts"
+          },
+          "passages": {
+            "$ref": "#/components/schemas/PassagePage"
+          },
+          "corpus_version": {
+            "type": "string",
+            "title": "Corpus Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "article_id",
+          "title",
+          "revision_id",
+          "revision_timestamp",
+          "source_url",
+          "revision_url",
+          "length_chars",
+          "is_smoke",
+          "license_url",
+          "attribution",
+          "categories",
+          "links",
+          "passages",
+          "corpus_version"
+        ],
+        "title": "ArticleDetail"
+      },
+      "ArticleNode": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "const": "article",
+            "title": "Kind"
+          },
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "revision_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revision Id"
+          },
+          "depth": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Depth"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "article_id",
+          "title",
+          "source_url"
+        ],
+        "title": "ArticleNode"
+      },
+      "ArticlePage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ArticleSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          },
+          "corpus_version": {
+            "type": "string",
+            "title": "Corpus Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "corpus_version"
+        ],
+        "title": "ArticlePage"
+      },
+      "ArticleSummary": {
+        "properties": {
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "length_chars": {
+            "type": "integer",
+            "title": "Length Chars"
+          },
+          "chunk_count": {
+            "type": "integer",
+            "title": "Chunk Count"
+          },
+          "categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Categories"
+          }
+        },
+        "type": "object",
+        "required": [
+          "article_id",
+          "title",
+          "source_url",
+          "length_chars",
+          "chunk_count",
+          "categories"
+        ],
+        "title": "ArticleSummary"
+      },
+      "CategoryNode": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "const": "category",
+            "title": "Kind"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "depth": {
+            "type": "integer",
+            "title": "Depth"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "name",
+          "depth"
+        ],
+        "title": "CategoryNode"
+      },
+      "CorpusStats": {
+        "properties": {
+          "corpus_version": {
+            "type": "string",
+            "title": "Corpus Version"
+          },
+          "articles": {
+            "type": "integer",
+            "title": "Articles"
+          },
+          "smoke_articles": {
+            "type": "integer",
+            "title": "Smoke Articles"
+          },
+          "distinct_categories": {
+            "type": "integer",
+            "title": "Distinct Categories"
+          },
+          "category_memberships": {
+            "type": "integer",
+            "title": "Category Memberships"
+          },
+          "article_links": {
+            "type": "integer",
+            "title": "Article Links"
+          },
+          "chunks": {
+            "type": "integer",
+            "title": "Chunks"
+          },
+          "embedding_configs": {
+            "items": {
+              "$ref": "#/components/schemas/EmbeddingCoverage"
+            },
+            "type": "array",
+            "title": "Embedding Configs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "corpus_version",
+          "articles",
+          "smoke_articles",
+          "distinct_categories",
+          "category_memberships",
+          "article_links",
+          "chunks",
+          "embedding_configs"
+        ],
+        "title": "CorpusStats"
+      },
+      "EmbeddingCoverage": {
+        "properties": {
+          "chunk_config": {
+            "type": "string",
+            "title": "Chunk Config"
+          },
+          "embedding_config": {
+            "type": "string",
+            "title": "Embedding Config"
+          },
+          "chunks": {
+            "type": "integer",
+            "title": "Chunks"
+          },
+          "articles_covered": {
+            "type": "integer",
+            "title": "Articles Covered"
+          },
+          "token_count_min": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Token Count Min"
+          },
+          "token_count_max": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Token Count Max"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chunk_config",
+          "embedding_config",
+          "chunks",
+          "articles_covered",
+          "token_count_min",
+          "token_count_max"
+        ],
+        "title": "EmbeddingCoverage"
+      },
+      "ErrorBody": {
+        "properties": {
+          "error": {
+            "type": "string",
+            "title": "Error",
+            "description": "Stable machine-readable code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Safe, human-readable explanation"
+          },
+          "current_corpus_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Corpus Version"
+          },
+          "missing_chunk_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Missing Chunk Ids"
+          },
+          "graph": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GraphStatusOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "error",
+          "message"
+        ],
+        "title": "ErrorBody",
+        "description": "Every non-2xx response except request-schema errors (FastAPI's 422 detail list)."
+      },
+      "GraphCounts": {
+        "properties": {
+          "articles": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Articles"
+          },
+          "categories": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Categories"
+          },
+          "links": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Links"
+          },
+          "memberships": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memberships"
+          }
+        },
+        "type": "object",
+        "title": "GraphCounts"
+      },
+      "GraphEdge": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LINKS_TO",
+              "IN_CATEGORY"
+            ],
+            "title": "Type"
+          },
+          "target": {
+            "type": "string",
+            "title": "Target"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "type",
+          "target"
+        ],
+        "title": "GraphEdge"
+      },
+      "GraphLimits": {
+        "properties": {
+          "max_nodes": {
+            "type": "integer",
+            "title": "Max Nodes"
+          },
+          "max_edges": {
+            "type": "integer",
+            "title": "Max Edges"
+          }
+        },
+        "type": "object",
+        "required": [
+          "max_nodes",
+          "max_edges"
+        ],
+        "title": "GraphLimits"
+      },
+      "GraphPath": {
+        "properties": {
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "target": {
+            "type": "string",
+            "title": "Target"
+          },
+          "directed": {
+            "type": "boolean",
+            "title": "Directed"
+          },
+          "max_links": {
+            "type": "integer",
+            "title": "Max Links"
+          },
+          "graph_version": {
+            "type": "string",
+            "title": "Graph Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "stale",
+              "rebuilding",
+              "unavailable"
+            ],
+            "title": "Status"
+          },
+          "found": {
+            "type": "boolean",
+            "title": "Found"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message",
+            "description": "e.g. \"No path within 3 links\""
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/ArticleNode"
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/GraphEdge"
+            },
+            "type": "array",
+            "title": "Edges"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "target",
+          "directed",
+          "max_links",
+          "graph_version",
+          "status",
+          "found",
+          "nodes",
+          "edges"
+        ],
+        "title": "GraphPath"
+      },
+      "GraphStatusOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "stale",
+              "rebuilding",
+              "unavailable"
+            ],
+            "title": "Status"
+          },
+          "source_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Version",
+            "description": "Current MariaDB corpus version"
+          },
+          "imported_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imported Version",
+            "description": "Corpus version imported into Neo4j"
+          },
+          "imported_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Imported At"
+          },
+          "counts": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GraphCounts"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "source_version",
+          "imported_version",
+          "imported_at",
+          "counts",
+          "detail"
+        ],
+        "title": "GraphStatusOut"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          },
+          "services": {
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "ready",
+                "unavailable"
+              ]
+            },
+            "type": "object",
+            "title": "Services"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "services"
+        ],
+        "title": "Health"
+      },
+      "InvalidRun": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "error": {
+            "type": "string",
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "error"
+        ],
+        "title": "InvalidRun"
+      },
+      "LinkCounts": {
+        "properties": {
+          "outgoing": {
+            "type": "integer",
+            "title": "Outgoing"
+          },
+          "incoming": {
+            "type": "integer",
+            "title": "Incoming"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outgoing",
+          "incoming"
+        ],
+        "title": "LinkCounts"
+      },
+      "Neighborhood": {
+        "properties": {
+          "seed": {
+            "type": "string",
+            "title": "Seed"
+          },
+          "graph_version": {
+            "type": "string",
+            "title": "Graph Version"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ready",
+              "stale",
+              "rebuilding",
+              "unavailable"
+            ],
+            "title": "Status"
+          },
+          "hops": {
+            "type": "integer",
+            "title": "Hops"
+          },
+          "rel_types": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "LINKS_TO",
+                "IN_CATEGORY"
+              ]
+            },
+            "type": "array",
+            "title": "Rel Types"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/GraphLimits"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "description": "True when node or edge caps cut the result"
+          },
+          "nodes": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/ArticleNode"
+                },
+                {
+                  "$ref": "#/components/schemas/CategoryNode"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "kind",
+                "mapping": {
+                  "article": "#/components/schemas/ArticleNode",
+                  "category": "#/components/schemas/CategoryNode"
+                }
+              }
+            },
+            "type": "array",
+            "title": "Nodes"
+          },
+          "edges": {
+            "items": {
+              "$ref": "#/components/schemas/GraphEdge"
+            },
+            "type": "array",
+            "title": "Edges"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seed",
+          "graph_version",
+          "status",
+          "hops",
+          "rel_types",
+          "limits",
+          "truncated",
+          "nodes",
+          "edges"
+        ],
+        "title": "Neighborhood"
+      },
+      "OmittedPassage": {
+        "properties": {
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "article_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Article Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "tokens": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tokens"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chunk_id",
+          "article_id",
+          "reason"
+        ],
+        "title": "OmittedPassage"
+      },
+      "Passage": {
+        "properties": {
+          "chunk_id": {
+            "type": "string",
+            "title": "Chunk Id"
+          },
+          "ordinal": {
+            "type": "integer",
+            "title": "Ordinal"
+          },
+          "char_start": {
+            "type": "integer",
+            "title": "Char Start"
+          },
+          "char_end": {
+            "type": "integer",
+            "title": "Char End"
+          },
+          "token_count": {
+            "type": "integer",
+            "title": "Token Count"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chunk_id",
+          "ordinal",
+          "char_start",
+          "char_end",
+          "token_count",
+          "text"
+        ],
+        "title": "Passage"
+      },
+      "PassagePage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Passage"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "page_size": {
+            "type": "integer",
+            "title": "Page Size"
+          },
+          "chunk_config": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Config"
+          },
+          "embedding_config": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Config"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "chunk_config",
+          "embedding_config"
+        ],
+        "title": "PassagePage"
+      },
+      "RunAnswer": {
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "title": "Question Id"
+          },
+          "split": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "answerable": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answerable"
+          },
+          "expected_answer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Answer"
+          },
+          "retrieval": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retrieval"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "citations": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Citations"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RunAnswerSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "prompt_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prompt Version"
+          },
+          "generation_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generation Ms"
+          },
+          "truncated": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Truncated"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunAnswerReview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "question_id",
+          "split",
+          "question",
+          "answerable",
+          "expected_answer",
+          "retrieval",
+          "status",
+          "text",
+          "citations",
+          "sources",
+          "reason",
+          "model",
+          "prompt_version",
+          "generation_ms",
+          "truncated",
+          "review"
+        ],
+        "title": "RunAnswer"
+      },
+      "RunAnswerReview": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "grounded": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Grounded"
+          },
+          "citations_support": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Citations Support"
+          },
+          "correct_abstention": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correct Abstention"
+          },
+          "reviewer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "RunAnswerReview"
+      },
+      "RunAnswerSource": {
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "article_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Article Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "label",
+          "chunk_id",
+          "article_id",
+          "title",
+          "source_url"
+        ],
+        "title": "RunAnswerSource"
+      },
+      "RunCorpus": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "MariaDB corpus version, e.g. \"corpus:2\""
+          },
+          "version_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Id"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "title": "RunCorpus"
+      },
+      "RunCounts": {
+        "properties": {
+          "records": {
+            "type": "integer",
+            "title": "Records"
+          },
+          "rows": {
+            "type": "integer",
+            "title": "Rows"
+          },
+          "answers": {
+            "type": "integer",
+            "title": "Answers"
+          },
+          "reviewed_answers": {
+            "type": "integer",
+            "title": "Reviewed Answers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "records",
+          "rows",
+          "answers",
+          "reviewed_answers"
+        ],
+        "title": "RunCounts"
+      },
+      "RunDetail": {
+        "properties": {
+          "manifest": {
+            "$ref": "#/components/schemas/RunManifest"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/RunRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "answers": {
+            "items": {
+              "$ref": "#/components/schemas/RunAnswer"
+            },
+            "type": "array",
+            "title": "Answers"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/RunCounts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "manifest",
+          "rows",
+          "answers",
+          "counts"
+        ],
+        "title": "RunDetail"
+      },
+      "RunList": {
+        "properties": {
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/RunManifest"
+            },
+            "type": "array",
+            "title": "Runs"
+          },
+          "invalid": {
+            "items": {
+              "$ref": "#/components/schemas/InvalidRun"
+            },
+            "type": "array",
+            "title": "Invalid",
+            "description": "Run directories that could not be read"
+          }
+        },
+        "type": "object",
+        "required": [
+          "runs",
+          "invalid"
+        ],
+        "title": "RunList"
+      },
+      "RunManifest": {
+        "properties": {
+          "schema": {
+            "type": "string",
+            "title": "Schema"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "final_claims_allowed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Claims Allowed"
+          },
+          "splits": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Splits"
+          },
+          "corpus": {
+            "$ref": "#/components/schemas/RunCorpus"
+          },
+          "config_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config Id"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": [
+          "schema",
+          "run_id",
+          "created_at",
+          "splits",
+          "corpus"
+        ],
+        "title": "RunManifest",
+        "description": "C08 manifest (schema citehop-eval-v1). Core fields are typed; the rest (config,\nlatency boundaries, hardware, warm-up, summary with denominators) is passed through as\nsaved, with nulls kept as null."
+      },
+      "RunRow": {
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "title": "Question Id"
+          },
+          "split": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split"
+          },
+          "repetition": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Repetition"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "answerable": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answerable"
+          },
+          "filtered": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filtered"
+          },
+          "recall_at_5": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recall At 5"
+          },
+          "articles_found": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Articles Found"
+          },
+          "exhausted": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exhausted"
+          },
+          "cutoff_reached": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cutoff Reached"
+          },
+          "top_article_ids": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Top Article Ids"
+          },
+          "embedding_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Ms",
+            "description": "Null for keyword rows (no embedding)"
+          },
+          "retrieval_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retrieval Ms"
+          },
+          "answer_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Status"
+          },
+          "generation_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generation Ms"
+          },
+          "review_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question_id",
+          "split",
+          "repetition",
+          "method",
+          "answerable",
+          "filtered",
+          "recall_at_5",
+          "articles_found",
+          "exhausted",
+          "cutoff_reached",
+          "top_article_ids",
+          "embedding_ms",
+          "retrieval_ms",
+          "answer_status",
+          "generation_ms",
+          "review_status"
+        ],
+        "title": "RunRow",
+        "description": "One question repetition and method; the CSV export has exactly these columns."
+      },
+      "SearchFilters": {
+        "properties": {
+          "category": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "min_length_chars": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min Length Chars"
+          },
+          "max_length_chars": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Length Chars"
+          },
+          "linked_from": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 4294967295.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Linked From",
+            "description": "Only articles this article links to"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "SearchFilters"
+      },
+      "SearchHit": {
+        "properties": {
+          "chunk_id": {
+            "type": "string",
+            "title": "Chunk Id"
+          },
+          "article_id": {
+            "type": "integer",
+            "title": "Article Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_url": {
+            "type": "string",
+            "title": "Source Url"
+          },
+          "passage": {
+            "type": "string",
+            "title": "Passage"
+          },
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score",
+            "description": "Method-specific; not comparable across methods"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chunk_id",
+          "article_id",
+          "title",
+          "source_url",
+          "passage",
+          "rank",
+          "score",
+          "method"
+        ],
+        "title": "SearchHit"
+      },
+      "SearchRequest": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Query"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "keyword",
+              "vector",
+              "exact"
+            ],
+            "title": "Method",
+            "default": "vector"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/SearchFilters"
+          },
+          "k": {
+            "type": "integer",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "K",
+            "default": 5
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "title": "SearchRequest"
+      },
+      "SearchResponse": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "k": {
+            "type": "integer",
+            "title": "K"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/SearchFilters",
+            "description": "Effective filters applied in SQL"
+          },
+          "corpus_version": {
+            "type": "string",
+            "title": "Corpus Version"
+          },
+          "embedding_config": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Config",
+            "description": "Vector config searched; null for keyword"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHit"
+            },
+            "type": "array",
+            "title": "Hits"
+          },
+          "timings": {
+            "$ref": "#/components/schemas/SearchTimings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query",
+          "method",
+          "k",
+          "filters",
+          "corpus_version",
+          "embedding_config",
+          "hits",
+          "timings"
+        ],
+        "title": "SearchResponse"
+      },
+      "SearchTimings": {
+        "properties": {
+          "embedding_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Ms",
+            "description": "Query embedding; null for keyword search"
+          },
+          "retrieval_ms": {
+            "type": "number",
+            "title": "Retrieval Ms",
+            "description": "MariaDB query only"
+          },
+          "total_ms": {
+            "type": "number",
+            "title": "Total Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "embedding_ms",
+          "retrieval_ms",
+          "total_ms"
+        ],
+        "title": "SearchTimings"
+      },
+      "Stats": {
+        "properties": {
+          "corpus": {
+            "$ref": "#/components/schemas/CorpusStats",
+            "description": "Live MariaDB counts"
+          },
+          "graph": {
+            "$ref": "#/components/schemas/GraphStatusOut",
+            "description": "Neo4j projection, reported separately"
+          }
+        },
+        "type": "object",
+        "required": [
+          "corpus",
+          "graph"
+        ],
+        "title": "Stats"
+      }
+    }
+  }
+}
