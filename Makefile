@@ -3,7 +3,7 @@ PY = .venv/bin/python
 API_PORT ?= 8000
 FRONTEND_PORT ?= 3000
 
-.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test lint locks
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph graph-import graph-status lint locks
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
 venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
@@ -33,7 +33,13 @@ frontend-check: ## lint, typecheck and production build
 	npm --prefix frontend run typecheck
 	npm --prefix frontend run build
 test: ## backend smoke/unit tests without databases
-	$(PY) -m pytest -m 'not db'
+	$(PY) -m pytest -m 'not db and not neo4j'
+test-graph: ## Neo4j tests; set CITEHOP_TEST_NEO4J_URI/_PASSWORD to a DISPOSABLE instance
+	$(PY) -m pytest -m neo4j
+graph-import: ## rebuild the Neo4j graph from MariaDB (explicit, never automatic)
+	$(PY) -m citehop.graph import
+graph-status: ## graph ready/stale/rebuilding/unavailable plus versions
+	$(PY) -m citehop.graph status
 lint: ## Python lint
 	.venv/bin/ruff check citehop tests scripts/check_persistence.py
 locks: ## explicitly refresh Python lock and pip exports after dependency changes
