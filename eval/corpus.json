@@ -1,0 +1,1009 @@
+{
+  "schema_version": 1,
+  "language": "en",
+  "extraction": "wikipedia-html-text-v2",
+  "created_at": "2026-10-31T15:28:28.946900+00:00",
+  "articles": [
+    {
+      "requested_title": "Machine learning",
+      "title": "Machine learning",
+      "article_id": 233488,
+      "revision_id": 1382314933,
+      "revision_timestamp": "2026-10-28T00:12:37Z",
+      "smoke": true,
+      "raw_sha256": "a2f53265361b4eae4ae754afc508e829e41512a2eb47581f4dd9431be18d959d",
+      "record_sha256": "9fb159d9f4242ef7a16e5a332ee0f708f3c52d342a5922a746317c84efd73083"
+    },
+    {
+      "requested_title": "Supervised learning",
+      "title": "Supervised learning",
+      "article_id": 20926,
+      "revision_id": 1379881854,
+      "revision_timestamp": "2026-10-12T12:26:18Z",
+      "smoke": true,
+      "raw_sha256": "16fa83495964a1468cbd2bfa310c7eca585368abbc273d3c04135924fb8e6517",
+      "record_sha256": "dd066b38e234b70a1da4000449ff473567dd349f6dcf3b4aa500e02cd599acf9"
+    },
+    {
+      "requested_title": "Unsupervised learning",
+      "title": "Unsupervised learning",
+      "article_id": 233497,
+      "revision_id": 1364965375,
+      "revision_timestamp": "2026-07-19T15:00:20Z",
+      "smoke": true,
+      "raw_sha256": "596a8d71aaf1556bcf4b4766a912943b12f53979722435a35c13c755416c5c6f",
+      "record_sha256": "cdc01a217698b6ea4afb87ccfdd9bd850c892310ee4dadeb33278f61ec1bfbaf"
+    },
+    {
+      "requested_title": "Reinforcement learning",
+      "title": "Reinforcement learning",
+      "article_id": 66294,
+      "revision_id": 1382044619,
+      "revision_timestamp": "2026-10-26T06:21:43Z",
+      "smoke": true,
+      "raw_sha256": "14a1dc5ca90dfcaad9f26c4a05f14d130fb58e6d290c1b007e1c896302020723",
+      "record_sha256": "91059f4f73646a1891bdc1cfdb4eeba78ac9b70cc1490cf5fe9d39b0e2493c36"
+    },
+    {
+      "requested_title": "Decision tree learning",
+      "title": "Decision tree learning",
+      "article_id": 577003,
+      "revision_id": 1373673315,
+      "revision_timestamp": "2026-09-07T06:23:14Z",
+      "smoke": true,
+      "raw_sha256": "c912e4c82688344d33f03de64c3731d3685544c7ea805cff86bb36f99ce4ca77",
+      "record_sha256": "b293a591454297181580ff1ee952a102d6c35daf79b00af529d8fbc130d71a4e"
+    },
+    {
+      "requested_title": "Random forest",
+      "title": "Random forest",
+      "article_id": 1363880,
+      "revision_id": 1373673788,
+      "revision_timestamp": "2026-09-07T06:29:12Z",
+      "smoke": true,
+      "raw_sha256": "b0050160ad21234a7bf12b2b5849a8490dadfa070b97edfcbd8a1587963a9da9",
+      "record_sha256": "12ac83900d2f1247e31472ff54e0d94ecd8ab9629b09a5560ddd2ab1fc981192"
+    },
+    {
+      "requested_title": "Support vector machine",
+      "title": "Support vector machine",
+      "article_id": 65309,
+      "revision_id": 1377218945,
+      "revision_timestamp": "2026-09-28T10:17:26Z",
+      "smoke": true,
+      "raw_sha256": "feb80573be4c2e8febd6c49a3097f73a49ce329e6ea39ea4141185e03f354e6c",
+      "record_sha256": "cfa4b4f66eab2a1bb9ae88f1c7540173a2bbfbc9a1728079f03add69ae936899"
+    },
+    {
+      "requested_title": "K-nearest neighbors algorithm",
+      "title": "K-nearest neighbors algorithm",
+      "article_id": 1775388,
+      "revision_id": 1371531071,
+      "revision_timestamp": "2026-08-27T00:45:52Z",
+      "smoke": true,
+      "raw_sha256": "bd7e93bcf18ca74fbac5e786c51e5ad9797191a40864b5b7573f50aa7554375d",
+      "record_sha256": "8c802cdb165fafdc6aa40b9abcd3473dea5c176a3d2bfcbfd53ae65dcaf1d500"
+    },
+    {
+      "requested_title": "Neural network (machine learning)",
+      "title": "Neural network (machine learning)",
+      "article_id": 21523,
+      "revision_id": 1382090148,
+      "revision_timestamp": "2026-10-26T15:05:10Z",
+      "smoke": true,
+      "raw_sha256": "d77088b9a58913285e6aeeb0e780ac87e6290771660f240e93b931657e9ab2de",
+      "record_sha256": "edb47ac2a7e04926e1431a1594a28b8f01e64f749218d5583fdae787b611ae94"
+    },
+    {
+      "requested_title": "Deep learning",
+      "title": "Deep learning",
+      "article_id": 32472154,
+      "revision_id": 1378632336,
+      "revision_timestamp": "2026-10-05T10:02:43Z",
+      "smoke": true,
+      "raw_sha256": "102d2454e7a184361ff39887f303fc9fcca412568e2927207f3c4da9bb69293f",
+      "record_sha256": "71a948fe17057773c791ecf9d35ffff34d45b8d2c008de3fe6e863b0d3ef219a"
+    },
+    {
+      "requested_title": "Linear regression",
+      "title": "Linear regression",
+      "article_id": 48758386,
+      "revision_id": 1381404633,
+      "revision_timestamp": "2026-10-22T06:41:49Z",
+      "smoke": false,
+      "raw_sha256": "65cf884d00f6a450dd1daa97f80b37089b263082d557f4e577f4c3acb9fff1a3",
+      "record_sha256": "f6948079e79d03fb559fdc874fa9c05ddfb7f9734dfc2318d6691c71083c3a6f"
+    },
+    {
+      "requested_title": "Logistic regression",
+      "title": "Logistic regression",
+      "article_id": 226631,
+      "revision_id": 1368293703,
+      "revision_timestamp": "2026-08-08T05:56:38Z",
+      "smoke": false,
+      "raw_sha256": "e0138566a191b92697248390a20bca5cc4db1c16462850903a9e37a51e90acbf",
+      "record_sha256": "b32c4c86ba1bd978ead3cc0774a00e9f0025a6fc38c7bfc7efc23d4880f182ae"
+    },
+    {
+      "requested_title": "Naive Bayes classifier",
+      "title": "Naive Bayes classifier",
+      "article_id": 87339,
+      "revision_id": 1361005901,
+      "revision_timestamp": "2026-06-25T01:28:48Z",
+      "smoke": false,
+      "raw_sha256": "5448d4f7509d8e267c979f1239549d13c904feb04021086983d87528cd25109c",
+      "record_sha256": "28ced1c61c0f33a1e67a500de2abda7925624877906cca5799bb25173beb58a9"
+    },
+    {
+      "requested_title": "Bayesian network",
+      "title": "Bayesian network",
+      "article_id": 203996,
+      "revision_id": 1376990231,
+      "revision_timestamp": "2026-09-27T08:16:29Z",
+      "smoke": false,
+      "raw_sha256": "80398ad32adda87a0acae4bc91b4b1637bfe4227b4f18b35e2760798dc952c68",
+      "record_sha256": "8ee580cd82dca5f1b561257f3fbb486032b35ab9153b6c478ac688b80202fcc3"
+    },
+    {
+      "requested_title": "K-means clustering",
+      "title": "K-means clustering",
+      "article_id": 1860407,
+      "revision_id": 1380990513,
+      "revision_timestamp": "2026-10-19T08:20:17Z",
+      "smoke": false,
+      "raw_sha256": "1fae09bddacd416bf6f901d4cb7f652942c1fd32d40440e6da9e7dec19ea3477",
+      "record_sha256": "bce321a36ccd9fff7720ce3d44c8172b438c580e7599f5e54d53718e514f55b8"
+    },
+    {
+      "requested_title": "Principal component analysis",
+      "title": "Principal component analysis",
+      "article_id": 76340,
+      "revision_id": 1382439040,
+      "revision_timestamp": "2026-10-28T18:29:03Z",
+      "smoke": false,
+      "raw_sha256": "4784490df70ae37f7711c7421e663ff1a0d1776caa73b38db10c3a1e4b15bc0c",
+      "record_sha256": "6cf56479b019acd5ec2982b44ccda8627c5ba3315ad6564fa0a4c834996517d9"
+    },
+    {
+      "requested_title": "Dimensionality reduction",
+      "title": "Dimensionality reduction",
+      "article_id": 579867,
+      "revision_id": 1379974449,
+      "revision_timestamp": "2026-10-13T01:06:35Z",
+      "smoke": false,
+      "raw_sha256": "e01fec46727b5d92512f154aed066367ee34fcab4a61059e88c1f5ebc6a38075",
+      "record_sha256": "c4d98be3657005e635c5aceea38b8af769c485f384b060a8e9ec8dd5dfcaf078"
+    },
+    {
+      "requested_title": "Overfitting",
+      "title": "Overfitting",
+      "article_id": 173332,
+      "revision_id": 1374396766,
+      "revision_timestamp": "2026-09-11T20:32:43Z",
+      "smoke": false,
+      "raw_sha256": "f29746b0a17a45385832bbf4fae0427bbb54c4e4aaf8e6b23aeef4b012d2e69d",
+      "record_sha256": "2fe151ec4ddc6302d529945e44279d983cecc05b35cc5ebed5c0954cd22e6b29"
+    },
+    {
+      "requested_title": "Cross-validation (statistics)",
+      "title": "Cross-validation (statistics)",
+      "article_id": 416612,
+      "revision_id": 1378616325,
+      "revision_timestamp": "2026-10-05T06:49:13Z",
+      "smoke": false,
+      "raw_sha256": "9a378de138ae80a94ff363d2c286ccea6fc6007514de5eada19fa944eb53c08b",
+      "record_sha256": "7cf6cd205098d56f61793d75ef18d56db50b4240533109e087ac475f5c291209"
+    },
+    {
+      "requested_title": "Gradient descent",
+      "title": "Gradient descent",
+      "article_id": 201489,
+      "revision_id": 1373673523,
+      "revision_timestamp": "2026-09-07T06:25:53Z",
+      "smoke": false,
+      "raw_sha256": "1f80b270859b99a641faef659bcba749cfa462e06a74d4931d8daa6ee8edc576",
+      "record_sha256": "64b1c2dc25479ade773f7ee7fd1dca48c89931d8e537aebdf23dad82c3cedd50"
+    },
+    {
+      "requested_title": "Stochastic gradient descent",
+      "title": "Stochastic gradient descent",
+      "article_id": 1180641,
+      "revision_id": 1380942635,
+      "revision_timestamp": "2026-10-18T23:22:19Z",
+      "smoke": false,
+      "raw_sha256": "aa70d6a67525305c85b9592a9fee7d7a4745b341701bc92507efe3d4f723712c",
+      "record_sha256": "451639441d9cce8734a481cda16669f4258b0f4f3056766b581dc0a545b71b9b"
+    },
+    {
+      "requested_title": "Backpropagation",
+      "title": "Backpropagation",
+      "article_id": 1360091,
+      "revision_id": 1381710221,
+      "revision_timestamp": "2026-10-24T08:06:45Z",
+      "smoke": false,
+      "raw_sha256": "8ff7874dade408f1de2d20f15d7384066dc37502ed14c20b53242611893f95c4",
+      "record_sha256": "846ea26e15e79c568b0ee999a3b5ef7df8688f6527eca866b8a17777d17ba939"
+    },
+    {
+      "requested_title": "Convolutional neural network",
+      "title": "Convolutional neural network",
+      "article_id": 40409788,
+      "revision_id": 1379323106,
+      "revision_timestamp": "2026-10-09T06:37:37Z",
+      "smoke": false,
+      "raw_sha256": "94dfe0754c5fa8c63d78d70854aefa1c9edb78cda4849c2f4ca562bfe54ceb3b",
+      "record_sha256": "1d1eb175bd63eb73028203b21886635ca10ea7d1e09f89457f2416fae74c350f"
+    },
+    {
+      "requested_title": "Recurrent neural network",
+      "title": "Recurrent neural network",
+      "article_id": 1706303,
+      "revision_id": 1382045773,
+      "revision_timestamp": "2026-10-26T06:41:32Z",
+      "smoke": false,
+      "raw_sha256": "269e3828300f600c70925bd40987ec5b293d4d77e7dd67616dfebba34f54c6a8",
+      "record_sha256": "91c4621274b04871fbce42fde4c552447ba95aa7299f6953bf3eac797e0760f2"
+    },
+    {
+      "requested_title": "Long short-term memory",
+      "title": "Long short-term memory",
+      "article_id": 10711453,
+      "revision_id": 1380313689,
+      "revision_timestamp": "2026-10-15T00:50:31Z",
+      "smoke": false,
+      "raw_sha256": "fec3f88ebb85393d7158b8839a8e063ce48680f8e12c3f08b5b809bc37282b33",
+      "record_sha256": "fe3959132d1834bad46220971dd6515fb10dbf2884bbf555f2f4ab9200a30dee"
+    },
+    {
+      "requested_title": "Transformer (deep learning)",
+      "title": "Transformer (deep learning)",
+      "article_id": 61603971,
+      "revision_id": 1382511100,
+      "revision_timestamp": "2026-10-29T01:35:22Z",
+      "smoke": false,
+      "raw_sha256": "cbfe2fd587eac34ad62e8f4c846fd60a4a7bcc8628b596b130efd8ccc547f1bd",
+      "record_sha256": "170165fcdf26f30aaad891cb1917d00a6e1a9090e4c586588868f6e1432b8986"
+    },
+    {
+      "requested_title": "Attention (machine learning)",
+      "title": "Attention (machine learning)",
+      "article_id": 66001552,
+      "revision_id": 1381934278,
+      "revision_timestamp": "2026-10-25T18:21:31Z",
+      "smoke": false,
+      "raw_sha256": "3185ba5603c677a0f1fcf035e014afc8837f0d5619afd5f30df6e8339fa6ae85",
+      "record_sha256": "56da73b5490f27269597b39172506f1e34396383f085f4cb99ae489c371f551e"
+    },
+    {
+      "requested_title": "Generative adversarial network",
+      "title": "Generative adversarial network",
+      "article_id": 50073184,
+      "revision_id": 1380981582,
+      "revision_timestamp": "2026-10-19T06:26:30Z",
+      "smoke": false,
+      "raw_sha256": "6968682bf2ab2f76f84321bc9c768f172777811cb19fc7f588fd71976fa6c468",
+      "record_sha256": "bdfab746875cf67c1465b1e54a9207a564fd97c8351f84d0a52fee3f9b7f3e91"
+    },
+    {
+      "requested_title": "Autoencoder",
+      "title": "Autoencoder",
+      "article_id": 6836612,
+      "revision_id": 1375973936,
+      "revision_timestamp": "2026-09-21T05:41:12Z",
+      "smoke": false,
+      "raw_sha256": "4d758719751d3720d5ded9d847028835bcf65b0ad197533fddb1a4def5f96af4",
+      "record_sha256": "66a0509a34659d7b9558f2f6e7d60615bcb1a300972cb13e8cc0f7ce73d9d7ff"
+    },
+    {
+      "requested_title": "Variational autoencoder",
+      "title": "Variational autoencoder",
+      "article_id": 62078649,
+      "revision_id": 1377688233,
+      "revision_timestamp": "2026-09-30T16:00:12Z",
+      "smoke": false,
+      "raw_sha256": "676bff893e1bbab5e8086fb6784e231a9ccbfba0db3d15b78845f3c2a6535eeb",
+      "record_sha256": "367dbdeb7f931c7f2f0822aa3ac614341e8de8a5dcbfde0e7f37e36f26b15cb9"
+    },
+    {
+      "requested_title": "Weak supervision",
+      "title": "Weak supervision",
+      "article_id": 60968880,
+      "revision_id": 1375992650,
+      "revision_timestamp": "2026-09-21T09:25:08Z",
+      "smoke": false,
+      "raw_sha256": "688f2e38c17e36b741e825fc5127ba633576101c0a71bcd6afa1269edc4cd3fa",
+      "record_sha256": "0dc9c840eeb7246b9065fbba21c91bc7a3ebc44a13ad56ba8e3812c1972eda03"
+    },
+    {
+      "requested_title": "Self-supervised learning",
+      "title": "Self-supervised learning",
+      "article_id": 67902375,
+      "revision_id": 1380353226,
+      "revision_timestamp": "2026-10-15T05:44:13Z",
+      "smoke": false,
+      "raw_sha256": "12db0cd7baac095355cd8dbd02bc8e00fdf436380091cc78e903af95fc11bf4e",
+      "record_sha256": "a4ee70fb62dab5fdd6bd5ae6399e5f413ecbdae6828926d016a13a68b66b497b"
+    },
+    {
+      "requested_title": "Transfer learning",
+      "title": "Transfer learning",
+      "article_id": 3920550,
+      "revision_id": 1360633829,
+      "revision_timestamp": "2026-06-22T18:11:09Z",
+      "smoke": false,
+      "raw_sha256": "39b254290fea30973272da95f0a9ecc21ceb0fb575bed8e5d73f15694ebf14e1",
+      "record_sha256": "7c5ddcf00f09cb4d684ecd5c4f67fdbfbf21d3d38378e04eec81f5ec8320103c"
+    },
+    {
+      "requested_title": "Multi-task learning",
+      "title": "Multi-task learning",
+      "article_id": 938663,
+      "revision_id": 1381517498,
+      "revision_timestamp": "2026-10-23T01:40:31Z",
+      "smoke": false,
+      "raw_sha256": "25743b8f76b86909efa89cf8bab656861bb686ad85dae44751f0274b1714fade",
+      "record_sha256": "e57898086627069622996cda08488ec50b9ab832836930f1d22896da263e20f0"
+    },
+    {
+      "requested_title": "Online machine learning",
+      "title": "Online machine learning",
+      "article_id": 19892153,
+      "revision_id": 1378451425,
+      "revision_timestamp": "2026-10-04T15:36:47Z",
+      "smoke": false,
+      "raw_sha256": "b04dcdf921e1cbebc69709652718dfd7b78deecd4d923669bf71b32db89c17e7",
+      "record_sha256": "00e4826d028549435a4689fad5cdbb152c287a038c90a24f64d67e4a3c8498cc"
+    },
+    {
+      "requested_title": "Active learning (machine learning)",
+      "title": "Active learning (machine learning)",
+      "article_id": 28801798,
+      "revision_id": 1378688515,
+      "revision_timestamp": "2026-10-05T18:07:22Z",
+      "smoke": false,
+      "raw_sha256": "9f0cfb7f3af89ffd574d931e5d56a1242f69aad5b860fb670dc35b406d6c8e33",
+      "record_sha256": "ef09c1a080335df8131b77a3d0ea4620055e222f4b38397e49c4e43a3e1d3ae4"
+    },
+    {
+      "requested_title": "Ensemble learning",
+      "title": "Ensemble learning",
+      "article_id": 22212276,
+      "revision_id": 1376024103,
+      "revision_timestamp": "2026-09-21T15:19:48Z",
+      "smoke": false,
+      "raw_sha256": "944f15e30dc3be0e850bf2e13c94d526f7fabe52c52958d7e2c83814c8f2d959",
+      "record_sha256": "c15ba6b8a9fa4369e29b8be3030f5009c8b159fee1b33fbdfa0f08ccfae803e4"
+    },
+    {
+      "requested_title": "Boosting (machine learning)",
+      "title": "Boosting (machine learning)",
+      "article_id": 90500,
+      "revision_id": 1368726976,
+      "revision_timestamp": "2026-08-10T19:19:23Z",
+      "smoke": false,
+      "raw_sha256": "e822b09084dc24ecb05aecb9e14dded3dae8ea65e8ba537415f28dbfe664e6cd",
+      "record_sha256": "c9f9d861a2792bf983836e6d8c158d582c767416631f76dd7b9b2bd0f3b3ab0c"
+    },
+    {
+      "requested_title": "AdaBoost",
+      "title": "AdaBoost",
+      "article_id": 1645603,
+      "revision_id": 1380247235,
+      "revision_timestamp": "2026-10-14T17:25:04Z",
+      "smoke": false,
+      "raw_sha256": "a637fcf7e8ac565d66044ceb86522f22e56646ff00405bfc8fbf51c8bdc5dc0d",
+      "record_sha256": "fd46e30c0996cd08a37054e30d619d50096f33dddf38367b346271f2b7405202"
+    },
+    {
+      "requested_title": "Gradient boosting",
+      "title": "Gradient boosting",
+      "article_id": 26649339,
+      "revision_id": 1373672597,
+      "revision_timestamp": "2026-09-07T06:14:31Z",
+      "smoke": false,
+      "raw_sha256": "a43ebda906193961a876a136a2e1e04770e4b0aa955473f0572eb44054742bb7",
+      "record_sha256": "01f525e819eab61d693afc41672fe13e6c3c35142f2de061c644b1256f52099f"
+    },
+    {
+      "requested_title": "Bootstrap aggregating",
+      "title": "Bootstrap aggregating",
+      "article_id": 1307911,
+      "revision_id": 1375890244,
+      "revision_timestamp": "2026-09-20T18:20:13Z",
+      "smoke": false,
+      "raw_sha256": "226535be4560b995bc54b578ad1214ebd7e16860a6ce301e8567b482dcf15ef8",
+      "record_sha256": "ffff3ccaf1af27c24a57babf620ef93fdfc2bb7db37b17a3cc3915afc000d11d"
+    },
+    {
+      "requested_title": "Dropout (neural networks)",
+      "title": "Dropout (neural networks)",
+      "article_id": 47349395,
+      "revision_id": 1382560819,
+      "revision_timestamp": "2026-10-29T07:11:52Z",
+      "smoke": false,
+      "raw_sha256": "8d200dd56eb0c62fff05cec8dbb96d7c57c11fc2f0652884954a1ff1c39d4f84",
+      "record_sha256": "d3063fa5bbc02e2203988c323a0637940d18649cddec79c98e19e8874e7a8e3d"
+    },
+    {
+      "requested_title": "DBSCAN",
+      "title": "DBSCAN",
+      "article_id": 13747309,
+      "revision_id": 1379881565,
+      "revision_timestamp": "2026-10-12T12:23:38Z",
+      "smoke": false,
+      "raw_sha256": "a8c612ccfdeac3dbcaa70f76956a0e3a5696c5a6580bdb13e1cddc79ad35af50",
+      "record_sha256": "68ac2b22f3fa7504adb95168081a6daf2f3307ec556ac29b68669aeafb9a30a8"
+    },
+    {
+      "requested_title": "Hierarchical clustering",
+      "title": "Hierarchical clustering",
+      "article_id": 477573,
+      "revision_id": 1369029920,
+      "revision_timestamp": "2026-08-12T12:56:11Z",
+      "smoke": false,
+      "raw_sha256": "457018ad3c96047bf0aece98781b7b551f599c76e10984e98121e817bb6f1153",
+      "record_sha256": "223d3092bc671be9ca0d7d5bb4a9c7e83c01eaf05b7abd55acda3196071e956f"
+    },
+    {
+      "requested_title": "Spectral clustering",
+      "title": "Spectral clustering",
+      "article_id": 13651683,
+      "revision_id": 1346215917,
+      "revision_timestamp": "2026-03-30T15:49:48Z",
+      "smoke": false,
+      "raw_sha256": "7ee69403e759c41dc646f18e27f6f782cc9024a907bd67706f8c7a8a9feaebc9",
+      "record_sha256": "24723ea9e531ca996e1c8045c01257af367ddc421e75c627c3586afed00b0711"
+    },
+    {
+      "requested_title": "Mean shift",
+      "title": "Mean shift",
+      "article_id": 10999922,
+      "revision_id": 1368860814,
+      "revision_timestamp": "2026-08-11T13:45:04Z",
+      "smoke": false,
+      "raw_sha256": "c70f49334e94f44e6df7d6b8dc0bad8df104a649215b0f0649da0825e3f59ff4",
+      "record_sha256": "9d5cae17982a4d9f5b1211c2c10b6f81c7028692c484bade09e2767fe9b605fc"
+    },
+    {
+      "requested_title": "Mixture model",
+      "title": "Mixture model",
+      "article_id": 871681,
+      "revision_id": 1379924356,
+      "revision_timestamp": "2026-10-12T18:28:57Z",
+      "smoke": false,
+      "raw_sha256": "2d697f8511fea1a7c64812a7f6c8b964d44418fc35db4072a1efc7af5e2f5988",
+      "record_sha256": "5f212dee36499e7a047a2a66deff5066d647cae918d3f0f2aecfcc221864b11f"
+    },
+    {
+      "requested_title": "Expectation–maximization algorithm",
+      "title": "Expectation–maximization algorithm",
+      "article_id": 470752,
+      "revision_id": 1369278721,
+      "revision_timestamp": "2026-08-14T00:50:36Z",
+      "smoke": false,
+      "raw_sha256": "80f04e40ec47adeb272f0000302ae3d02e9ac20f289bd59698b63134e763f3e1",
+      "record_sha256": "129f961c24cedf9ba8a896846388373f98c960550e826850baf021f65676b5c2"
+    },
+    {
+      "requested_title": "Hidden Markov model",
+      "title": "Hidden Markov model",
+      "article_id": 98770,
+      "revision_id": 1369030736,
+      "revision_timestamp": "2026-08-12T13:03:37Z",
+      "smoke": false,
+      "raw_sha256": "8fb8600aafed305d0374477833d08cccefa455dda9a05eb1f6ba87cd2628e28b",
+      "record_sha256": "21ab8da13f39710e8c9f967f79e5d335e674ff29a2b6ae6e74b8ce54835a8c1e"
+    },
+    {
+      "requested_title": "Markov decision process",
+      "title": "Markov decision process",
+      "article_id": 1125883,
+      "revision_id": 1381688772,
+      "revision_timestamp": "2026-10-24T04:05:35Z",
+      "smoke": false,
+      "raw_sha256": "6449802a3092b84cd38588b6c3cce34eb4036a4884b564621ea7cac4d8b9e486",
+      "record_sha256": "4db026aa8e374a1019ee7a60f0709d7ddacbc18d63cb44533db054be33daaa9d"
+    },
+    {
+      "requested_title": "Q-learning",
+      "title": "Q-learning",
+      "article_id": 1281850,
+      "revision_id": 1373673723,
+      "revision_timestamp": "2026-09-07T06:28:20Z",
+      "smoke": false,
+      "raw_sha256": "11a2efb220207e4bd4dc9d255b25f5c2a79d27d3be5e132bb0f656a714710f41",
+      "record_sha256": "e0329d26f5c2ae6ed7dd547b9f8394d3c6d99f7351abed102c68fce7cec4f654"
+    },
+    {
+      "requested_title": "Temporal difference learning",
+      "title": "Temporal difference learning",
+      "article_id": 1209759,
+      "revision_id": 1375126803,
+      "revision_timestamp": "2026-09-16T00:40:30Z",
+      "smoke": false,
+      "raw_sha256": "6b88841192b649cc3c6660435ab8ae9e82f8061561cd963bb5c34aa76cfde82c",
+      "record_sha256": "6c6ed0a3e5e54d35db8f25e794af6a156e982bf01c86a1c26a3a4122446619b9"
+    },
+    {
+      "requested_title": "Deep reinforcement learning",
+      "title": "Deep reinforcement learning",
+      "article_id": 60105148,
+      "revision_id": 1382061382,
+      "revision_timestamp": "2026-10-26T10:00:25Z",
+      "smoke": false,
+      "raw_sha256": "8046c8da4d1119c333ac19f90a754366b658a1145f4c66fe39628d931aa8ac5f",
+      "record_sha256": "9d26ac65b888e5248d0d07297f1dbfddb9c8b7401c535a65cda6ead5142e4bca"
+    },
+    {
+      "requested_title": "Multi-armed bandit",
+      "title": "Multi-armed bandit",
+      "article_id": 2854828,
+      "revision_id": 1374215207,
+      "revision_timestamp": "2026-09-10T15:41:01Z",
+      "smoke": false,
+      "raw_sha256": "08ca4bd56b7de4f77690641e0e576ee7e0bcee8b4720da9e58c274760cc96299",
+      "record_sha256": "07a741eab2b873ebe3d054afdd48a7cdf7a4469260b6d195208fbc3791e1a5f3"
+    },
+    {
+      "requested_title": "Monte Carlo tree search",
+      "title": "Monte Carlo tree search",
+      "article_id": 40528449,
+      "revision_id": 1376485206,
+      "revision_timestamp": "2026-09-24T12:27:27Z",
+      "smoke": false,
+      "raw_sha256": "2c7366da0249b60aba4db84051bb7798be26bdf90409659b18e3c1ed24ff481f",
+      "record_sha256": "eb18b5a0a77c34a335b50fbea645b747b765f441e8dee58f607c8ee14cc3925a"
+    },
+    {
+      "requested_title": "Feature engineering",
+      "title": "Feature engineering",
+      "article_id": 46207323,
+      "revision_id": 1381695647,
+      "revision_timestamp": "2026-10-24T05:18:31Z",
+      "smoke": false,
+      "raw_sha256": "a15447d632132f037c3aea66ac2c3d7a45a0be6c15e0919e25f757000a79c6cc",
+      "record_sha256": "741e23a51f4ef4cfeb3a011ee6832ecfcf215cde1a1222bb27a1f3e1115a554b"
+    },
+    {
+      "requested_title": "Feature selection",
+      "title": "Feature selection",
+      "article_id": 1179950,
+      "revision_id": 1375077689,
+      "revision_timestamp": "2026-09-15T18:52:29Z",
+      "smoke": false,
+      "raw_sha256": "48cabf2e094b099867539e96abe022a5863d2610561578cf415422247faa026c",
+      "record_sha256": "78017b031f267f19bcd524925def2d92e34b90c2313a6ff28752167819ea9170"
+    },
+    {
+      "requested_title": "Feature scaling",
+      "title": "Feature scaling",
+      "article_id": 34061548,
+      "revision_id": 1304314661,
+      "revision_timestamp": "2025-08-05T08:16:29Z",
+      "smoke": false,
+      "raw_sha256": "b88b5369b867ac53acfa8151e582e9719098e43a7779f9eb820dce26c7ab9fb8",
+      "record_sha256": "0baaa3a24217a15199d08b6fc09b9d64ddaac8c4c0af5c17993968a01d6624b5"
+    },
+    {
+      "requested_title": "Regularization (mathematics)",
+      "title": "Regularization (mathematics)",
+      "article_id": 2009061,
+      "revision_id": 1369487330,
+      "revision_timestamp": "2026-08-15T08:09:37Z",
+      "smoke": false,
+      "raw_sha256": "cbec63a3cf9ea0a5078ec651f8ac7e3e2e27edef67f3e61d7f00e908b521542b",
+      "record_sha256": "2de6761a877133335a3984d34ff5c8cf4de7a194ebb531933dbb1d8832488d2d"
+    },
+    {
+      "requested_title": "Lasso (statistics)",
+      "title": "Lasso (statistics)",
+      "article_id": 22349350,
+      "revision_id": 1376294298,
+      "revision_timestamp": "2026-09-23T07:38:26Z",
+      "smoke": false,
+      "raw_sha256": "2feb953efd13ac32e3d51062ed6e4d7d7e1f98c302df4d34dabb0937876237c0",
+      "record_sha256": "57102af9c002e711acf3a2941b17173fb397720a41d8600053933cba84230453"
+    },
+    {
+      "requested_title": "Ridge regression",
+      "title": "Ridge regression",
+      "article_id": 954328,
+      "revision_id": 1365109207,
+      "revision_timestamp": "2026-07-20T08:38:42Z",
+      "smoke": false,
+      "raw_sha256": "33c5fca6a91bf3e9f64d814d21fd4082e460fd8a519065c01ef4d8926c62b31b",
+      "record_sha256": "7e86a6affcc347130cf299342bc0a6d96492f0133b3a4ad44edac5bace193314"
+    },
+    {
+      "requested_title": "Elastic net regularization",
+      "title": "Elastic net regularization",
+      "article_id": 34021763,
+      "revision_id": 1374244169,
+      "revision_timestamp": "2026-09-10T19:38:42Z",
+      "smoke": false,
+      "raw_sha256": "fa3063ae05635e1d7716e349845a200fa9cb262a1e9d1c8df8cf5e826b7bd503",
+      "record_sha256": "38fc725b85bffe5fef447297237a572ef7fa3ab1c94fac9bc638a3a531014e37"
+    },
+    {
+      "requested_title": "Bias–variance tradeoff",
+      "title": "Bias–variance tradeoff",
+      "article_id": 40678189,
+      "revision_id": 1360011387,
+      "revision_timestamp": "2026-06-18T17:53:06Z",
+      "smoke": false,
+      "raw_sha256": "87d32d5088bb310bcc73943a8bd44a32a5e040b2cc979c156c88277e4cd81f88",
+      "record_sha256": "c8d0168fb5e499a5886574c18a4ab1f482a978e5642f36746c7ed654ccc63c91"
+    },
+    {
+      "requested_title": "Confusion matrix",
+      "title": "Confusion matrix",
+      "article_id": 847558,
+      "revision_id": 1382483577,
+      "revision_timestamp": "2026-10-28T22:52:00Z",
+      "smoke": false,
+      "raw_sha256": "d75794f9ff9a0df0f453a53639ff1f50aa4de103bc537b56093e2aefa6240047",
+      "record_sha256": "6a459f4e2125188d132d572b2d88d22785b8bf0da93775cef0fee1f433668d79"
+    },
+    {
+      "requested_title": "Precision and recall",
+      "title": "Precision and recall",
+      "article_id": 14343887,
+      "revision_id": 1377633271,
+      "revision_timestamp": "2026-09-30T07:26:11Z",
+      "smoke": false,
+      "raw_sha256": "41f1fe8ff0e6e522b1562febfee74e69532f12e183883fa56262f2a800dee132",
+      "record_sha256": "697b746f7ac340b16e8fee61b1d90f592284586207d1f6a7ff90034ef0576bde"
+    },
+    {
+      "requested_title": "Receiver operating characteristic",
+      "title": "Receiver operating characteristic",
+      "article_id": 922505,
+      "revision_id": 1379634439,
+      "revision_timestamp": "2026-10-11T02:13:27Z",
+      "smoke": false,
+      "raw_sha256": "f67e0df9232dac0b4ea5e155e5c53f64c3795e99cb32e7d98e82d0892505cad6",
+      "record_sha256": "748e7401570b3bb7a7e931d88c5c7522eb40d5a547cdea1eb2ba71ed4a3e82ff"
+    },
+    {
+      "requested_title": "F-score",
+      "title": "F-score",
+      "article_id": 4011785,
+      "revision_id": 1378835488,
+      "revision_timestamp": "2026-10-06T11:22:34Z",
+      "smoke": false,
+      "raw_sha256": "18af46be4d81686d4122bea7ac29e1bf90e2901bb6404edd2239444bbb34f36e",
+      "record_sha256": "97016dac803ad6bcd21ca6ecdebb0041eedb0133282ec96517739332efeda5ff"
+    },
+    {
+      "requested_title": "Accuracy and precision",
+      "title": "Accuracy and precision",
+      "article_id": 41932,
+      "revision_id": 1373730938,
+      "revision_timestamp": "2026-09-07T16:42:38Z",
+      "smoke": false,
+      "raw_sha256": "177d1dff7732cfa37f2113a73dc210a23fef6ecff8eb4d19d05d36b3562c12f8",
+      "record_sha256": "723f9e3d922e1fa9b0b70c28d473f574a005a74abcc9736d3efcab3ed3356dbd"
+    },
+    {
+      "requested_title": "Loss function",
+      "title": "Loss function",
+      "article_id": 442137,
+      "revision_id": 1379881902,
+      "revision_timestamp": "2026-10-12T12:26:46Z",
+      "smoke": false,
+      "raw_sha256": "97f7969d00d2aea2d12b0c3e90e15d2f21ee229ca4a905acc106d84fb4168dca",
+      "record_sha256": "2d0b3a7b48f36b38bc71da5c5530793d8d64d9135343fd783a720793e2820c1c"
+    },
+    {
+      "requested_title": "Cross-entropy",
+      "title": "Cross-entropy",
+      "article_id": 1735250,
+      "revision_id": 1374965211,
+      "revision_timestamp": "2026-09-15T02:14:33Z",
+      "smoke": false,
+      "raw_sha256": "bb7c3bf14964188e553210f4ce02c60f4495bb1ffab9203804f029eb2fd602f8",
+      "record_sha256": "dac5caec672b34110070becd4601cd26204f932c7fbecafcbf69e9828915e88a"
+    },
+    {
+      "requested_title": "Maximum likelihood estimation",
+      "title": "Maximum likelihood estimation",
+      "article_id": 140806,
+      "revision_id": 1364278350,
+      "revision_timestamp": "2026-07-15T16:39:50Z",
+      "smoke": false,
+      "raw_sha256": "2863f3453f6439db871fa6b830e4189e5ce9949fa3e41e26aa2cf04a5ad67afb",
+      "record_sha256": "6686361afe015eab305b4d247c479add6c73df8fe829dc9119088db8b7fdb35f"
+    },
+    {
+      "requested_title": "Maximum a posteriori estimation",
+      "title": "Maximum a posteriori estimation",
+      "article_id": 1792433,
+      "revision_id": 1346789558,
+      "revision_timestamp": "2026-04-02T22:47:46Z",
+      "smoke": false,
+      "raw_sha256": "7a468a98949adbbc2a73ad9014cbc2e4b9a3848d705e62ae5e5f7a1bcb845f21",
+      "record_sha256": "34d29eb488f84571b0ae6572c8446d9e172eb1d9d0e085d36cb4604e9ac373c1"
+    },
+    {
+      "requested_title": "Bayesian inference",
+      "title": "Bayesian inference",
+      "article_id": 49571,
+      "revision_id": 1379760658,
+      "revision_timestamp": "2026-10-11T20:20:55Z",
+      "smoke": false,
+      "raw_sha256": "3a9ae25682574ea73dcd4f1e9f05d7f23e052352de90a6b82d858d4f2b53ef94",
+      "record_sha256": "d3dbbfd564f1910b1fbf5e56e3bbddbebc8df8ddc5a2bd0763df7346b490a1dc"
+    },
+    {
+      "requested_title": "Gaussian process",
+      "title": "Gaussian process",
+      "article_id": 302944,
+      "revision_id": 1381611000,
+      "revision_timestamp": "2026-10-23T17:37:52Z",
+      "smoke": false,
+      "raw_sha256": "7ca8578e89bdf3c102db3a1705e6c7fe143da0ff36194ad59f8fd7f1dfcbf0ff",
+      "record_sha256": "0b9ce04cc9e0a198e660d7b8143d98152e8485bf5ba2033c0ede45f1ed6f48ab"
+    },
+    {
+      "requested_title": "Kernel method",
+      "title": "Kernel method",
+      "article_id": 3424576,
+      "revision_id": 1380617165,
+      "revision_timestamp": "2026-10-16T21:30:15Z",
+      "smoke": false,
+      "raw_sha256": "2d3b2929fbaa189319f5af2fc10e1dbe32bbbf2a74af86c7daea60bb14dcc56c",
+      "record_sha256": "bb4886cc39657e2ed591809889fa5d5fcf55ed36fcff373d654599eedd3ec023"
+    },
+    {
+      "requested_title": "Batch normalization",
+      "title": "Batch normalization",
+      "article_id": 57222123,
+      "revision_id": 1382561856,
+      "revision_timestamp": "2026-10-29T07:17:50Z",
+      "smoke": false,
+      "raw_sha256": "405848d700093c88cb3d3bf3ea3d5600880829e5832db43b012eb4e153c47190",
+      "record_sha256": "ff8bb947d5a532060a02e37cbc6a919f2e5f2d91df0e4f8298208ca71a58539b"
+    },
+    {
+      "requested_title": "Perceptron",
+      "title": "Perceptron",
+      "article_id": 172777,
+      "revision_id": 1377470406,
+      "revision_timestamp": "2026-09-29T15:19:14Z",
+      "smoke": false,
+      "raw_sha256": "3d89e12d5a0bd346a2ab7fe760da4ad75c6c5fda002d9760ec4c14bbe26c7846",
+      "record_sha256": "34b3bd5d8f35156207a7a0f8ed0efaef21722b89e5f0a924700fa9965acae6ac"
+    },
+    {
+      "requested_title": "Multilayer perceptron",
+      "title": "Multilayer perceptron",
+      "article_id": 2266644,
+      "revision_id": 1380964914,
+      "revision_timestamp": "2026-10-19T02:58:56Z",
+      "smoke": false,
+      "raw_sha256": "0a693ffc22b4f15450d07014d6f93f5bf94f0ad5d93faca60cf49f91bce1ebff",
+      "record_sha256": "071ccfbe7c474d9b5aaa04af6a803b88b47d913984fbb536961d619ed1a30b4c"
+    },
+    {
+      "requested_title": "Radial basis function network",
+      "title": "Radial basis function network",
+      "article_id": 9651443,
+      "revision_id": 1356142934,
+      "revision_timestamp": "2026-05-26T00:06:35Z",
+      "smoke": false,
+      "raw_sha256": "2e193fcb2815bd246866089c761c10a3ebe6e14c2ba625b35f648d4bd01f1039",
+      "record_sha256": "0283b1545a9d4480b1c79a1d49377ae155795acefe23d883c443049a75aff113"
+    },
+    {
+      "requested_title": "Self-organizing map",
+      "title": "Self-organizing map",
+      "article_id": 76996,
+      "revision_id": 1372427894,
+      "revision_timestamp": "2026-08-31T18:16:55Z",
+      "smoke": false,
+      "raw_sha256": "f6672be4afd023c05da4cc6358b1746e571dbba93cb407cfd221a97d27dbc9b6",
+      "record_sha256": "f4be49945d3f1f3c10f9989e09546e6ba0805cffb8f2a47973e3973d588f04e5"
+    },
+    {
+      "requested_title": "Restricted Boltzmann machine",
+      "title": "Restricted Boltzmann machine",
+      "article_id": 33742232,
+      "revision_id": 1365856341,
+      "revision_timestamp": "2026-07-24T21:04:04Z",
+      "smoke": false,
+      "raw_sha256": "0f64dd7f60a948cd9cf8d6b5c91b1b458c952ade068bc9cfcd3ce1bb3ec3e0cd",
+      "record_sha256": "ffb3d6376d3f154d8abbdcae226571408b9a4ec2dbe487d40f77eaf06f2fede2"
+    },
+    {
+      "requested_title": "Deep belief network",
+      "title": "Deep belief network",
+      "article_id": 41416740,
+      "revision_id": 1342493920,
+      "revision_timestamp": "2026-03-09T06:56:35Z",
+      "smoke": false,
+      "raw_sha256": "a0f0a88fba1ac3d57446039cf72265cf4bba81b0ae199815ac35009e1520eb58",
+      "record_sha256": "55012744f1fde36874ca750fdf179f055ca3237973087faa6f38ad98048a9155"
+    },
+    {
+      "requested_title": "Word embedding",
+      "title": "Word embedding",
+      "article_id": 43561218,
+      "revision_id": 1374850731,
+      "revision_timestamp": "2026-09-14T12:25:56Z",
+      "smoke": false,
+      "raw_sha256": "d1cbe8b7c08c99532a3b3a903b806cf7539bc36c9043bf899df35740b6b8394a",
+      "record_sha256": "4b36d4e7d9a876abe70dc1f3ef1d2fb45507d10a5f750c5e2ddbd94d2e3b1f94"
+    },
+    {
+      "requested_title": "Word2Vec",
+      "title": "Word2Vec",
+      "article_id": 47527969,
+      "revision_id": 1381528953,
+      "revision_timestamp": "2026-10-23T03:10:52Z",
+      "smoke": false,
+      "raw_sha256": "fa507661f4e67f7a02097fe99babf296b033c8156ac832cc49bca69e90f38ed5",
+      "record_sha256": "bbbb18e9674221fe46eec76929bc15dd6d39d41b5e0cc5f4d1e8e4f295bc574c"
+    },
+    {
+      "requested_title": "GloVe",
+      "title": "GloVe",
+      "article_id": 49489032,
+      "revision_id": 1381528889,
+      "revision_timestamp": "2026-10-23T03:10:14Z",
+      "smoke": false,
+      "raw_sha256": "a71990b73afdcbf34392d55428b4d9852462e33dcf29aceaf0017fb117596752",
+      "record_sha256": "bb1200f76d16d2a969794cf62bf5545c9c291a32bb100fab779180dc8b1ba17e"
+    },
+    {
+      "requested_title": "BERT (language model)",
+      "title": "BERT (language model)",
+      "article_id": 62026514,
+      "revision_id": 1382680910,
+      "revision_timestamp": "2026-10-29T19:39:50Z",
+      "smoke": false,
+      "raw_sha256": "887a8c40e2aa52e50e8d640e89957852e6448115c2ef9ef76fd6558b1649f4f8",
+      "record_sha256": "e1ec210c7d25ea4ca6851e3e0e7d4b2775f0a71f3e878950b8649a10d2de7bda"
+    },
+    {
+      "requested_title": "Large language model",
+      "title": "Large language model",
+      "article_id": 73248112,
+      "revision_id": 1382610955,
+      "revision_timestamp": "2026-10-29T13:21:56Z",
+      "smoke": false,
+      "raw_sha256": "a75a03fcd9da369a45ffdf546bc86bbc9e97cbaca9c8d5f5fc07a7a065fe3703",
+      "record_sha256": "36aa5346975ac66cab4cb8bea1e7c5891dd8da7482a3abdec2517e5554984d8d"
+    },
+    {
+      "requested_title": "Natural language processing",
+      "title": "Natural language processing",
+      "article_id": 21652,
+      "revision_id": 1381302520,
+      "revision_timestamp": "2026-10-21T13:09:27Z",
+      "smoke": false,
+      "raw_sha256": "94d70074f3061b7f61d8c4cb5734efd72237665f81be94ff9534a4c805fbddf4",
+      "record_sha256": "dead4d017dc80f906cf93b51326caf922fb047b88c4399d8fb82b2d35468e970"
+    },
+    {
+      "requested_title": "Computer vision",
+      "title": "Computer vision",
+      "article_id": 6596,
+      "revision_id": 1379527564,
+      "revision_timestamp": "2026-10-10T14:19:04Z",
+      "smoke": false,
+      "raw_sha256": "53cbdcb74ac683f6f43b159353fd455c1ae9e577ce3d642364a65a690e60c92a",
+      "record_sha256": "2181b2615c0622a34933e5fba89bbbf0d556e16c44a819dd5d03eb1bf4bba841"
+    },
+    {
+      "requested_title": "Residual neural network",
+      "title": "Residual neural network",
+      "article_id": 55867424,
+      "revision_id": 1376425875,
+      "revision_timestamp": "2026-09-24T02:21:51Z",
+      "smoke": false,
+      "raw_sha256": "3f30920c0e3fa04cdc37914035bcd25e783a5451e0979e0ab0b7f0efd3811615",
+      "record_sha256": "b109e03b16fcec2d73244502002e38572c03f80238880d86225e3d9ca26328bd"
+    },
+    {
+      "requested_title": "Object detection",
+      "title": "Object detection",
+      "article_id": 15822591,
+      "revision_id": 1379620671,
+      "revision_timestamp": "2026-10-11T00:52:02Z",
+      "smoke": false,
+      "raw_sha256": "c135a59897e2358c6abb0d727551dc18f64902fcdd03ed4bbd1fc4e01898260f",
+      "record_sha256": "8cc8b45e23a1d8a45f0d5c2fb9a2358f1f8920b5288c98c0632da564ddca893f"
+    },
+    {
+      "requested_title": "Speech recognition",
+      "title": "Speech recognition",
+      "article_id": 29468,
+      "revision_id": 1380060991,
+      "revision_timestamp": "2026-10-13T15:02:26Z",
+      "smoke": false,
+      "raw_sha256": "7800cb1d807179839155c6bd4a48ba925f8fb64988550bbe274436f63faf598b",
+      "record_sha256": "3c717c24b4192c88a4f23d78d61369ff62269a16acac750483f9a29bf37e9656"
+    },
+    {
+      "requested_title": "Anomaly detection",
+      "title": "Anomaly detection",
+      "article_id": 8190902,
+      "revision_id": 1379473430,
+      "revision_timestamp": "2026-10-10T05:17:35Z",
+      "smoke": false,
+      "raw_sha256": "5508914ba9073a04067416ca3f89d3a564e3eb781cee9792644e78d663996009",
+      "record_sha256": "e2d0a4b22b931477abfc601f353dc43acddf3d1b702ed47dc5fd9c1d053392d8"
+    },
+    {
+      "requested_title": "Recommender system",
+      "title": "Recommender system",
+      "article_id": 596646,
+      "revision_id": 1381129579,
+      "revision_timestamp": "2026-10-20T05:07:05Z",
+      "smoke": false,
+      "raw_sha256": "e69a1c73e69887276fab8491efcc5052bd884d91f53c255f09425163c9939a69",
+      "record_sha256": "eb98a2cb149a907191915d34706c8b1981be2910e93aa351d6e588d079630c54"
+    },
+    {
+      "requested_title": "Collaborative filtering",
+      "title": "Collaborative filtering",
+      "article_id": 480289,
+      "revision_id": 1377968300,
+      "revision_timestamp": "2026-10-02T04:32:39Z",
+      "smoke": false,
+      "raw_sha256": "ae4aa51ce0a880ef1505c3141038c43c3a3cd8e2d9e311f533cb8a6db6d05562",
+      "record_sha256": "d65ea1d9a4f62b6ce4d8de012951e070fb5ef2841c34862cc38ccd6ede0f36c1"
+    },
+    {
+      "requested_title": "Matrix factorization (recommender systems)",
+      "title": "Matrix factorization (recommender systems)",
+      "article_id": 57680998,
+      "revision_id": 1320771585,
+      "revision_timestamp": "2025-11-06T17:52:46Z",
+      "smoke": false,
+      "raw_sha256": "33277ce9ae677c97bc4bdb5de270895d7fbf07471dda65d2cf2d0234c80589c3",
+      "record_sha256": "ece167a5ec3985b46028aed1c8c35ffa7b46f8ceb38bf6bf8d65b021ee32b808"
+    },
+    {
+      "requested_title": "Learning to rank",
+      "title": "Learning to rank",
+      "article_id": 25050663,
+      "revision_id": 1380690519,
+      "revision_timestamp": "2026-10-17T07:46:42Z",
+      "smoke": false,
+      "raw_sha256": "619fc8aacbc37eee37630c6a63928f383cc08ffd9ac71552fcb80133a524febb",
+      "record_sha256": "cc17349ced393f04c90debf83848f716d9684445cc21553c59288b8287af085d"
+    },
+    {
+      "requested_title": "Similarity learning",
+      "title": "Similarity learning",
+      "article_id": 38059657,
+      "revision_id": 1381027585,
+      "revision_timestamp": "2026-10-19T15:08:12Z",
+      "smoke": false,
+      "raw_sha256": "56bf806f1e69660e6c6d2801a5b36093c679111121d450f8f9f922f3f40494ea",
+      "record_sha256": "e4a49526dc1df2071364eb317ce5d6aef6ce7c872cfd31b0b9219049e9b59727"
+    },
+    {
+      "requested_title": "Federated learning",
+      "title": "Federated learning",
+      "article_id": 60992857,
+      "revision_id": 1378647925,
+      "revision_timestamp": "2026-10-05T12:44:46Z",
+      "smoke": false,
+      "raw_sha256": "160e1408acde0ef49ac9218043d37340ce2f00a7c77ba188b27d8ea5ea197d71",
+      "record_sha256": "24f474b2e67a2a2261099ca95c143e60110887c08df441ffbdf58ff3cb2b651a"
+    },
+    {
+      "requested_title": "Explainable artificial intelligence",
+      "title": "Explainable artificial intelligence",
+      "article_id": 54575571,
+      "revision_id": 1378696667,
+      "revision_timestamp": "2026-10-05T18:52:16Z",
+      "smoke": false,
+      "raw_sha256": "f0bfb0fac1b3d5311ef89a96947170827aeb8a400d91f0b9f2ed49d4a721856e",
+      "record_sha256": "20b86d2bfe009bb40c05d525801cb23056c9736047a3c4eeabaa2982ff5ccfa2"
+    }
+  ],
+  "corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c"
+}
