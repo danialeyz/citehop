@@ -10,10 +10,12 @@
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "api:types": "openapi-typescript lib/api/openapi.json -o lib/api/schema.d.ts"
   },
   "dependencies": {
     "next": "16.4.3",
+    "openapi-fetch": "0.17.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
@@ -24,6 +26,7 @@
     "@types/react-dom": "19.2.2",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
+    "openapi-typescript": "7.13.0",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3"
   },

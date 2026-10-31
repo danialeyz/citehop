@@ -3,7 +3,7 @@ PY = .venv/bin/python
 API_PORT ?= 8000
 FRONTEND_PORT ?= 3000
 
-.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph test-model graph-import graph-status venv-ml embed-smoke embed embed-status rag-validate eval lint locks
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph test-model graph-import graph-status api-types venv-ml embed-smoke embed embed-status rag-validate eval lint locks
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
 venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
@@ -28,6 +28,9 @@ sql: ## run trusted SQL file: make sql FILE=sql/smoke.sql
 	$(PY) -m citehop.apply_sql "$(FILE)"
 api: ## run FastAPI on localhost (one development worker)
 	$(PY) -m uvicorn citehop.api.main:app --reload --host 127.0.0.1 --port $(API_PORT)
+api-types: ## regenerate OpenAPI JSON and frontend/lib/api/schema.d.ts after API schema changes
+	$(PY) scripts/export_openapi.py
+	npm --prefix frontend run api:types
 frontend: ## run Next.js on localhost
 	npm --prefix frontend run dev -- --port $(FRONTEND_PORT)
 frontend-check: ## lint, typecheck and production build
@@ -55,7 +58,8 @@ rag-validate: ## live search + generation check (3 generator calls; needs venv-m
 eval: ## C08 retrieval + answer evaluation into results/runs/<run_id>/ (needs venv-ml, embedded corpus, Ollama)
 	$(PY) -m citehop.evaluate
 lint: ## Python lint
-	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py scripts/validate_rag.py
+	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py scripts/validate_rag.py \
+		scripts/export_openapi.py scripts/smoke_api.py
 locks: ## explicitly refresh Python lock and pip exports after dependency changes
 	uv lock
 	uv export --no-dev --no-emit-project -o requirements.txt
