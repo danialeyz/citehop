@@ -1,8 +1,8 @@
 """Read the graph-relevant MariaDB snapshot: articles, categories, and article links.
 
-MariaDB is the source of truth. The column names below follow the shared-contract table
-names (articles, article_categories, article_links); confirm them against the C03 data
-model before the first real import. Only these three statements touch MariaDB.
+MariaDB is the source of truth (schema: sql/corpus_schema.sql, docs/DATA_MODEL.md). The
+corpus version is the latest `corpus_versions.version_id`, which the C03 loader advances on
+any content change. Only the statements below touch MariaDB.
 """
 
 from __future__ import annotations
@@ -12,8 +12,9 @@ import json
 from dataclasses import dataclass
 
 ARTICLES_SQL = "SELECT article_id, title, source_url, revision_id FROM articles"
-CATEGORIES_SQL = "SELECT article_id, category FROM article_categories"
+CATEGORIES_SQL = "SELECT article_id, category_name FROM article_categories"
 LINKS_SQL = "SELECT source_article_id, target_article_id FROM article_links"
+VERSION_SQL = "SELECT MAX(version_id) FROM corpus_versions"
 
 
 @dataclass(frozen=True)
@@ -34,10 +35,13 @@ class Snapshot:
     links: tuple[tuple[int | str, int | str], ...]
     skipped_links: int
     skipped_memberships: int
+    corpus_version: str | None = None
 
     @property
     def version(self) -> str:
-        """Content fingerprint of everything the graph imports; changes with any source edit."""
+        """MariaDB corpus version when read from MariaDB, else a fingerprint of the content."""
+        if self.corpus_version:
+            return self.corpus_version
         payload = json.dumps(
             [
                 [[a.article_id, a.title, a.source_url, a.revision_id] for a in self.articles],
@@ -62,7 +66,7 @@ def _key(value):
     return (isinstance(value, str), value)
 
 
-def build_snapshot(article_rows, category_rows, link_rows) -> Snapshot:
+def build_snapshot(article_rows, category_rows, link_rows, corpus_version=None) -> Snapshot:
     """Normalize raw rows; links/memberships to missing articles are skipped and counted."""
     articles = {}
     for article_id, title, source_url, revision_id in article_rows:
@@ -92,13 +96,35 @@ def build_snapshot(article_rows, category_rows, link_rows) -> Snapshot:
         links=tuple(sorted(links, key=lambda e: (_key(e[0]), _key(e[1])))),
         skipped_links=skipped_links,
         skipped_memberships=skipped_memberships,
+        corpus_version=corpus_version,
     )
 
 
-def read_snapshot(conn) -> Snapshot:
-    """Read the snapshot from any DB-API connection (MariaDB in production)."""
+def corpus_version(cur) -> str:
+    """Current corpus version, e.g. `corpus:2`. One indexed row lookup; cheap to call often."""
+    cur.execute(VERSION_SQL)
+    (version_id,) = cur.fetchone()
+    if version_id is None:
+        raise ValueError("corpus_versions is empty; run python -m citehop.corpus first")
+    return f"corpus:{version_id}"
+
+
+def read_corpus_version(conn) -> str:
     cur = conn.cursor()
     try:
+        return corpus_version(cur)
+    finally:
+        cur.close()
+
+
+def read_snapshot(conn) -> Snapshot:
+    """Read the version and graph tables in one transaction, so they describe the same load.
+
+    InnoDB's default REPEATABLE READ gives every read in the transaction the same snapshot.
+    """
+    cur = conn.cursor()
+    try:
+        version = corpus_version(cur)
         cur.execute(ARTICLES_SQL)
         article_rows = cur.fetchall()
         cur.execute(CATEGORIES_SQL)
@@ -107,4 +133,5 @@ def read_snapshot(conn) -> Snapshot:
         link_rows = cur.fetchall()
     finally:
         cur.close()
-    return build_snapshot(article_rows, category_rows, link_rows)
+        conn.rollback()  # read-only; end the snapshot transaction
+    return build_snapshot(article_rows, category_rows, link_rows, corpus_version=version)

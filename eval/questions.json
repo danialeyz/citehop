@@ -1,0 +1,1076 @@
+{
+  "schema_version": 1,
+  "corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+  "status": "draft",
+  "drafted_by": "AI agent (Claude); requires team review",
+  "notes": "Frozen before tuning. Review fields are mutable; everything else is covered by labels_sha256.",
+  "questions": [
+    {
+      "id": "dev-01",
+      "split": "dev",
+      "question": "Who created the first algorithm for random decision forests, and in what year?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        1363880
+      ],
+      "evidence": [
+        {
+          "article_id": 1363880,
+          "title": "Random forest",
+          "revision_id": 1373673788,
+          "text_sha256": "6d3cbc368e6ac93f3b35fce98b306de4110ace6ea8220ccd48904dd44c9b7f1d",
+          "start_char": 453,
+          "end_char": 534,
+          "passage": "The first algorithm for random decision forests was created in 1995 by Tin Kam Ho"
+        }
+      ],
+      "expected_answer": "Tin Kam Ho, in 1995.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-02",
+      "split": "dev",
+      "question": "At which university did Ian Goodfellow and colleagues first develop the generative adversarial network concept?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        50073184
+      ],
+      "evidence": [
+        {
+          "article_id": 50073184,
+          "title": "Generative adversarial network",
+          "revision_id": 1380981582,
+          "text_sha256": "c440a28d35860b41e28a5b74ca7a331d54e1e7316a479a5a38a00396f6c4f6b6",
+          "start_char": 173,
+          "end_char": 285,
+          "passage": "The concept was initially developed by Ian Goodfellow and his colleagues at Université de Montréal in June 2014."
+        }
+      ],
+      "expected_answer": "Université de Montréal (in June 2014).",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-03",
+      "split": "dev",
+      "question": "Who coined the term machine learning, and when?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        233488
+      ],
+      "evidence": [
+        {
+          "article_id": 233488,
+          "title": "Machine learning",
+          "revision_id": 1382314933,
+          "text_sha256": "f2c7bcae618780aad969b1ae9cde430d063cdc27df8098894ac3cd7c58ef0b70",
+          "start_char": 1186,
+          "end_char": 1337,
+          "passage": "The term machine learning was coined in 1959 by Arthur Samuel, an IBM employee and pioneer in the field of computer gaming and artificial intelligence."
+        }
+      ],
+      "expected_answer": "Arthur Samuel, an IBM employee, in 1959.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-04",
+      "split": "dev",
+      "question": "Who invented principal component analysis, and who later independently developed and named it?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        76340
+      ],
+      "evidence": [
+        {
+          "article_id": 76340,
+          "title": "Principal component analysis",
+          "revision_id": 1382439040,
+          "text_sha256": "968c0af267b39aa03cbce6a67e879d0d064a18d873d65d47efa314691a29b257",
+          "start_char": 3293,
+          "end_char": 3474,
+          "passage": "PCA was invented in 1901 by Karl Pearson, as an analogue of the principal axis theorem in mechanics; it was later independently developed and named by Harold Hotelling in the 1930s."
+        }
+      ],
+      "expected_answer": "Karl Pearson invented it in 1901; Harold Hotelling independently developed and named it in the 1930s.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-05",
+      "split": "dev",
+      "question": "What is the title of the 2017 paper that introduced the transformer architecture?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "multi-article"
+      ],
+      "relevant_article_ids": [
+        21523,
+        61603971,
+        73248112
+      ],
+      "evidence": [
+        {
+          "article_id": 61603971,
+          "title": "Transformer (deep learning)",
+          "revision_id": 1382511100,
+          "text_sha256": "d0f25a286a0f1d13863970a07bedecb32988704395901d32ca8e294faf5fca15",
+          "start_char": 1359,
+          "end_char": 1496,
+          "passage": "The original version of the transformer architecture was proposed in the 2017 paper \"Attention Is All You Need\" by researchers at Google."
+        },
+        {
+          "article_id": 21523,
+          "title": "Neural network (machine learning)",
+          "revision_id": 1382090148,
+          "text_sha256": "16a992892695395012bebfebcb2c6fad70f69dbdfd5fcdbaa6a06ef19a22e6fd",
+          "start_char": 17290,
+          "end_char": 17377,
+          "passage": "This led to the modern transformer architecture in 2017 in \"Attention Is All You Need\"."
+        },
+        {
+          "article_id": 73248112,
+          "title": "Large language model",
+          "revision_id": 1382610955,
+          "text_sha256": "c0eb84567a165c072a3020dc9d5727a1fcb0f45e5b4109ba4400df7c71f5be45",
+          "start_char": 3047,
+          "end_char": 3190,
+          "passage": "At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper \"Attention Is All You Need\"."
+        }
+      ],
+      "expected_answer": "\"Attention Is All You Need\", by researchers at Google.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-06",
+      "split": "dev",
+      "question": "Who proposed bootstrap aggregating, and who developed the random forest extension that combines bagging with random feature selection?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "multi-article"
+      ],
+      "relevant_article_ids": [
+        1307911,
+        1363880
+      ],
+      "evidence": [
+        {
+          "article_id": 1307911,
+          "title": "Bootstrap aggregating",
+          "revision_id": 1375890244,
+          "text_sha256": "e4cd0cc7ad753350880bf129785bd79cd8c06d0bc391b887de25eb05901ce230",
+          "start_char": 14801,
+          "end_char": 14922,
+          "passage": "Bootstrap aggregating was proposed by Leo Breiman who also coined the abbreviated term \"bagging\" (bootstrap aggregating)."
+        },
+        {
+          "article_id": 1363880,
+          "title": "Random forest",
+          "revision_id": 1373673788,
+          "text_sha256": "6d3cbc368e6ac93f3b35fce98b306de4110ace6ea8220ccd48904dd44c9b7f1d",
+          "start_char": 708,
+          "end_char": 783,
+          "passage": "An extension of the algorithm was developed by Leo Breiman and Adele Cutler"
+        }
+      ],
+      "expected_answer": "Leo Breiman proposed bagging; Breiman and Adele Cutler developed the random forest extension.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-07",
+      "split": "dev",
+      "question": "Who proposed the DBSCAN clustering algorithm, and in which year?",
+      "answerable": true,
+      "filters": {
+        "category": "Cluster analysis algorithms"
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        13747309
+      ],
+      "evidence": [
+        {
+          "article_id": 13747309,
+          "title": "DBSCAN",
+          "revision_id": 1379881565,
+          "text_sha256": "b9e90fd88fb782d9285274c2aa15e5aed18738deb76b28c9af463b32b6c60990",
+          "start_char": 69,
+          "end_char": 182,
+          "passage": "is a data clustering algorithm proposed by Martin Ester, Hans-Peter Kriegel, Jörg Sander, and Xiaowei Xu in 1996."
+        }
+      ],
+      "expected_answer": "Martin Ester, Hans-Peter Kriegel, Jörg Sander and Xiaowei Xu, in 1996.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-08",
+      "split": "dev",
+      "question": "Who first used the term k-means, and who first proposed the standard k-means algorithm?",
+      "answerable": true,
+      "filters": {
+        "min_length_chars": 20000
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        1860407
+      ],
+      "evidence": [
+        {
+          "article_id": 1860407,
+          "title": "K-means clustering",
+          "revision_id": 1380990513,
+          "text_sha256": "ccab8450509ffde73421224d76ed3e795dd2e5f901055e965b1f7cb50507c914",
+          "start_char": 2493,
+          "end_char": 2685,
+          "passage": "The term \"k-means\" was first used by James MacQueen in 1967, though the idea goes back to Hugo Steinhaus in 1956. The standard algorithm was first proposed by Stuart Lloyd of Bell Labs in 1957"
+        }
+      ],
+      "expected_answer": "James MacQueen first used the term in 1967; Stuart Lloyd of Bell Labs proposed the standard algorithm in 1957.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-09",
+      "split": "dev",
+      "question": "What is the default value of the min_samples parameter in scikit-learn's DBSCAN implementation?",
+      "answerable": false,
+      "filters": {},
+      "tags": [
+        "near-miss",
+        "unanswerable"
+      ],
+      "relevant_article_ids": [],
+      "evidence": [],
+      "expected_answer": null,
+      "unanswerable_reason": "The corpus gives minPts rules of thumb but never states scikit-learn's default parameter values.",
+      "scope_evidence": [
+        {
+          "article_id": 13747309,
+          "title": "DBSCAN",
+          "revision_id": 1379881565,
+          "text_sha256": "b9e90fd88fb782d9285274c2aa15e5aed18738deb76b28c9af463b32b6c60990",
+          "start_char": 11903,
+          "end_char": 11949,
+          "passage": "As a rule of thumb, minPts = 2·dim can be used"
+        }
+      ],
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "dev-10",
+      "split": "dev",
+      "question": "Who introduced Q-learning, and in what year?",
+      "answerable": false,
+      "filters": {
+        "category": "Cluster analysis algorithms"
+      },
+      "tags": [
+        "filter-excludes-answer",
+        "filtered",
+        "unanswerable"
+      ],
+      "relevant_article_ids": [],
+      "evidence": [],
+      "expected_answer": null,
+      "unanswerable_reason": "The answer exists only in the Q-learning article, which the cluster-analysis category filter excludes.",
+      "scope_evidence": [
+        {
+          "article_id": 1281850,
+          "title": "Q-learning",
+          "revision_id": 1373673723,
+          "text_sha256": "6a78c85b4c2b5f260b3df9c35a1285760cc73c02994ae01408a44b902920391d",
+          "start_char": 8849,
+          "end_char": 8900,
+          "passage": "Q-learning was introduced by Chris Watkins in 1989."
+        }
+      ],
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-01",
+      "split": "test",
+      "question": "Who formulated AdaBoost, and which prize did they win for this work?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "multi-article"
+      ],
+      "relevant_article_ids": [
+        90500,
+        1645603
+      ],
+      "evidence": [
+        {
+          "article_id": 1645603,
+          "title": "AdaBoost",
+          "revision_id": 1380247235,
+          "text_sha256": "f176cb376c86cd78c0efac0c4a0a9d4095fb50389e3e40ab67aa5bd190a0e4f5",
+          "start_char": 86,
+          "end_char": 184,
+          "passage": "formulated by Yoav Freund and Robert Schapire in 1995, who won the 2003 Gödel Prize for their work"
+        },
+        {
+          "article_id": 90500,
+          "title": "Boosting (machine learning)",
+          "revision_id": 1368726976,
+          "text_sha256": "6f34d181fe6c3cc6e8f45a4518b8880f1f404a8b00250f54edc207204738be2a",
+          "start_char": 2241,
+          "end_char": 2354,
+          "passage": "Schapire and Freund then developed AdaBoost, an adaptive boosting algorithm that won the prestigious Gödel Prize."
+        }
+      ],
+      "expected_answer": "Yoav Freund and Robert Schapire (1995); they won the 2003 Gödel Prize.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-02",
+      "split": "test",
+      "question": "Who introduced Q-learning, and who presented its convergence proof in 1992?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        1281850
+      ],
+      "evidence": [
+        {
+          "article_id": 1281850,
+          "title": "Q-learning",
+          "revision_id": 1373673723,
+          "text_sha256": "6a78c85b4c2b5f260b3df9c35a1285760cc73c02994ae01408a44b902920391d",
+          "start_char": 8849,
+          "end_char": 8969,
+          "passage": "Q-learning was introduced by Chris Watkins in 1989. A convergence proof was presented by Watkins and Peter Dayan in 1992"
+        }
+      ],
+      "expected_answer": "Chris Watkins introduced it in 1989; Watkins and Peter Dayan presented the convergence proof in 1992.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-03",
+      "split": "test",
+      "question": "Who identified the vanishing gradient problem in 1991?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "multi-article"
+      ],
+      "relevant_article_ids": [
+        21523,
+        2266644,
+        10711453,
+        32472154,
+        55867424
+      ],
+      "evidence": [
+        {
+          "article_id": 10711453,
+          "title": "Long short-term memory",
+          "revision_id": 1380313689,
+          "text_sha256": "5355739eba659588ebf7bab66d273ca1128997ef159c8ad20aee309d9ecebdbe",
+          "start_char": 9688,
+          "end_char": 9812,
+          "passage": "Sepp Hochreiter's 1991 German diploma thesis analyzed the vanishing gradient problem and developed principles of the method."
+        },
+        {
+          "article_id": 32472154,
+          "title": "Deep learning",
+          "revision_id": 1378632336,
+          "text_sha256": "e3d051cc0d194ca10d47587fcbfa1f584e0b35a938616f706a00be162a4467f7",
+          "start_char": 13732,
+          "end_char": 13874,
+          "passage": "Sepp Hochreiter's diploma thesis (1991) implemented the neural history compressor, and identified and analyzed the vanishing gradient problem."
+        },
+        {
+          "article_id": 21523,
+          "title": "Neural network (machine learning)",
+          "revision_id": 1382090148,
+          "text_sha256": "16a992892695395012bebfebcb2c6fad70f69dbdfd5fcdbaa6a06ef19a22e6fd",
+          "start_char": 13582,
+          "end_char": 13678,
+          "passage": "In 1991, Sepp Hochreiter's diploma thesis identified and analyzed the vanishing gradient problem"
+        },
+        {
+          "article_id": 2266644,
+          "title": "Multilayer perceptron",
+          "revision_id": 1380964914,
+          "text_sha256": "887b69c4d381df785b723c22fa90a1b1141af84a7969fc7e0d274526b2f748ea",
+          "start_char": 14111,
+          "end_char": 14180,
+          "passage": "The vanishing gradient problem, identified by Sepp Hochreiter in 1991"
+        },
+        {
+          "article_id": 55867424,
+          "title": "Residual neural network",
+          "revision_id": 1376425875,
+          "text_sha256": "556bf823f04d3017f2cff1464d92b5e3a70b81ab9d654ace2012ec0c618b11e7",
+          "start_char": 8230,
+          "end_char": 8295,
+          "passage": "Sepp Hochreiter discovered the vanishing gradient problem in 1991"
+        }
+      ],
+      "expected_answer": "Sepp Hochreiter (in his 1991 diploma thesis).",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-04",
+      "split": "test",
+      "question": "In which month and year was BERT introduced, and which transformer architecture does it use?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        62026514
+      ],
+      "evidence": [
+        {
+          "article_id": 62026514,
+          "title": "BERT (language model)",
+          "revision_id": 1382680910,
+          "text_sha256": "fcd9129064349bdc6fd34255c9fe5b1575ec31fee51686414a858fe53653efc3",
+          "start_char": 63,
+          "end_char": 271,
+          "passage": "is a language model introduced in October 2018 by researchers at Google. It learns to represent text as a sequence of vectors using self-supervised learning. It uses the encoder-only transformer architecture."
+        }
+      ],
+      "expected_answer": "October 2018, by researchers at Google; it uses an encoder-only transformer architecture.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-05",
+      "split": "test",
+      "question": "Which researchers developed Word2Vec, and at which conference was it presented?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        47527969
+      ],
+      "evidence": [
+        {
+          "article_id": 47527969,
+          "title": "Word2Vec",
+          "revision_id": 1381528953,
+          "text_sha256": "2af990986fec5c0a850fe3cc1d92fbb893c3059b6d2aee378738fdfab4572b46",
+          "start_char": 454,
+          "end_char": 612,
+          "passage": "Word2Vec was developed by Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever and Jeff Dean at Google, published in preprints and presented at ICLR in 2013."
+        }
+      ],
+      "expected_answer": "Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever and Jeff Dean at Google; presented at ICLR in 2013.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-06",
+      "split": "test",
+      "question": "Where was GloVe developed, when was it launched, and what was it designed to compete with?",
+      "answerable": true,
+      "filters": {
+        "max_length_chars": 6000
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        49489032
+      ],
+      "evidence": [
+        {
+          "article_id": 49489032,
+          "title": "GloVe",
+          "revision_id": 1381528889,
+          "text_sha256": "c97849eb31e89f60c3d4dc0b177279caa571137fa0b950f708547bbf00e25cc5",
+          "start_char": 736,
+          "end_char": 867,
+          "passage": "It was developed as an open-source project at Stanford University and launched in 2014. It was designed as a competitor to word2vec"
+        }
+      ],
+      "expected_answer": "At Stanford University as an open-source project, launched in 2014, as a competitor to word2vec.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-07",
+      "split": "test",
+      "question": "Who introduced batch normalization, and in what year?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        57222123
+      ],
+      "evidence": [
+        {
+          "article_id": 57222123,
+          "title": "Batch normalization",
+          "revision_id": 1382561856,
+          "text_sha256": "e2c569566e4745f36a1174329a643af77c06c12b38f2a7e3292a5b82e3002be2",
+          "start_char": 260,
+          "end_char": 324,
+          "passage": "It was introduced by Sergey Ioffe and Christian Szegedy in 2015."
+        }
+      ],
+      "expected_answer": "Sergey Ioffe and Christian Szegedy, in 2015.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-08",
+      "split": "test",
+      "question": "Which competition did the residual neural network win in the year it was developed?",
+      "answerable": true,
+      "filters": {
+        "category": "Neural network architectures"
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        55867424
+      ],
+      "evidence": [
+        {
+          "article_id": 55867424,
+          "title": "Residual neural network",
+          "revision_id": 1376425875,
+          "text_sha256": "556bf823f04d3017f2cff1464d92b5e3a70b81ab9d654ace2012ec0c618b11e7",
+          "start_char": 283,
+          "end_char": 415,
+          "passage": "It was developed in 2015 for image recognition, and won the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) of that year."
+        }
+      ],
+      "expected_answer": "The ImageNet Large Scale Visual Recognition Challenge (ILSVRC) of 2015.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-09",
+      "split": "test",
+      "question": "Which authors explained and named the EM algorithm in a 1977 paper?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        470752
+      ],
+      "evidence": [
+        {
+          "article_id": 470752,
+          "title": "Expectation–maximization algorithm",
+          "revision_id": 1369278721,
+          "text_sha256": "252aff236b7057750503188e7bb1fd3e5b4747420d03a7335879487392cd9e8f",
+          "start_char": 1126,
+          "end_char": 1248,
+          "passage": "The EM algorithm was explained and given its name in a classic 1977 paper by Arthur Dempster, Nan Laird, and Donald Rubin."
+        }
+      ],
+      "expected_answer": "Arthur Dempster, Nan Laird and Donald Rubin.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-10",
+      "split": "test",
+      "question": "On which computer did Frank Rosenblatt first simulate the perceptron?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        172777
+      ],
+      "evidence": [
+        {
+          "article_id": 172777,
+          "title": "Perceptron",
+          "revision_id": 1377470406,
+          "text_sha256": "735577157b9a8ba00dfe56d271338199cedbab432690b9b4d5d2faa7f0bc0a49",
+          "start_char": 1389,
+          "end_char": 1501,
+          "passage": "In 1957, Frank Rosenblatt was at the Cornell Aeronautical Laboratory. He simulated the perceptron on an IBM 704."
+        }
+      ],
+      "expected_answer": "An IBM 704 (in 1957, at the Cornell Aeronautical Laboratory).",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-11",
+      "split": "test",
+      "question": "Who introduced the self-organizing map, and in which decade?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        76996
+      ],
+      "evidence": [
+        {
+          "article_id": 76996,
+          "title": "Self-organizing map",
+          "revision_id": 1372427894,
+          "text_sha256": "f5504cebe155018cd2864041384f1374ee86af5278714b4da33cc7932ad00141",
+          "start_char": 1638,
+          "end_char": 1712,
+          "passage": "The SOM was introduced by the Finnish professor Teuvo Kohonen in the 1980s"
+        }
+      ],
+      "expected_answer": "The Finnish professor Teuvo Kohonen, in the 1980s.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-12",
+      "split": "test",
+      "question": "When did AlphaGo become the first Computer Go program to beat a professional human player without handicaps on a full-sized board?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        40528449
+      ],
+      "evidence": [
+        {
+          "article_id": 40528449,
+          "title": "Monte Carlo tree search",
+          "revision_id": 1376485206,
+          "text_sha256": "a46355bc5bb72038b56e570e2043f6e0433b5ae364e75d6d04a8a21dfd3ed43f",
+          "start_char": 2750,
+          "end_char": 2941,
+          "passage": "Google Deepmind developed the program AlphaGo, which in October 2015 became the first Computer Go program to beat a professional human Go player without handicaps on a full-sized 19x19 board."
+        }
+      ],
+      "expected_answer": "October 2015.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-13",
+      "split": "test",
+      "question": "Which researcher discussed in the history of backpropagation was awarded the 2024 Nobel Prize in Physics?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        1360091
+      ],
+      "evidence": [
+        {
+          "article_id": 1360091,
+          "title": "Backpropagation",
+          "revision_id": 1381710221,
+          "text_sha256": "99c337f5cdd6113ca645d96c2614876036df3cfb32d64f69a25b638cbcdb5783",
+          "start_char": 21899,
+          "end_char": 21999,
+          "passage": "Geoffrey Hinton, who was awarded the 2024 Nobel Prize in Physics for his contributions to the field."
+        }
+      ],
+      "expected_answer": "Geoffrey Hinton.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-14",
+      "split": "test",
+      "question": "Who coined the term lasso, and which regularized regression method linearly combines the lasso and ridge penalties?",
+      "answerable": true,
+      "filters": {
+        "category": "Regression analysis"
+      },
+      "tags": [
+        "multi-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        22349350,
+        34021763
+      ],
+      "evidence": [
+        {
+          "article_id": 22349350,
+          "title": "Lasso (statistics)",
+          "revision_id": 1376294298,
+          "text_sha256": "0c8823929de0f30c0ba1d65ba47a438c98064e49d09e76fd4e3c492a5dde2564",
+          "start_char": 484,
+          "end_char": 536,
+          "passage": "and later by Robert Tibshirani, who coined the term."
+        },
+        {
+          "article_id": 34021763,
+          "title": "Elastic net regularization",
+          "revision_id": 1374244169,
+          "text_sha256": "74603c5bad243485b081e337009b2a17f7dfe6ffcf63ae2854dfbd2b15b516a7",
+          "start_char": 90,
+          "end_char": 219,
+          "passage": "the elastic net is a regularized regression method that linearly combines the L1 and L2 penalties of the lasso and ridge methods."
+        }
+      ],
+      "expected_answer": "Robert Tibshirani coined the term; the elastic net combines the L1 and L2 penalties.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-15",
+      "split": "test",
+      "question": "Who developed the bootstrapping concept from which bootstrap aggregating is derived?",
+      "answerable": true,
+      "filters": {
+        "linked_from": 22212276
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        1307911
+      ],
+      "evidence": [
+        {
+          "article_id": 1307911,
+          "title": "Bootstrap aggregating",
+          "revision_id": 1375890244,
+          "text_sha256": "e4cd0cc7ad753350880bf129785bd79cd8c06d0bc391b887de25eb05901ce230",
+          "start_char": 14681,
+          "end_char": 14800,
+          "passage": "The concept of bootstrap aggregating is derived from the concept of bootstrapping which was developed by Bradley Efron."
+        }
+      ],
+      "expected_answer": "Bradley Efron.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-16",
+      "split": "test",
+      "question": "What grand prize did Netflix offer in the Netflix Prize competition, and over which years did it run?",
+      "answerable": true,
+      "filters": {},
+      "tags": [
+        "single-article"
+      ],
+      "relevant_article_ids": [
+        596646
+      ],
+      "evidence": [
+        {
+          "article_id": 596646,
+          "title": "Recommender system",
+          "revision_id": 1381129579,
+          "text_sha256": "27885b0cae7a862768b9928a5df505a605b1237a9bf207b767769ef5f6b77ad4",
+          "start_char": 21035,
+          "end_char": 21123,
+          "passage": "From 2006 to 2009, Netflix sponsored a competition, offering a grand prize of $1,000,000"
+        }
+      ],
+      "expected_answer": "$1,000,000; the competition ran from 2006 to 2009.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-17",
+      "split": "test",
+      "question": "Who developed explicit regression gradient boosting algorithms, and in which years?",
+      "answerable": true,
+      "filters": {
+        "category": "Ensemble learning"
+      },
+      "tags": [
+        "single-article",
+        "filtered"
+      ],
+      "relevant_article_ids": [
+        26649339
+      ],
+      "evidence": [
+        {
+          "article_id": 26649339,
+          "title": "Gradient boosting",
+          "revision_id": 1373672597,
+          "text_sha256": "7d3bdade06c9f0f42e3be0047aa2e4b325a62d902e1e6455442654088f8a2312",
+          "start_char": 865,
+          "end_char": 993,
+          "passage": "Explicit regression gradient boosting algorithms were subsequently developed, by Jerome H. Friedman, (in 1999 and later in 2001)"
+        }
+      ],
+      "expected_answer": "Jerome H. Friedman, in 1999 and later in 2001.",
+      "unanswerable_reason": null,
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-18",
+      "split": "test",
+      "question": "According to Kaggle, how many winning competition solutions in 2015 used XGBoost?",
+      "answerable": false,
+      "filters": {},
+      "tags": [
+        "near-miss",
+        "unanswerable"
+      ],
+      "relevant_article_ids": [],
+      "evidence": [],
+      "expected_answer": null,
+      "unanswerable_reason": "XGBoost is mentioned, but the corpus contains no Kaggle competition statistics.",
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-19",
+      "split": "test",
+      "question": "What top-5 error rate did the original ResNet ensemble achieve on the ImageNet test set?",
+      "answerable": false,
+      "filters": {},
+      "tags": [
+        "near-miss",
+        "unanswerable"
+      ],
+      "relevant_article_ids": [],
+      "evidence": [],
+      "expected_answer": null,
+      "unanswerable_reason": "The ResNet article says it won ILSVRC 2015 but reports no top-5 error rate.",
+      "scope_evidence": [
+        {
+          "article_id": 55867424,
+          "title": "Residual neural network",
+          "revision_id": 1376425875,
+          "text_sha256": "556bf823f04d3017f2cff1464d92b5e3a70b81ab9d654ace2012ec0c618b11e7",
+          "start_char": 335,
+          "end_char": 415,
+          "passage": "won the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) of that year."
+        }
+      ],
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "id": "test-20",
+      "split": "test",
+      "question": "Who introduced batch normalization?",
+      "answerable": false,
+      "filters": {
+        "max_length_chars": 6000
+      },
+      "tags": [
+        "filter-excludes-answer",
+        "filtered",
+        "unanswerable"
+      ],
+      "relevant_article_ids": [],
+      "evidence": [],
+      "expected_answer": null,
+      "unanswerable_reason": "Only the Batch normalization article (longer than 6000 characters) names its authors; the length filter excludes it.",
+      "scope_evidence": [
+        {
+          "article_id": 57222123,
+          "title": "Batch normalization",
+          "revision_id": 1382561856,
+          "text_sha256": "e2c569566e4745f36a1174329a643af77c06c12b38f2a7e3292a5b82e3002be2",
+          "start_char": 260,
+          "end_char": 324,
+          "passage": "It was introduced by Sergey Ioffe and Christian Szegedy in 2015."
+        }
+      ],
+      "review": {
+        "status": "unreviewed",
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    }
+  ],
+  "labels_sha256": "23e52d6ac35a3e5f820fccaef74d3427b8856cca2f7942359809979fcfa23375"
+}

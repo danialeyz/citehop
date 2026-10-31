@@ -1,53 +1,48 @@
-COMPOSE = docker compose -f docker/docker-compose.yml
-PY = python
+COMPOSE = docker compose --env-file .env -f docker/docker-compose.yml
+PY = .venv/bin/python
+API_PORT ?= 8000
+FRONTEND_PORT ?= 3000
 
-.PHONY: help venv db-up db-down db-reset db-shell check schema kg-schema test test-db test-graph graph-import graph-status lint inspect
-
-help:            ## list targets
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph graph-import graph-status lint locks
+help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
-
-venv:            ## create .venv and install core + dev deps
-	python3.11 -m venv .venv && . .venv/bin/activate && pip install -U pip && pip install -r requirements-dev.txt && pip install -e .
-
-db-up:           ## start MariaDB 11.8.9 and wait until healthy
+venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
+	uv sync --locked
+frontend-install: ## install locked frontend dependencies
+	npm ci --prefix frontend
+db-up: ## start both databases and wait for health
 	$(COMPOSE) up -d --wait
-
-db-down:         ## stop MariaDB (data kept)
+db-down: ## stop databases; preserve volumes
 	$(COMPOSE) down
-
-db-reset:        ## DELETE all data and start fresh (asks first)
-	@read -p "Delete the database volume? [y/N] " a; \
-	if [ "$$a" = "y" ]; then $(COMPOSE) down -v && $(COMPOSE) up -d --wait; else echo "Cancelled."; fi
-
-db-shell:        ## open a mariadb prompt
-	$(COMPOSE) exec db mariadb -ucitehop -pcitehop citehop
-
-check:           ## verify connection and version
+db-restart: ## restart databases and wait for health
+	$(COMPOSE) restart
+	$(COMPOSE) up -d --wait
+db-shell: ## open SQL shell with configured credentials
+	$(COMPOSE) exec db sh -c 'exec mariadb -u"$$MARIADB_USER" -p"$$MARIADB_PASSWORD" "$$MARIADB_DATABASE"'
+check: ## real database connections and native vector check
 	$(PY) -m citehop.check
-
-schema:          ## create the 6 core tables (safe to rerun)
-	$(PY) -m citehop.apply_sql sql/schema.sql
-
-kg-schema:       ## create the knowledge graph tables and view (safe to rerun)
-	$(PY) -m citehop.apply_sql sql/kg_schema.sql
-
-test:            ## unit tests, no DB
-	pytest -m "not db and not neo4j"
-
-test-db:         ## integration tests, needs make db-up
-	pytest -m db
-
-test-graph:      ## Neo4j tests; needs CITEHOP_TEST_NEO4J_URI/_PASSWORD for a DISPOSABLE instance
-	pytest -m neo4j
-
-graph-import:    ## rebuild the Neo4j graph from MariaDB (explicit, never automatic)
+sql: ## run trusted SQL file: make sql FILE=sql/smoke.sql
+	@test -n "$(FILE)" || (echo 'Set FILE=path/to/file.sql'; exit 1)
+	$(PY) -m citehop.apply_sql "$(FILE)"
+api: ## run FastAPI on localhost (one development worker)
+	$(PY) -m uvicorn citehop.api.main:app --reload --host 127.0.0.1 --port $(API_PORT)
+frontend: ## run Next.js on localhost
+	npm --prefix frontend run dev -- --port $(FRONTEND_PORT)
+frontend-check: ## lint, typecheck and production build
+	npm --prefix frontend run lint
+	npm --prefix frontend run typecheck
+	npm --prefix frontend run build
+test: ## backend smoke/unit tests without databases
+	$(PY) -m pytest -m 'not db and not neo4j'
+test-graph: ## Neo4j tests; set CITEHOP_TEST_NEO4J_URI/_PASSWORD to a DISPOSABLE instance
+	$(PY) -m pytest -m neo4j
+graph-import: ## rebuild the Neo4j graph from MariaDB (explicit, never automatic)
 	$(PY) -m citehop.graph import
-
-graph-status:    ## graph ready/stale/rebuilding/unavailable plus versions
+graph-status: ## graph ready/stale/rebuilding/unavailable plus versions
 	$(PY) -m citehop.graph status
-
-lint:            ## ruff
-	ruff check citehop tests scripts
-
-inspect:         ## card #9: download LitSearch and print its fields
-	$(PY) scripts/inspect_litsearch.py
+lint: ## Python lint
+	.venv/bin/ruff check citehop tests scripts/check_persistence.py
+locks: ## explicitly refresh Python lock and pip exports after dependency changes
+	uv lock
+	uv export --no-dev --no-emit-project -o requirements.txt
+	uv export --no-emit-project -o requirements-dev.txt

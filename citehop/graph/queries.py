@@ -24,9 +24,9 @@ REL_TYPES = ("LINKS_TO", "IN_CATEGORY")
 MAX_HOPS = 2
 DEFAULT_NODES, MAX_NODES = 50, 100
 DEFAULT_EDGES, MAX_EDGES = 100, 200
-# Computing the source version scans MariaDB's graph tables, so a long-lived caller reuses it
-# for this long. A corpus change can therefore take up to this long to show as `stale`.
-SOURCE_VERSION_TTL_S = 60.0
+# A long-lived caller (the API) reuses the MariaDB corpus version for this long, so a burst of
+# graph requests costs one lookup. A corpus change can take this long to show as `stale`.
+SOURCE_VERSION_TTL_S = 5.0
 PATH_MAX_LINKS = 3
 
 FIND_ARTICLES = """

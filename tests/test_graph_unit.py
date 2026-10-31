@@ -6,7 +6,7 @@ import pytest
 from neo4j import GraphDatabase
 
 from citehop.graph.queries import GraphQueries
-from citehop.graph.source import build_snapshot, read_snapshot
+from citehop.graph.source import build_snapshot, read_corpus_version, read_snapshot
 from citehop.graph.store import GraphNotReady, GraphUnavailable, import_snapshot
 
 ARTICLES = [(1, "Neural network", "https://en.wikipedia.org/wiki/Neural_network", 10),
@@ -40,13 +40,23 @@ def test_version_is_order_independent_and_tracks_changes():
     assert build_snapshot(ARTICLES, [], [(1, 2)]).version != a.version
 
 
-def test_read_snapshot_uses_contract_tables():
+def c03_tables():
+    """The graph-relevant columns of sql/corpus_schema.sql."""
     conn = sqlite3.connect(":memory:")
     conn.executescript("""
+        CREATE TABLE corpus_versions (version_id INTEGER PRIMARY KEY);
         CREATE TABLE articles (article_id INTEGER PRIMARY KEY, title TEXT, source_url TEXT,
                                revision_id INTEGER);
-        CREATE TABLE article_categories (article_id INTEGER, category TEXT);
+        CREATE TABLE article_categories (article_id INTEGER, category_name TEXT);
         CREATE TABLE article_links (source_article_id INTEGER, target_article_id INTEGER);
+    """)
+    return conn
+
+
+def test_read_snapshot_uses_c03_schema_and_corpus_version():
+    conn = c03_tables()
+    conn.executescript("""
+        INSERT INTO corpus_versions VALUES (1), (2);
         INSERT INTO articles VALUES (1, 'Neural network', 'u1', 10), (2, 'Perceptron', 'u2', 20);
         INSERT INTO article_categories VALUES (1, 'ML'), (2, 'ML');
         INSERT INTO article_links VALUES (1, 2), (2, 3);
@@ -54,6 +64,12 @@ def test_read_snapshot_uses_contract_tables():
     snap = read_snapshot(conn)
     assert snap.counts() == {"articles": 2, "categories": 1, "links": 1, "memberships": 2}
     assert snap.skipped_links == 1
+    assert snap.version == read_corpus_version(conn) == "corpus:2"
+
+
+def test_read_snapshot_refuses_unloaded_corpus():
+    with pytest.raises(ValueError, match="corpus_versions is empty"):
+        read_snapshot(c03_tables())
 
 
 @pytest.fixture

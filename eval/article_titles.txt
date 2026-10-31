@@ -1,0 +1,100 @@
+Machine learning
+Supervised learning
+Unsupervised learning
+Reinforcement learning
+Decision tree learning
+Random forest
+Support vector machine
+K-nearest neighbors algorithm
+Neural network (machine learning)
+Deep learning
+Linear regression
+Logistic regression
+Naive Bayes classifier
+Bayesian network
+K-means clustering
+Principal component analysis
+Dimensionality reduction
+Overfitting
+Cross-validation (statistics)
+Gradient descent
+Stochastic gradient descent
+Backpropagation
+Convolutional neural network
+Recurrent neural network
+Long short-term memory
+Transformer (deep learning)
+Attention (machine learning)
+Generative adversarial network
+Autoencoder
+Variational autoencoder
+Weak supervision
+Self-supervised learning
+Transfer learning
+Multi-task learning
+Online machine learning
+Active learning (machine learning)
+Ensemble learning
+Boosting (machine learning)
+AdaBoost
+Gradient boosting
+Bootstrap aggregating
+Dropout (neural networks)
+DBSCAN
+Hierarchical clustering
+Spectral clustering
+Mean shift
+Mixture model
+Expectation–maximization algorithm
+Hidden Markov model
+Markov decision process
+Q-learning
+Temporal difference learning
+Deep reinforcement learning
+Multi-armed bandit
+Monte Carlo tree search
+Feature engineering
+Feature selection
+Feature scaling
+Regularization (mathematics)
+Lasso (statistics)
+Ridge regression
+Elastic net regularization
+Bias–variance tradeoff
+Confusion matrix
+Precision and recall
+Receiver operating characteristic
+F-score
+Accuracy and precision
+Loss function
+Cross-entropy
+Maximum likelihood estimation
+Maximum a posteriori estimation
+Bayesian inference
+Gaussian process
+Kernel method
+Batch normalization
+Perceptron
+Multilayer perceptron
+Radial basis function network
+Self-organizing map
+Restricted Boltzmann machine
+Deep belief network
+Word embedding
+Word2Vec
+GloVe
+BERT (language model)
+Large language model
+Natural language processing
+Computer vision
+Residual neural network
+Object detection
+Speech recognition
+Anomaly detection
+Recommender system
+Collaborative filtering
+Matrix factorization (recommender systems)
+Learning to rank
+Similarity learning
+Federated learning
+Explainable artificial intelligence
