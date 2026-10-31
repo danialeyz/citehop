@@ -4,6 +4,7 @@ import Link from "next/link";
 import { EmptyState, MetaRow, PageHeader, Panel, buttonSecondary } from "@/components/ui";
 import { api, type Schemas } from "@/lib/api/client";
 import { load } from "@/lib/api/load";
+import { METHOD_LABEL, parseGraphSearchContext, searchHref } from "@/lib/search";
 
 export const metadata: Metadata = { title: "Graph" };
 
@@ -15,7 +16,9 @@ const STATUS_TEXT: Record<Schemas["GraphStatusOut"]["status"], string> = {
 };
 
 export default async function GraphPage({ searchParams }: PageProps<"/graph">) {
-  const raw = (await searchParams).article;
+  const params = await searchParams;
+  const raw = params.article;
+  const context = parseGraphSearchContext(params);
   const seedId = Number(Array.isArray(raw) ? raw[0] : raw);
   const hasSeed = Number.isInteger(seedId) && seedId >= 1 && seedId <= 4_294_967_295;
 
@@ -31,6 +34,17 @@ export default async function GraphPage({ searchParams }: PageProps<"/graph">) {
       <PageHeader eyebrow="Graph" title="Knowledge graph">
         <p>Real Wikipedia article links and categories from the pinned snapshot. A link between articles is not a citation or evidence that they agree.</p>
       </PageHeader>
+
+      {context && (
+        <nav aria-label="Search context" className="mb-6 flex flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted [overflow-wrap:anywhere]">
+            From {METHOD_LABEL[context.search.method]} search{" "}
+            <strong className="font-medium text-ink">“{context.search.q}”</strong>
+            {context.sources.length > 0 && <> · {context.sources.length} retrieved {context.sources.length === 1 ? "article" : "articles"}</>}
+          </p>
+          <Link href={searchHref(context.search)} className={buttonSecondary}>← Back to search results</Link>
+        </nav>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
         <EmptyState
