@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+<title id="title">CiteHop — Ask a question. Follow the sources.</title><desc id="desc">CiteHop brand illustration: a source becomes a passage, a cited answer, and a connection. A Databases course project at Constructor University. Architecture and design stage.</desc>
+<defs><linearGradient id="hero-bg" x2="1" y2="1"><stop stop-color="#08111f"/><stop offset="1" stop-color="#102b3e"/></linearGradient><radialGradient id="glow"><stop stop-color="#27bbce" stop-opacity=".18"/><stop offset="1" stop-color="#27bbce" stop-opacity="0"/></radialGradient><pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#426079" opacity=".3"/></pattern></defs>
+<rect width="1440" height="620" rx="24" fill="url(#hero-bg)"/><rect width="1440" height="620" rx="24" fill="url(#dots)"/><ellipse cx="1100" cy="290" rx="430" ry="320" fill="url(#glow)"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+<g transform="translate(64 54) scale(.62)">
+  <defs>
+    <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="0.55" stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#0D9488"/>
+    </linearGradient>
+    <linearGradient id="hsheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="0.5" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="hglow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FDE68A" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#FBBF24" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="120" height="120" rx="30" fill="url(#hbg)"/>
+  <rect width="120" height="120" rx="30" fill="url(#hsheen)"/>
+  <rect x="1" y="1" width="118" height="118" rx="29" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="2"/>
+  <g stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="4" stroke-linecap="round">
+    <line x1="30" y1="84" x2="58" y2="70"/>
+    <line x1="58" y1="70" x2="90" y2="84"/>
+    <line x1="58" y1="70" x2="56" y2="98"/>
+  </g>
+  <path d="M30 70 C 34 28, 82 22, 89 58" fill="none" stroke="#FBBF24" stroke-width="5" stroke-linecap="round" stroke-dasharray="0.1 9.5"/>
+  <path d="M82 54 L90 66 L96 53 Z" fill="#FBBF24" stroke="#FBBF24" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="90" cy="84" r="22" fill="url(#hglow)"/>
+  <circle cx="30" cy="84" r="11" fill="#FFFFFF"/>
+  <circle cx="58" cy="70" r="7" fill="#FFFFFF" fill-opacity="0.8"/>
+  <circle cx="56" cy="98" r="5" fill="#FFFFFF" fill-opacity="0.6"/>
+  <circle cx="90" cy="84" r="16" fill="none" stroke="#FBBF24" stroke-opacity="0.55" stroke-width="2.5"/>
+  <circle cx="90" cy="84" r="11" fill="#FBBF24"/>
+</g>
+<text x="158" y="108" font-size="46" font-weight="800" fill="#f0f7fc">Cite<tspan fill="#77e4f0">Hop</tspan></text>
+<rect x="1065" y="64" width="310" height="32" rx="16" fill="#132c3e" stroke="#355368"/><text x="1220" y="85" text-anchor="middle" font-size="12" letter-spacing="1.3" fill="#a5bdcd">ARCHITECTURE + DESIGN STAGE</text>
+<text x="64" y="207" font-size="13" letter-spacing="3" fill="#77e4f0">NATIVE VECTOR SEARCH · GROUNDED ANSWERS</text>
+<text x="60" y="280" font-size="64" font-weight="750" letter-spacing="-2" fill="#f1f6fc">Ask a question.</text>
+<text x="60" y="354" font-size="64" font-weight="750" letter-spacing="-2" fill="#77e4f0">Follow the sources.</text>
+<text x="64" y="408" font-size="20" fill="#a7bacb">From Wikipedia passages to cited answers</text><text x="64" y="438" font-size="20" fill="#a7bacb">and an explorable knowledge graph.</text>
+<g stroke="#426c82" stroke-width="2" fill="none"><path d="M873 214 C970 214 952 318 1050 318"/><path d="M1200 214 C1110 214 1165 318 1050 318"/><path d="M1050 318 C1050 430 1230 390 1230 464"/><path d="M1050 318 C1050 410 865 380 865 462"/></g>
+<g fill="#10263a" stroke="#3d5c73"><rect x="770" y="156" width="216" height="94" rx="16"/><rect x="1120" y="156" width="234" height="94" rx="16"/><rect x="770" y="435" width="216" height="84" rx="16"/><rect x="1114" y="435" width="240" height="84" rx="16"/></g>
+<text x="790" y="183" font-size="11" fill="#8eafc4" letter-spacing="2">01 / SOURCE</text><text x="790" y="218" font-size="22" fill="#f0f7fc">Wikipedia article</text>
+<text x="1140" y="183" font-size="11" fill="#8eafc4" letter-spacing="2">02 / EVIDENCE</text><text x="1140" y="218" font-size="22" fill="#f0f7fc">Retrieved passage</text>
+<text x="790" y="464" font-size="11" fill="#8eafc4" letter-spacing="2">03 / ANSWER</text><text x="790" y="496" font-size="22" fill="#f0f7fc">Traceable citations</text>
+<text x="1134" y="464" font-size="11" fill="#8eafc4" letter-spacing="2">04 / EXPLORE</text><text x="1134" y="496" font-size="22" fill="#f0f7fc">Connected articles</text>
+<circle cx="1050" cy="318" r="68" fill="#102f43" stroke="#77e4f0" stroke-width="2"/><circle cx="1050" cy="318" r="78" fill="none" stroke="#77e4f0" opacity=".18"/><text x="1050" y="314" text-anchor="middle" font-size="23" font-weight="700" fill="#f0f7fc">CiteHop</text><text x="1050" y="338" text-anchor="middle" font-size="11" letter-spacing=".3" fill="#77e4f0">retrieve · cite · explore</text>
+<path d="M64 552 H1376" stroke="#294355"/><text x="64" y="584" font-size="15" fill="#b5c7d6">CONSTRUCTOR UNIVERSITY <tspan fill="#66849b"> / </tspan> DATABASES COURSE</text><text x="1376" y="584" text-anchor="end" font-size="14" fill="#8fa9bb">Danial &amp; Akshat</text></g></svg>
