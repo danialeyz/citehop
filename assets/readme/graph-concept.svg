@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="540" viewBox="0 0 1240 540" role="img" aria-labelledby="title desc"><title id="title">Knowledge graph interaction concept</title><desc id="desc">Illustrative graph, not live data. A selected source article links to other articles and shares categories with them. One bounded two-hop path is highlighted, and a linked article can be expanded.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#77e4f0"/></marker>
+<marker id="arrow-hot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#fbbf24"/></marker>
+<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#253f54"/></pattern>
+<radialGradient id="halo"><stop stop-color="#77e4f0" stop-opacity=".28"/><stop offset="1" stop-color="#77e4f0" stop-opacity="0"/></radialGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<rect width="1240" height="540" rx="20" fill="#091422"/><rect x="210" y="52" width="820" height="444" fill="url(#grid)"/>
+<ellipse cx="620" cy="265" rx="210" ry="130" fill="url(#halo)"/>
+<g font-family="Inter,Segoe UI,Arial,sans-serif">
+<text x="32" y="35" font-size="12" letter-spacing="2" fill="#77e4f0">GRAPH EXPLORER / INTERACTION CONCEPT</text><text x="1208" y="35" text-anchor="end" font-size="12" fill="#9cb1c4">Illustration · not live data</text>
+<g stroke="#b79652" stroke-width="2" opacity=".7" fill="none" stroke-dasharray="6 6"><path d="M620 239 L620 116"/><path d="M620 291 L620 409"/><path d="M415 380 L538 420"/><path d="M830 380 L702 420"/></g>
+<g stroke="#77e4f0" stroke-width="2" opacity=".7" fill="none" marker-end="url(#arrow)"><path d="M570 239 L432 179"/><path d="M372 176 L334 341"/></g>
+<path d="M670 239 L828 179 M888 176 L912 341" stroke="#fbbf24" stroke-width="8" opacity=".35" fill="none" filter="url(#soft)"/>
+<g stroke="#fbbf24" stroke-width="2.5" fill="none" marker-end="url(#arrow-hot)"><path d="M670 239 L826 180"/><path d="M888 176 L911 340"/></g>
+<rect x="723" y="191" width="76" height="20" rx="10" fill="#0d1d2e" stroke="#3c3020"/><text x="761" y="205" text-anchor="middle" font-size="10" letter-spacing="1" fill="#eac675">LINKS_TO</text>
+<rect x="530" y="239" width="180" height="52" rx="12" fill="#11273b" stroke="#77e4f0" stroke-width="2"/><text x="620" y="270" text-anchor="middle" font-size="16" font-weight="600" fill="#f0f7fc">Source article</text>
+<rect x="580" y="298" width="80" height="20" rx="10" fill="#123a42"/><text x="620" y="312" text-anchor="middle" font-size="10" letter-spacing="1" fill="#77e4f0">SEED · [1]</text>
+<rect x="290" y="124" width="180" height="52" rx="12" fill="#11273b" stroke="#476880"/><text x="380" y="155" text-anchor="middle" font-size="16" fill="#e8f2fa">Linked article</text>
+<circle cx="470" cy="124" r="11" fill="#123a42" stroke="#77e4f0"/><text x="470" y="129" text-anchor="middle" font-size="15" fill="#77e4f0">+</text>
+<rect x="790" y="124" width="180" height="52" rx="12" fill="#11273b" stroke="#fbbf24" stroke-width="1.5"/><text x="880" y="155" text-anchor="middle" font-size="16" fill="#e8f2fa">Linked article</text>
+<rect x="235" y="344" width="180" height="52" rx="12" fill="#11273b" stroke="#476880"/><text x="325" y="375" text-anchor="middle" font-size="16" fill="#e8f2fa">Related article</text>
+<rect x="830" y="344" width="180" height="52" rx="12" fill="#11273b" stroke="#fbbf24" stroke-width="1.5"/><text x="920" y="375" text-anchor="middle" font-size="16" fill="#e8f2fa">Related article</text>
+<rect x="866" y="403" width="108" height="20" rx="10" fill="#3c3020"/><text x="920" y="417" text-anchor="middle" font-size="10" letter-spacing="1" fill="#fff5db">PATH · 2 HOPS</text>
+<rect x="530" y="64" width="180" height="52" rx="26" fill="#1d1a12" stroke="#f0c777"/><text x="620" y="95" text-anchor="middle" font-size="16" fill="#fff5db">Category</text>
+<rect x="530" y="409" width="180" height="52" rx="26" fill="#1d1a12" stroke="#f0c777"/><text x="620" y="440" text-anchor="middle" font-size="16" fill="#fff5db">Category</text>
+<text x="32" y="208" font-size="22" fill="#f0f7fc" font-weight="700">Explore</text><text x="32" y="244" font-size="15" fill="#9cb1c4">Pan and zoom</text><text x="32" y="274" font-size="15" fill="#9cb1c4">Select a source</text><text x="32" y="304" font-size="15" fill="#9cb1c4">Expand one hop <tspan fill="#77e4f0">(+)</tspan></text><text x="32" y="334" font-size="15" fill="#9cb1c4">Highlight a path <tspan fill="#fbbf24">━</tspan></text>
+<text x="1050" y="208" font-size="22" fill="#f0f7fc" font-weight="700">Inspect</text><text x="1050" y="244" font-size="15" fill="#9cb1c4">Original source</text><text x="1050" y="274" font-size="15" fill="#9cb1c4">Exact passage</text><text x="1050" y="304" font-size="15" fill="#9cb1c4">Link direction</text><text x="1050" y="334" font-size="15" fill="#9cb1c4">Snapshot version</text>
+<text x="32" y="514" font-size="13" fill="#9cb1c4"><tspan fill="#77e4f0">→</tspan> article links · <tspan fill="#eac675">- -</tspan> category membership · <tspan fill="#fbbf24">━</tspan> highlighted path</text><text x="1208" y="514" text-anchor="end" font-size="13" fill="#77e4f0">Bounded exploration. Visible provenance.</text>
+</g></svg>

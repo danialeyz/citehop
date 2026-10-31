@@ -10,3 +10,12 @@ data/*
 results/*.png
 .DS_Store
 .ipynb_checkpoints/
+
+.context/
+.env.*
+!.env.example
+node_modules/
+.next/
+*.tsbuildinfo
+build/
+dist/
