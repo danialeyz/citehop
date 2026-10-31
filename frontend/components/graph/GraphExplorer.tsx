@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Chip, buttonSmall as smallButton } from "@/components/ui";
 import { api, type Schemas } from "@/lib/api/client";
 import { load, type Loaded as ApiLoaded } from "@/lib/api/load";
+import { RESULT_COUNT, apiFilters, type Filters, type GraphSearchContext, type Method } from "@/lib/search";
 import { graphProblem, versionChanged, type GraphProblem } from "@/lib/graph/errors";
 import {
   LIMITS, VersionMismatch, addPath, combineNeighborhoods, expandView, pushHistory, withoutMaintenance, nodeLabel, radialLayout, viewFromNeighborhood, visibleGraph,
@@ -25,7 +26,6 @@ type Loaded<T> = ApiLoaded<T> | { ok: false; status: number; error: null; mismat
 const problemOf = (r: Exclude<Loaded<unknown>, { ok: true }>) =>
   "mismatch" in r ? versionChanged(r.mismatch.expected, r.mismatch.received) : graphProblem(r.status, r.error);
 type Options = { hops: 1 | 2; categories: boolean; maintenance: boolean };
-export type SearchMethod = "keyword" | "vector";
 
 const HISTORY_LIMIT = 30;
 const DEFAULT_OPTIONS: Options = { hops: 1, categories: true, maintenance: false };
@@ -33,11 +33,10 @@ const DEFAULT_OPTIONS: Options = { hops: 1, categories: true, maintenance: false
 type Props = {
   seedId: number;
   status: Schemas["GraphStatusOut"] | null;
-  initialQuery: string | null;
-  initialMethod: SearchMethod;
+  context: GraphSearchContext | null; // the Search page's query, filters, and retrieved articles
 };
 
-export function GraphExplorer({ seedId, status, initialQuery, initialMethod }: Props) {
+export function GraphExplorer({ seedId, status, context }: Props) {
   const [history, setHistory] = useState<Entry[]>([]);
   const [selection, setSelection] = useState<Selection>(null);
   const [trail, setTrail] = useState<string[]>([]);
@@ -45,7 +44,10 @@ export function GraphExplorer({ seedId, status, initialQuery, initialMethod }: P
   const [problem, setProblem] = useState<GraphProblem | null>(null);
   const [mode, setMode] = useState<"canvas" | "list">("canvas");
   const [fitTick, setFitTick] = useState(0);
-  const [search, setSearch] = useState<SearchState>({ query: initialQuery ?? "", method: initialMethod, status: "idle", hits: [], message: null, ran: null });
+  const [search, setSearch] = useState<SearchState>({
+    query: context?.search.q ?? "", method: context?.search.method ?? "keyword", filters: context?.search.filters ?? {},
+    status: "idle", hits: [], message: null, ran: null, carried: context?.sources ?? [],
+  });
   const [path, setPath] = useState<PathState>({ from: null, to: null, directed: true, status: "idle", result: null, problem: null });
   const request = useRef(0);
   const pathRequest = useRef(0);
@@ -166,28 +168,25 @@ export function GraphExplorer({ seedId, status, initialQuery, initialMethod }: P
     }
   }, [view, options, busy, push]);
 
-  const runSearch = useCallback(async (query: string, method: SearchMethod) => {
+  /** Retrieval only. `k` matches the Search page when re-running its context, so ranks agree. */
+  const runSearch = useCallback(async (query: string, method: Method, filters: Filters, k: number) => {
     const trimmed = query.trim();
     if (!trimmed) return;
     setSearch((s) => ({ ...s, query: trimmed, method, status: "loading", message: null }));
-    const result = await load(() => api.POST("/api/v1/search", { body: { query: trimmed, method, k: 10 } }));
+    const result = await load(() => api.POST("/api/v1/search", { body: { query: trimmed, method, filters: apiFilters(filters), k } }));
     setSearch((s) => {
-      if (s.query !== trimmed || s.method !== method) return s; // the user changed it meanwhile
+      if (s.query !== trimmed || s.method !== method || s.filters !== filters) return s; // the user changed it meanwhile
       if (!result.ok) return { ...s, status: "error", hits: [], ran: null, message: result.error?.message ?? (result.status === null ? "The API is unreachable." : `HTTP ${result.status}`) };
-      return { ...s, status: "done", hits: result.data.hits, ran: { query: trimmed, method }, message: null };
+      return { ...s, status: "done", hits: result.data.hits, ran: { query: trimmed, method }, message: null, carried: [] };
     });
-    const url = new URL(window.location.href);
-    url.searchParams.set("q", trimmed);
-    url.searchParams.set("method", method);
-    window.history.replaceState(window.history.state, "", url);
   }, []);
 
   const searched = useRef(false);
   useEffect(() => {
-    if (searched.current || !initialQuery) return;
+    if (searched.current || !context) return;
     searched.current = true;
-    void runSearch(initialQuery, initialMethod);
-  }, [initialQuery, initialMethod, runSearch]);
+    void runSearch(context.search.q, context.search.method, context.search.filters, RESULT_COUNT);
+  }, [context, runSearch]);
 
   // --- navigation -------------------------------------------------------------------------
 
@@ -229,8 +228,10 @@ export function GraphExplorer({ seedId, status, initialQuery, initialMethod }: P
   const sourceRanks = useMemo(() => {
     const ranks = new Map<number, number>();
     for (const hit of search.hits) if (!ranks.has(hit.article_id)) ranks.set(hit.article_id, hit.rank);
+    // Until (or if) the re-run fails, badge the articles the Search page passed along, in its order.
+    if (!search.hits.length) search.carried.forEach((id, i) => ranks.has(id) || ranks.set(id, i + 1));
     return ranks;
-  }, [search.hits]);
+  }, [search.hits, search.carried]);
 
   const pathNodes = useMemo(() => (path.result?.found ? path.result.nodes.map((n) => n.id) : []), [path.result]);
   const pathEdges = useMemo(() => new Set(path.result?.found ? path.result.edges.map((e) => `${e.source}|${e.type}|${e.target}`) : []), [path.result]);
@@ -391,8 +392,8 @@ export function GraphExplorer({ seedId, status, initialQuery, initialMethod }: P
             search={search}
             view={view}
             onChange={(next) => setSearch((s) => ({ ...s, ...next }))}
-            onRun={() => runSearch(search.query, search.method)}
-            onClear={() => setSearch((s) => ({ ...s, status: "idle", hits: [], ran: null, message: null }))}
+            onRun={() => runSearch(search.query, search.method, search.filters, 10)}
+            onClear={() => setSearch((s) => ({ ...s, status: "idle", hits: [], ran: null, message: null, carried: [] }))}
             onSelect={select}
             onExplore={(articleId, title) => explore(articleId, options, title)}
           />

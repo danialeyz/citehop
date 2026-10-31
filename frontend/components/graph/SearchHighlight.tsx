@@ -4,23 +4,25 @@
 import { Panel, buttonSmall, inputClass } from "@/components/ui";
 import type { Schemas } from "@/lib/api/client";
 import type { GraphView } from "@/lib/graph/model";
+import { filterLabels, type Filters, type Method } from "@/lib/search";
 
 import type { Selection } from "./GraphCanvas";
-import type { SearchMethod } from "./GraphExplorer";
 
 export type SearchState = {
   query: string;
-  method: SearchMethod;
+  method: Method;
+  filters: Filters; // carried from the Search page; applied in SQL like there
   status: "idle" | "loading" | "done" | "error";
   hits: Schemas["SearchHit"][];
   message: string | null;
-  ran: { query: string; method: SearchMethod } | null;
+  ran: { query: string; method: Method } | null;
+  carried: number[]; // article IDs the Search page retrieved, shown until a search here completes
 };
 
 type Props = {
   search: SearchState;
   view: GraphView;
-  onChange: (next: Partial<Pick<SearchState, "query" | "method">>) => void;
+  onChange: (next: Partial<Pick<SearchState, "query" | "method" | "filters">>) => void;
   onRun: () => void;
   onClear: () => void;
   onSelect: (selection: Selection) => void;
@@ -31,6 +33,7 @@ export function SearchHighlight({ search, view, onChange, onRun, onClear, onSele
   // One row per article, at its best rank.
   const articles = search.hits.filter((hit, i) => search.hits.findIndex((h) => h.article_id === hit.article_id) === i);
   const inView = new Set(view.nodes.map((n) => n.id));
+  const filters = filterLabels(search.filters);
   return (
     <Panel className="!p-5">
       <h2 className="mb-1 font-mono text-[11px] uppercase tracking-[0.18em] text-accent">Highlight search sources</h2>
@@ -52,11 +55,23 @@ export function SearchHighlight({ search, view, onChange, onRun, onClear, onSele
           <button type="submit" className={buttonSmall} disabled={!search.query.trim() || search.status === "loading"}>
             {search.status === "loading" ? "Searching…" : "Highlight"}
           </button>
-          {search.ran && <button type="button" className={buttonSmall} onClick={onClear}>Clear</button>}
+          {(search.ran || search.carried.length > 0) && <button type="button" className={buttonSmall} onClick={onClear}>Clear</button>}
         </div>
+        {filters.length > 0 && (
+          <p className="flex flex-wrap items-center gap-x-2 text-xs text-muted">
+            Filters from your search: {filters.join(" · ")}
+            <button type="button" className="text-accent hover:text-accent-soft" onClick={() => onChange({ filters: {} })}>Remove</button>
+          </p>
+        )}
       </form>
       <div aria-live="polite" className="mt-3">
         {search.status === "error" && <p role="alert" className="text-sm text-danger">Search failed: {search.message}</p>}
+        {search.carried.length > 0 && search.status !== "done" && (
+          <p className="text-xs text-muted">
+            {search.carried.length} {search.carried.length === 1 ? "article" : "articles"} retrieved on the Search page are badged in their result order
+            {search.status === "loading" ? "; loading their passages…" : "."}
+          </p>
+        )}
         {search.status === "done" && search.ran && (
           articles.length === 0 ? (
             <p className="text-sm text-muted">No passages matched “{search.ran.query}”.</p>

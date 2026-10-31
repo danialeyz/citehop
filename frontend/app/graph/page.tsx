@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { GraphExplorer, type SearchMethod } from "@/components/graph/GraphExplorer";
+import { GraphExplorer } from "@/components/graph/GraphExplorer";
 import { EmptyState, ErrorState, MetaRow, PageHeader, Panel, buttonPrimary, buttonSecondary, inputClass } from "@/components/ui";
 import { api, type Schemas } from "@/lib/api/client";
 import { load, type Loaded } from "@/lib/api/load";
 import { graphHref } from "@/lib/library";
+import { METHOD_LABEL, parseGraphSearchContext, searchHref } from "@/lib/search";
 
 export const metadata: Metadata = { title: "Graph" };
 
@@ -22,8 +23,7 @@ export default async function GraphPage({ searchParams }: PageProps<"/graph">) {
   const params = await searchParams;
   const seedId = Number(first(params.article));
   const hasSeed = Number.isInteger(seedId) && seedId >= 1 && seedId <= 4_294_967_295;
-  const query = first(params.q)?.trim().slice(0, 1000) || null;
-  const method: SearchMethod = first(params.method) === "vector" ? "vector" : "keyword";
+  const context = parseGraphSearchContext(params);
   const title = first(params.title)?.trim().slice(0, 200) || undefined;
 
   const [status, picks] = await Promise.all([
@@ -37,6 +37,17 @@ export default async function GraphPage({ searchParams }: PageProps<"/graph">) {
       <PageHeader eyebrow="Graph" title="Knowledge graph">
         <p>Real Wikipedia article links and categories from the pinned snapshot, read from Neo4j. A link between articles is not a citation or evidence that they agree.</p>
       </PageHeader>
+
+      {context && (
+        <nav aria-label="Search context" className="mb-6 flex flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-panel p-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-muted [overflow-wrap:anywhere]">
+            From {METHOD_LABEL[context.search.method]} search{" "}
+            <strong className="font-medium text-ink">“{context.search.q}”</strong>
+            {context.sources.length > 0 && <> · {context.sources.length} retrieved {context.sources.length === 1 ? "article" : "articles"}</>}
+          </p>
+          <Link href={searchHref(context.search)} className={buttonSecondary}>← Back to search results</Link>
+        </nav>
+      )}
 
       {graph && graph.status !== "ready" && (
         <div className="mb-6">
@@ -58,7 +69,7 @@ export default async function GraphPage({ searchParams }: PageProps<"/graph">) {
       )}
 
       {hasSeed ? (
-        <GraphExplorer key={seedId} seedId={seedId} status={graph} initialQuery={query} initialMethod={method} />
+        <GraphExplorer key={seedId} seedId={seedId} status={graph} context={context} />
       ) : (
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <SeedPicker title={title} picks={picks} />

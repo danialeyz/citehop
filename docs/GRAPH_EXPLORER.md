@@ -1,6 +1,6 @@
 # Graph explorer (C12)
 
-`/graph?article=<id>[&q=<query>&method=keyword|vector]` is a read-only React Flow view of the Neo4j projection ([GRAPH.md](GRAPH.md)). It calls only the C09 routes: `/graph/neighborhood`, `/graph/path`, `/graph/status`, `/articles/{id}` for evidence, and `/search` (retrieval only, never `/answer`) for highlighting.
+`/graph?article=<id>[&search=<encoded search>&sources=<ids>]` (built by C11's `graphHrefFromSearch`) is a read-only React Flow view of the Neo4j projection ([GRAPH.md](GRAPH.md)). It calls only the C09 routes: `/graph/neighborhood`, `/graph/path`, `/graph/status`, `/articles/{id}` for evidence, and `/search` (retrieval only, never `/answer`) for highlighting.
 
 | Piece | File |
 |---|---|
@@ -18,13 +18,14 @@
 - **History.** Back undoes the last exploration, expansion, path merge, or layout reset (up to 30 steps). Reset returns to the first neighborhood. A response from a different `graph_version` is refused rather than mixed into the view.
 - **Path.** Choose the start and end article in the inspector or the path pickers. The path is directed by default; "Ignore link direction" turns on the labelled undirected mode. The list states each link's real direction. "No path within 3 links" comes with a note that it does not mean the articles are unrelated. Path articles that are not in view are added next to their predecessor in the path.
 - **Keyboard.** Canvas nodes are not tab stops. The **Connection list** view lists every visible node and the selected node's outgoing links, incoming links, categories, and members. The inspector, path pickers, and toolbar are ordinary buttons and selects.
+- **Search context.** Arriving from Search shows "Back to search results". The articles in `sources` get badges straight away. The explorer then re-runs that same retrieval, with the same method, filters and k=5, to load the passages, so the ranks match the Search page. If that fails, the carried articles stay badged in their order.
 - **States.** The view handles stale or rebuilding projections (409), Neo4j outage (503), timeouts (504, the graph is kept), unknown articles (404), an unreachable API, a seed with no links, and a revision that differs between Neo4j and MariaDB. The server page shows `/graph/status` first.
 
 ## Checks run (2026-10-31)
 
 - `npm test` (`node --test`, 12 tests): a dense, cyclic graph of 100 nodes / 200 edges lays out without overlaps; the layout does not depend on response order; disconnected seed; stable positions on expansion; cap enforcement and truncation; version mismatch; path merge; degree in view; maintenance heuristic; error mapping.
 - `npm run lint`, `npm run typecheck`, `npm run build`: pass.
-- Browser journey (Playwright 1.64.1, headless Chromium, real API and data `corpus:2`, seed *Convolutional neural network*, keyword query "vanishing gradient"). Script and screenshots are in `.context/c12/` (not tracked).
+- Browser journey (Playwright 1.64.1, headless Chromium, real API and data `corpus:2`, seed *Convolutional neural network*, keyword query "vanishing gradient" (run before the C11 merge, through the former `q`/`method` link)). Script and screenshots are in `.context/c12/` (not tracked).
 
 ### Measured interaction on the demo machine
 
