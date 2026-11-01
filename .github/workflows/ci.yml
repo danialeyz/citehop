@@ -1,0 +1,59 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mariadb:11.8.9
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: citehop
+          MARIADB_USER: citehop
+          MARIADB_PASSWORD: citehop
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: "3306"
+      DB_USER: citehop
+      DB_PASS: citehop
+      DB_NAME: citehop
+      CITEHOP_TEST_DB_NAME: citehop_test
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.3
+        with:
+          version: "0.13.6"
+      - run: sudo apt-get update && sudo apt-get install -y libmariadb-dev
+      - run: make venv
+      - run: make lint
+      - run: make test
+      - name: create the disposable test database
+        run: >-
+          .venv/bin/python -c "import mariadb;
+          c = mariadb.connect(host='127.0.0.1', user='root', password='root');
+          k = c.cursor();
+          k.execute('CREATE DATABASE IF NOT EXISTS citehop_test');
+          k.execute(\"GRANT ALL ON citehop_test.* TO 'citehop'@'%'\")"
+      # M2 adds sql/schema.sql and sql/kg_schema.sql (make schema kg-schema) to both runs.
+      - run: make sql FILE=sql/corpus_schema.sql
+      - run: make sql FILE=sql/corpus_schema.sql  # idempotency
+      - run: make test-db
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: make frontend-install
+      - run: npm --prefix frontend run lint
+      - run: npm --prefix frontend run typecheck
+      - run: npm --prefix frontend test
+      - run: npm --prefix frontend run build
