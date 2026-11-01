@@ -1,0 +1,608 @@
+{
+  "schema": "citehop-eval-v1",
+  "card": "S01",
+  "run_id": "20261101T141006Z-dev-test-fb78fafd",
+  "created_at": "2026-11-01T14:10:06+00:00",
+  "status": "provisional: question labels are not all approved",
+  "final_claims_allowed": false,
+  "question_set": {
+    "path": "eval/questions.json",
+    "corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "labels_sha256": "23e52d6ac35a3e5f820fccaef74d3427b8856cca2f7942359809979fcfa23375",
+    "status": "draft",
+    "label_review": {
+      "unreviewed": 30
+    }
+  },
+  "splits": {
+    "dev": 10,
+    "test": 20
+  },
+  "corpus": {
+    "version_id": 1,
+    "id": "corpus:1",
+    "content_sha256": "d491fa4bb36d0859bd9a497a9ea45d8c50ca58f61b8d516e75c4ba09f407df32",
+    "source_corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "subset": "full",
+    "articles": 100
+  },
+  "chunk_configs": [
+    {
+      "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+      "chunk_config": "f19b156fec90a21af279bc335c6cee40754f31cca7a3389324f2c96da2bf3f0b",
+      "chunks": 1776
+    }
+  ],
+  "config_id": "fb78fafd2e5ce28c29a7c17af23e33f2f392b340b3c5eef37a8df03322e62949",
+  "config": {
+    "k": 5,
+    "recall": "article-level; chunks deduplicated by best chunk rank before the five-article cutoff",
+    "candidate_depths": [
+      50,
+      100
+    ],
+    "test_repeats": 3,
+    "methods": {
+      "dev": [
+        "keyword",
+        "vector",
+        "exact",
+        "hybrid"
+      ],
+      "test": [
+        "keyword",
+        "vector",
+        "hybrid"
+      ]
+    },
+    "hybrid": {
+      "fusion": "reciprocal rank fusion",
+      "rrf_k": 60,
+      "depth_per_list": 50,
+      "inputs": [
+        "keyword",
+        "vector"
+      ],
+      "candidate_depths": [
+        50
+      ],
+      "ties": "chunk_id ascending"
+    },
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+    "mariadb": {
+      "version": "11.8.9-MariaDB-ubu2404",
+      "mhnsw_ef_search": 20,
+      "mhnsw_default_m": 6
+    },
+    "generator": null,
+    "prompt_version": null,
+    "system_prompt_sha256": null,
+    "rag_limits": {
+      "passages": 5,
+      "context_tokens": 1800,
+      "output_tokens": 300
+    },
+    "answer_passages": "first 5 chunk hits of repetition 1 of the vector search"
+  },
+  "warm_up": "one untimed embedding, one untimed search per method and (with answers) one untimed generator call before any timed call; all calls run in one process over one open MariaDB connection",
+  "latency": {
+    "unit": "ms",
+    "boundaries": {
+      "embedding_ms": "embed_query(question): BGE query instruction, tokenize, CPU forward pass",
+      "retrieval_ms": "search() with a precomputed query vector: SQL round trip on an open connection including Python client; summed over candidate-depth attempts; hybrid includes both of its SQL queries and the fusion",
+      "generation_ms": "rag.answer(): one non-streaming Ollama /api/chat call"
+    },
+    "statistics": "median and nearest-rank p95 over every timed call, including repetitions"
+  },
+  "hardware": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M6",
+    "memory_bytes": 25769803776,
+    "database": "MariaDB in local Docker on the same machine"
+  },
+  "code": {
+    "commit": "0dc048abdd76ace86153ccb8c4b0ef0e322c2de2",
+    "dirty": true
+  },
+  "files": {
+    "retrieval": "retrieval.jsonl",
+    "answers": "answers.json"
+  },
+  "summary": {
+    "retrieval": {
+      "dev": {
+        "keyword": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 0.9583,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 0.9444,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "vector": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "exact": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "hybrid": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        }
+      },
+      "test": {
+        "keyword": {
+          "all_answerable": {
+            "n": 17,
+            "recall_at_5": 0.9588,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 12,
+            "recall_at_5": 0.9417,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 5,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "vector": {
+          "all_answerable": {
+            "n": 17,
+            "recall_at_5": 0.9765,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 12,
+            "recall_at_5": 0.9667,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 5,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "hybrid": {
+          "all_answerable": {
+            "n": 17,
+            "recall_at_5": 0.9882,
+            "zero_hit": 0,
+            "short_list": 1
+          },
+          "unfiltered": {
+            "n": 12,
+            "recall_at_5": 0.9833,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 5,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 1
+          },
+          "rankings_identical_across_repeats": true
+        }
+      }
+    },
+    "unanswerable": {
+      "dev": {
+        "keyword": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "vector": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "exact": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "hybrid": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        }
+      },
+      "test": {
+        "keyword": {
+          "n": 3,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "vector": {
+          "n": 3,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "hybrid": {
+          "n": 3,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        }
+      }
+    },
+    "ann_vs_exact": {
+      "dev": {
+        "n": 10,
+        "n_unfiltered": 7,
+        "note": "filtered vector search skips the HNSW index, so filtered cases compare an exact computation with itself; the unfiltered means are the ANN comparison",
+        "mean_chunk_overlap_at_5": 1.0,
+        "mean_chunk_overlap_at_5_unfiltered": 1.0,
+        "min_chunk_overlap_at_5_unfiltered": 1.0,
+        "mean_article_overlap_at_5": 1.0,
+        "cases": [
+          {
+            "question_id": "dev-01",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 6.948,
+            "retrieval_ms_exact": 160.218
+          },
+          {
+            "question_id": "dev-02",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 8.175,
+            "retrieval_ms_exact": 163.934
+          },
+          {
+            "question_id": "dev-03",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 6.874,
+            "retrieval_ms_exact": 165.151
+          },
+          {
+            "question_id": "dev-04",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 6.708,
+            "retrieval_ms_exact": 164.129
+          },
+          {
+            "question_id": "dev-05",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.047,
+            "retrieval_ms_exact": 163.508
+          },
+          {
+            "question_id": "dev-06",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 6.923,
+            "retrieval_ms_exact": 175.231
+          },
+          {
+            "question_id": "dev-07",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 23.916,
+            "retrieval_ms_exact": 24.19
+          },
+          {
+            "question_id": "dev-08",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 219.966,
+            "retrieval_ms_exact": 220.624
+          },
+          {
+            "question_id": "dev-09",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": null,
+            "recall_exact": null,
+            "retrieval_ms_vector": 6.957,
+            "retrieval_ms_exact": 160.571
+          },
+          {
+            "question_id": "dev-10",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": null,
+            "recall_exact": null,
+            "retrieval_ms_vector": 23.576,
+            "retrieval_ms_exact": 23.714
+          }
+        ]
+      },
+      "test": null
+    },
+    "latency": {
+      "dev": {
+        "samples": {
+          "questions": 10,
+          "records": 10
+        },
+        "embedding_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 28.823,
+          "p95": 35.655
+        },
+        "retrieval_ms_keyword": {
+          "n": 10,
+          "unit": "ms",
+          "median": 5.149,
+          "p95": 9.572
+        },
+        "retrieval_ms_keyword_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 5.122,
+          "p95": 5.969
+        },
+        "retrieval_ms_keyword_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 5.753,
+          "p95": 9.572
+        },
+        "retrieval_ms_vector": {
+          "n": 10,
+          "unit": "ms",
+          "median": 7.002,
+          "p95": 219.966
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 6.948,
+          "p95": 8.175
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 23.916,
+          "p95": 219.966
+        },
+        "retrieval_ms_exact": {
+          "n": 10,
+          "unit": "ms",
+          "median": 163.721,
+          "p95": 220.624
+        },
+        "retrieval_ms_exact_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 163.934,
+          "p95": 175.231
+        },
+        "retrieval_ms_exact_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 24.19,
+          "p95": 220.624
+        },
+        "retrieval_ms_hybrid": {
+          "n": 10,
+          "unit": "ms",
+          "median": 16.523,
+          "p95": 227.765
+        },
+        "retrieval_ms_hybrid_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 14.342,
+          "p95": 18.474
+        },
+        "retrieval_ms_hybrid_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 30.192,
+          "p95": 227.765
+        }
+      },
+      "test": {
+        "samples": {
+          "questions": 20,
+          "records": 54
+        },
+        "embedding_ms": {
+          "n": 54,
+          "unit": "ms",
+          "median": 11.708,
+          "p95": 26.955
+        },
+        "retrieval_ms_keyword": {
+          "n": 54,
+          "unit": "ms",
+          "median": 4.531,
+          "p95": 5.596
+        },
+        "retrieval_ms_keyword_unfiltered": {
+          "n": 38,
+          "unit": "ms",
+          "median": 4.774,
+          "p95": 5.616
+        },
+        "retrieval_ms_keyword_filtered": {
+          "n": 16,
+          "unit": "ms",
+          "median": 4.242,
+          "p95": 5.315
+        },
+        "retrieval_ms_vector": {
+          "n": 54,
+          "unit": "ms",
+          "median": 6.721,
+          "p95": 70.846
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 38,
+          "unit": "ms",
+          "median": 6.641,
+          "p95": 7.344
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 16,
+          "unit": "ms",
+          "median": 31.152,
+          "p95": 73.053
+        },
+        "retrieval_ms_hybrid": {
+          "n": 54,
+          "unit": "ms",
+          "median": 11.665,
+          "p95": 76.727
+        },
+        "retrieval_ms_hybrid_unfiltered": {
+          "n": 38,
+          "unit": "ms",
+          "median": 11.279,
+          "p95": 12.895
+        },
+        "retrieval_ms_hybrid_filtered": {
+          "n": 16,
+          "unit": "ms",
+          "median": 20.627,
+          "p95": 78.616
+        }
+      }
+    },
+    "generation": {
+      "answers": 0,
+      "statuses": null,
+      "answerable": 0,
+      "unanswerable": 0,
+      "unanswerable_abstained": null,
+      "generation_ms": {
+        "n": 0,
+        "unit": "ms",
+        "median": null,
+        "p95": null
+      },
+      "prompt_tokens": {
+        "n": 0,
+        "unit": "tokens",
+        "median": null,
+        "p95": null
+      }
+    },
+    "answer_review": {
+      "prepared": 0,
+      "reviewed": 0,
+      "grounded": null,
+      "denominator": null
+    }
+  }
+}

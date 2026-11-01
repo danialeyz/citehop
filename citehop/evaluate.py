@@ -1,7 +1,7 @@
 """Retrieval and answer-grounding evaluation over the frozen question set (C08).
 
     python -m citehop.evaluate [--splits dev test] [--repeats 3] [--answers 10] [--no-answers]
-                               [--out results/runs]
+                               [--hybrid] [--out results/runs]
 
 Writes results/runs/<run_id>/ with raw per-question retrieval records (retrieval.jsonl), the
 answers prepared for human review (answers.json), and a versioned manifest (manifest.json)
@@ -12,6 +12,7 @@ Recall@5 counts relevant articles among the first five distinct articles. The se
 deepened until five distinct articles appear or the eligible rows are exhausted. Answerable
 questions with zero hits count as zero; unanswerable questions are reported separately.
 Results stay provisional until every question label is approved (eval/README.md).
+`--hybrid` adds the S01 RRF method to both splits, timed like the others.
 """
 
 from __future__ import annotations
@@ -33,6 +34,9 @@ from pathlib import Path
 SCHEMA = "citehop-eval-v1"
 K = 5
 CANDIDATE_DEPTHS = (50, 100)  # chunk depths tried in turn; 100 is search.MAX_K
+# hybrid fuses fixed top-50 inputs, so 50 fused rows is its whole list (search.RRF_DEPTH);
+# fewer means both inputs returned every eligible row
+METHOD_DEPTHS = {"hybrid": (50,)}
 TEST_REPEATS = 3
 REVIEW_ANSWERS = 10
 REVIEW_UNANSWERABLE = 3
@@ -43,7 +47,8 @@ WARM_UP_POLICY = ("one untimed embedding, one untimed search per method and (wit
 BOUNDARIES = {
     "embedding_ms": "embed_query(question): BGE query instruction, tokenize, CPU forward pass",
     "retrieval_ms": "search() with a precomputed query vector: SQL round trip on an open "
-                    "connection including Python client; summed over candidate-depth attempts",
+                    "connection including Python client; summed over candidate-depth attempts; "
+                    "hybrid includes both of its SQL queries and the fusion",
     "generation_ms": "rag.answer(): one non-streaming Ollama /api/chat call",
 }
 
@@ -122,16 +127,18 @@ def review_selection(questions, n=REVIEW_ANSWERS, unanswerable=REVIEW_UNANSWERAB
 
 
 def evaluate(questions, *, search_fn, embed_fn, generator=None, splits=("dev", "test"),
-             repeats=TEST_REPEATS, answers=REVIEW_ANSWERS, warm_up=True, log=None):
+             repeats=TEST_REPEATS, answers=REVIEW_ANSWERS, warm_up=True, log=None,
+             extra_methods=()):
     """Raw retrieval records and answers.
 
     search_fn(query, method, filters, k, query_vector) -> hit dicts with passages;
     embed_fn(query) -> vector. Dev runs keyword, ANN vector and exact once per question; test
-    runs keyword and vector, `repeats` times for each answerable question.
+    runs keyword and vector, `repeats` times for each answerable question. `extra_methods`
+    (e.g. hybrid) run on both splits with the same query vector.
     """
     if warm_up:
         vector = embed_fn(WARMUP_QUERY)
-        for method in ("keyword", "vector", "exact"):
+        for method in ("keyword", "vector", "exact", *extra_methods):
             search_fn(WARMUP_QUERY, method, {}, K, vector)
         if generator is not None and answers:
             from citehop.rag import ProviderError
@@ -142,7 +149,8 @@ def evaluate(questions, *, search_fn, embed_fn, generator=None, splits=("dev", "
                 pass  # each answer then records provider_error; sources stay usable
     records, passages = [], {}
     for q in sorted((q for q in questions if q["split"] in splits), key=lambda q: q["id"]):
-        methods = ("keyword", "vector", "exact") if q["split"] == "dev" else ("keyword", "vector")
+        methods = (("keyword", "vector", "exact") if q["split"] == "dev"
+                   else ("keyword", "vector")) + tuple(extra_methods)
         reps = repeats if q["split"] == "test" and q["answerable"] else 1
         for rep in range(1, reps + 1):
             started = time.perf_counter()
@@ -156,7 +164,8 @@ def evaluate(questions, *, search_fn, embed_fn, generator=None, splits=("dev", "
             for method in methods:
                 hits, ranking, info = retrieve_articles(
                     lambda depth, q=q, m=method, v=vector: search_fn(q["question"], m,
-                                                                     q["filters"], depth, v))
+                                                                     q["filters"], depth, v),
+                    depths=METHOD_DEPTHS.get(method, CANDIDATE_DEPTHS))
                 record["methods"][method] = {
                     **info, "recall_at_5": recall_at_k(ranking, q["relevant_article_ids"]),
                     "article_ranking": ranking, "hits": [compact(h) for h in hits]}
@@ -345,12 +354,14 @@ def main(argv=None):
     parser.add_argument("--repeats", type=int, default=TEST_REPEATS)
     parser.add_argument("--answers", type=int, default=REVIEW_ANSWERS)
     parser.add_argument("--no-answers", action="store_true", help="skip generation")
+    parser.add_argument("--hybrid", action="store_true",
+                        help="also run S01 reciprocal rank fusion (keyword + vector)")
     parser.add_argument("--out", type=Path, default=Path("results/runs"))
     args = parser.parse_args(argv)
 
     from citehop import rag
     from citehop.db import connect
-    from citehop.search import default_embedder, search
+    from citehop.search import RRF_DEPTH, RRF_INPUTS, RRF_K, default_embedder, search
 
     document = json.loads(args.questions.read_text())
     questions = document["questions"]
@@ -380,7 +391,8 @@ def main(argv=None):
 
         records, answers = evaluate(questions, search_fn=search_fn, embed_fn=embed_query,
                                     generator=generator, splits=tuple(args.splits),
-                                    repeats=args.repeats, answers=args.answers, log=log)
+                                    repeats=args.repeats, answers=args.answers, log=log,
+                                    extra_methods=("hybrid",) if args.hybrid else ())
 
     from citehop.embed import MODEL_ID, MODEL_REVISION
 
@@ -388,7 +400,12 @@ def main(argv=None):
         "k": K, "recall": "article-level; chunks deduplicated by best chunk rank before the "
                           "five-article cutoff",
         "candidate_depths": list(CANDIDATE_DEPTHS), "test_repeats": args.repeats,
-        "methods": {"dev": ["keyword", "vector", "exact"], "test": ["keyword", "vector"]},
+        "methods": {"dev": ["keyword", "vector", "exact"] + ["hybrid"] * args.hybrid,
+                    "test": ["keyword", "vector"] + ["hybrid"] * args.hybrid},
+        **({"hybrid": {"fusion": "reciprocal rank fusion", "rrf_k": RRF_K,
+                       "depth_per_list": RRF_DEPTH, "inputs": list(RRF_INPUTS),
+                       "candidate_depths": list(METHOD_DEPTHS["hybrid"]),
+                       "ties": "chunk_id ascending"}} if args.hybrid else {}),
         "embedding_model": MODEL_ID, "embedding_model_revision": MODEL_REVISION,
         "embedding_config": embedding_config, "mariadb": state["mariadb"],
         "generator": generator.name if generator else None,
@@ -412,7 +429,7 @@ def main(argv=None):
          "(unanswerable) to true/false, reviewer and reviewed_at.", "answers": answers},
         indent=2, ensure_ascii=False, default=str) + "\n")
     manifest = {
-        "schema": SCHEMA, "card": "C08", "run_id": run_id,
+        "schema": SCHEMA, "card": "S01" if args.hybrid else "C08", "run_id": run_id,
         "created_at": created.isoformat(timespec="seconds"),
         "status": "final" if final else "provisional: question labels are not all approved",
         "final_claims_allowed": final,
