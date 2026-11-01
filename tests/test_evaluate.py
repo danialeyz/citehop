@@ -189,6 +189,19 @@ def test_no_generator_leaves_generation_null():
     assert s["answer_review"]["grounded"] is None
 
 
+def test_extra_methods_run_on_both_splits_with_one_embedding():
+    calls, embeds = [], []
+    records, _ = ev.evaluate(QUESTIONS, search_fn=fake_search(calls),
+                             embed_fn=lambda q: embeds.append(q) or [1.0], repeats=1,
+                             extra_methods=("hybrid",))
+    assert [c[1] for c in calls[:4]] == ["keyword", "vector", "exact", "hybrid"]
+    assert all("hybrid" in r["methods"] for r in records)
+    assert len(embeds) == 1 + len(QUESTIONS)
+    s = ev.summarize(records, [])
+    assert s["retrieval"]["test"]["hybrid"]["all_answerable"]["n"] == 2
+    assert s["latency"]["dev"]["retrieval_ms_hybrid"]["n"] == 3
+
+
 def test_review_selection_is_deterministic_and_stratified():
     questions = [{"id": f"test-{i:02d}", "split": "test", "answerable": i not in (3, 8, 9, 12)}
                  for i in range(1, 15)] + [{"id": "dev-01", "split": "dev", "answerable": True}]

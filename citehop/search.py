@@ -1,6 +1,7 @@
-"""Native MariaDB retrieval: FULLTEXT keyword search, ANN vector search, exact cosine baseline.
+"""Native MariaDB retrieval: FULLTEXT keyword search, ANN vector search, exact cosine baseline,
+and reciprocal rank fusion of keyword and vector (S01).
 
-    python -m citehop.search "QUERY" [--method keyword|vector|exact] [--k N]
+    python -m citehop.search "QUERY" [--method keyword|vector|exact|hybrid] [--k N]
                              [--category NAME] [--min-length N] [--max-length N]
                              [--linked-from ARTICLE_ID] [--explain]
 
@@ -10,6 +11,8 @@ global top-k. Scores are method-specific (FULLTEXT relevance, or cosine similari
 Keyword relevance is MariaDB InnoDB FULLTEXT natural-language relevance, not BM25.
 `vector` reads the HNSW index only when unfiltered; with filters it ranks every eligible row
 exactly (see build_sql). `exact` never uses the index and is the baseline for ANN recall.
+`hybrid` fuses the top-50 keyword and top-50 vector lists, each filtered in SQL, with RRF
+(constant 60); its score is the RRF sum and each hit names the ranks it was fused from.
 Retrieval uses MariaDB only; it never opens a Neo4j connection.
 """
 
@@ -21,12 +24,17 @@ import math
 import sys
 from contextlib import nullcontext
 from dataclasses import asdict, dataclass
+from fractions import Fraction
 
-METHODS = ("keyword", "vector", "exact")
+SQL_METHODS = ("keyword", "vector", "exact")  # one SELECT each (build_sql)
+METHODS = (*SQL_METHODS, "hybrid")
 MAX_K = 100
 MAX_QUERY_CHARS = 1000
 DIMENSIONS = 768
 FILTER_KEYS = {"category", "min_length_chars", "max_length_chars", "linked_from"}
+RRF_K = 60  # rank constant
+RRF_DEPTH = 50  # chunks taken from each input list
+RRF_INPUTS = ("keyword", "vector")
 
 
 class EmbedderUnavailable(RuntimeError):
@@ -43,6 +51,42 @@ class Hit:
     rank: int
     score: float
     method: str
+
+
+@dataclass(frozen=True)
+class Source:
+    """One input list that contributed to a fused hit: its method, rank and native score."""
+
+    method: str
+    rank: int
+    score: float
+
+
+@dataclass(frozen=True)
+class FusedHit(Hit):
+    """A hybrid hit; `score` is the RRF sum and `sources` holds every list that ranked it."""
+
+    sources: tuple[Source, ...] = ()
+
+
+def rrf(lists, k, constant=RRF_K):
+    """Fuse ranked hit lists: score(chunk) = sum over lists of 1 / (constant + rank).
+
+    Sums are exact fractions, so equal scores tie exactly; ties break on chunk_id as in SQL.
+    A chunk absent from a list contributes nothing for it. Metadata comes from the first list
+    that ranked the chunk; it is identical across lists because both read the same rows.
+    """
+    fused = {}
+    for hits in lists:
+        for hit in hits:
+            entry = fused.setdefault(hit.chunk_id, [hit, Fraction(0), []])
+            entry[1] += Fraction(1, constant + hit.rank)
+            entry[2].append(Source(hit.method, hit.rank, hit.score))
+    ordered = sorted(fused.values(), key=lambda e: (-e[1], e[0].chunk_id))[:k]
+    return [FusedHit(chunk_id=h.chunk_id, article_id=h.article_id, title=h.title,
+                     source_url=h.source_url, passage=h.passage, rank=i, score=float(total),
+                     method="hybrid", sources=tuple(sources))
+            for i, (h, total, sources) in enumerate(ordered, 1)]
 
 
 def validate(query, method, filters, k):
@@ -202,8 +246,23 @@ def search(query, method="vector", filters=None, k=5, *, connection=None, embedd
     Without `embedder`, vector methods use the C05 model and only its `embedding_config`.
     A custom `embedder(query) -> 768 floats` must match the given `embedding_config`;
     `query_vector` skips embedding (evaluation reuses one vector for ANN and exact runs).
+    `hybrid` runs keyword and vector at depth RRF_DEPTH on one connection, then fuses them.
     """
     query, filters = validate(query, method, filters, k)
+    if method == "hybrid":
+        if query_vector is None:
+            if embedder is None:
+                embedder, default_config = default_embedder()
+                embedding_config = embedding_config or default_config
+            query_vector = embedder(query)
+        vector_text(query_vector)  # reject a bad vector before any SQL runs
+        from citehop.db import connect
+
+        with nullcontext(connection) if connection is not None else connect() as conn:
+            lists = [search(query, m, filters, RRF_DEPTH, connection=conn,
+                            query_vector=query_vector, embedding_config=embedding_config)
+                     for m in RRF_INPUTS]
+        return rrf(lists, k)
     if method == "keyword":
         value = query
     else:
@@ -259,6 +318,9 @@ def main(argv=None) -> int:
         query, filters = validate(args.query, args.method, filters, args.k)
         config, vector = args.embedding_config, None
         if args.method != "keyword":
+            if args.explain and args.method == "hybrid":
+                raise ValueError("--explain shows one SQL statement; explain keyword and "
+                                 "vector separately for hybrid")
             embed_query, model_config = default_embedder()
             config, vector = config or model_config, embed_query(query)
         with connect() as conn:
