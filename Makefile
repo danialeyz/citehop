@@ -3,7 +3,7 @@ PY = .venv/bin/python
 API_PORT ?= 8000
 FRONTEND_PORT ?= 3000
 
-.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check e2e test test-graph test-model graph-import graph-status api-types venv-ml embed-smoke embed embed-status rag-validate eval lint locks
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check e2e test test-graph test-model graph-import graph-status api-types venv-ml embed-smoke embed embed-status rag-validate eval graph-retrieval-eval lint locks
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
 venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
@@ -60,6 +60,8 @@ rag-validate: ## live search + generation check (3 generator calls; needs venv-m
 	$(PY) scripts/validate_rag.py
 eval: ## C08 retrieval + answer evaluation into results/runs/<run_id>/ (needs venv-ml, embedded corpus, Ollama)
 	$(PY) -m citehop.evaluate
+graph-retrieval-eval: ## S02 experiment: graph-assisted vs core vector retrieval into results/experiments/s02/ (needs venv-ml, embedded corpus, ready graph)
+	$(PY) -m citehop.graph_retrieval eval
 lint: ## Python lint
 	.venv/bin/ruff check citehop tests scripts/check_persistence.py scripts/search_fixture.py scripts/validate_rag.py \
 		scripts/export_openapi.py scripts/smoke_api.py
