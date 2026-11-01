@@ -1,4 +1,6 @@
-"""Run a trusted local SQL file; no browser-facing SQL endpoint.
+"""Run a trusted local SQL file statement by statement: python -m citehop.apply_sql sql/x.sql
+
+No browser-facing SQL endpoint.
 
 DDL implicitly commits in MariaDB. This is not an atomic migration runner.
 Stored procedures / client DELIMITER directives are deliberately unsupported.
@@ -23,11 +25,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("file", type=Path)
     args = parser.parse_args()
-    queries = statements(args.file.read_text())
+    queries = statements(args.file.read_text(encoding="utf-8"))
     with connect() as connection:
         cursor = connection.cursor()
-        for query in queries:
+        for i, query in enumerate(queries, 1):
             cursor.execute(query)
+            label = sqlparse.format(query, strip_comments=True).strip().splitlines()[0]
+            print(f"[{i}/{len(queries)}] ok: {label[:70]}")
             if cursor.description:
                 for row in cursor:
                     print(row)

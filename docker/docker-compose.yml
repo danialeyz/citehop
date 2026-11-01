@@ -9,6 +9,7 @@ services:
     ports:
       - "127.0.0.1:${DB_PORT:-3306}:3306"
     volumes:
+      - ./my.cnf:/etc/mysql/conf.d/citehop.cnf:ro
       - mariadb_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]

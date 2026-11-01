@@ -30,7 +30,7 @@ Scores are specific to each method. They are not probabilities and must not be c
 
 ## Why filtered vector search does not use the HNSW index
 
-On MariaDB 11.8.9, the vector index returns a bounded candidate list (sized by `mhnsw_ef_search`, default 20), and `WHERE` is applied to that list afterwards. Observed on the fixture database with `FORCE INDEX (vx_chunks_embedding) WHERE article_id = X` for an article with 3 chunks: `LIMIT 3` returned 1 row, `LIMIT 5` returned 2, and `LIMIT 50` returned 3. A filtered indexed query would therefore filter a global top-k without warning. Two rules follow:
+On MariaDB 11.8.9, `WHERE` on an indexed vector query filters a bounded candidate list, so it can return fewer than k rows without warning. The observation and fix are in [TRAPS.md](TRAPS.md#hnsw-where-filter-returns-fewer-than-k-rows). Two rules follow:
 
 1. Unfiltered vector search uses the index. The ANN subquery reads only `chunks`, because joining `articles` inside it made the optimizer drop the index and use filesort.
 2. Vector search with any predicate (including an `embedding_config` that not every chunk has) uses `IGNORE INDEX`. It then computes exact cosine over the eligible rows, which the optimizer reaches through the category, link, or length index. For filtered queries, `vector` and `exact` are therefore the same computation.
