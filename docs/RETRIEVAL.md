@@ -62,11 +62,31 @@ The tests ran on an Apple M6 development Mac, with client and Docker MariaDB on 
 
 On the live corpus, the query *Which algorithm groups points by density?* with `max_length_chars` 6000 returned five hits for both `vector` and `exact`. None of the five is in the unfiltered exact top 20, so the filter is applied before the limit.
 
+## Reciprocal rank fusion (S01)
+
+`method="hybrid"` runs `keyword` and `vector` at depth 50 on one connection, with the same filters and `embedding_config`, then fuses them with reciprocal rank fusion: `score = Σ 1 / (60 + rank)` over the lists that contain the chunk. The constant (60) and the depth (50) are fixed; no sweep was run. Sums are exact fractions, so equal sums tie exactly and ties break on `chunk_id`, as in SQL. A hybrid hit has the usual fields (`score` is the RRF sum, `method` is `hybrid`) plus `sources`, which lists `(method, rank, score)` for each input list that ranked it. The API does not expose `hybrid`; it is available from Python, the CLI and `python -m citehop.evaluate --hybrid`.
+
+Frozen-set comparison, run `20261101T140542Z-dev-test-211053ad` (Apple M6, MariaDB 11.8.9 in local Docker, `corpus:1` with 100 articles and 1,776 chunks, `mhnsw_ef_search` 20, no answers generated). Labels are still unreviewed, so these are provisional.
+
+| Recall@5 (answerable n) | keyword | vector | hybrid |
+|---|---|---|---|
+| dev (8) | 0.958 | 1.0 | 1.0 |
+| test (17) | 0.959 | 0.976 | 0.988 |
+
+| Retrieval latency, test (ms, median / p95) | keyword | vector | hybrid |
+|---|---|---|---|
+| unfiltered (38 calls) | 4.96 / 7.09 | 6.77 / 8.86 | 11.26 / 16.95 |
+| filtered (16 calls) | 4.55 / 6.23 | 30.26 / 74.83 | 39.16 / 78.70 |
+
+Hybrid recovers both keyword misses that vector already got (dev-05, test-01). On test-03 it scores 0.8, against 0.8 for keyword and 0.6 for vector. Its retrieval latency is roughly the sum of its two queries. Query embedding (median 12.4 ms on test) is excluded from these timings, as for `vector`.
+
 ## Commands
 
 ```bash
 python -m citehop.search "k-means initialization" --method keyword --k 5 --category "Cluster analysis algorithms"
 python -m citehop.search "How does DBSCAN find clusters?" --method vector --explain   # needs make venv-ml
+python -m citehop.search "How does DBSCAN find clusters?" --method hybrid --k 5
+python -m citehop.evaluate --hybrid --no-answers                                      # S01 comparison
 python -m citehop.apply_sql sql/search_examples.sql
 CITEHOP_TEST_DB_NAME=citehop_test pytest tests/test_search.py         # db tests need a disposable DB
 CITEHOP_TEST_DB_NAME=citehop_test python scripts/search_fixture.py     # realistic plan fixture
