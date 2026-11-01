@@ -16,7 +16,7 @@ The repo is mid-migration from the Wikipedia RAG prototype (100 articles, Neo4j 
 | `make db-up` / `db-down` | start or stop MariaDB and Neo4j (volumes kept) |
 | `make db-reset` | delete the volumes and start fresh (asks first) |
 | `make check` | connections, version 11.8.9, `my.cnf` settings, a cosine check |
-| `make schema` / `kg-schema` | apply `sql/schema.sql` / `sql/kg_schema.sql` (from M2) |
+| `make schema` / `kg-schema` | apply `sql/schema.sql` / `sql/kg_schema.sql` |
 | `make sql FILE=...` | apply any trusted SQL file |
 | `make lint` | ruff |
 | `make test` | unit tests, no services |
@@ -62,7 +62,7 @@ Target:
 citehop/           Python package: db.py, apply_sql.py, check.py, search, embed, evaluate
 citehop/api/       FastAPI under /api/v1
 citehop/graph/     Neo4j import (removed in M8)
-sql/               SQL files (corpus_schema.sql now; schema.sql and kg_schema.sql from M2)
+sql/               SQL files: schema.sql, kg_schema.sql; corpus_schema.sql (legacy, until M8)
 frontend/          Next.js 16 UI (see frontend/AGENTS.md)
 docker/            docker-compose.yml and my.cnf
 tests/             pytest; markers db, neo4j, model
@@ -77,4 +77,4 @@ Danial owns meaning, extraction and the demo. Akshat owns tables, FULLTEXT and r
 
 ## Read before SQL work
 
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/DATA_MODEL.md](docs/DATA_MODEL.md) and [docs/TRAPS.md](docs/TRAPS.md). ARCHITECTURE and DATA_MODEL still describe the prototype until M2 and M4 rewrite them.
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/DATA_MODEL.md](docs/DATA_MODEL.md) and [docs/TRAPS.md](docs/TRAPS.md). DATA_MODEL describes the target tables (M2). ARCHITECTURE still describes the prototype until M4 rewrites it.

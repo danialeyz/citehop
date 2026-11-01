@@ -30,11 +30,9 @@ check: ## real database connections, pinned version, my.cnf settings, native vec
 sql: ## run trusted SQL file: make sql FILE=sql/smoke.sql
 	@test -n "$(FILE)" || (echo 'Set FILE=path/to/file.sql'; exit 1)
 	$(PY) -m citehop.apply_sql "$(FILE)"
-schema: ## M2: create the core LitSearch tables (safe to rerun)
-	@test -f sql/schema.sql || (echo 'sql/schema.sql arrives in migration phase M2'; exit 1)
+schema: ## create the core LitSearch tables and search_log (safe to rerun)
 	$(PY) -m citehop.apply_sql sql/schema.sql
-kg-schema: ## M2: create the knowledge graph tables and kg_links view (safe to rerun)
-	@test -f sql/kg_schema.sql || (echo 'sql/kg_schema.sql arrives in migration phase M2'; exit 1)
+kg-schema: ## create the knowledge graph tables and kg_links view (safe to rerun; needs schema)
 	$(PY) -m citehop.apply_sql sql/kg_schema.sql
 inspect: ## card #9: download LitSearch and print its fields
 	@test -f scripts/inspect_litsearch.py || (echo 'scripts/inspect_litsearch.py arrives in migration phase M3'; exit 1)
