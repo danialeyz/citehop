@@ -99,6 +99,10 @@ def validate(query, method, filters, k):
         raise ValueError(f"method must be one of {', '.join(METHODS)}")
     if type(k) is not int or not 1 <= k <= MAX_K:
         raise ValueError(f"k must be an integer from 1 to {MAX_K}")
+    if method == "hybrid" and k > RRF_DEPTH:
+        # Deeper inputs would reorder the top (two rank-51 entries beat one rank-1 entry), so
+        # the fused list is defined over fixed top-50 inputs and cannot be longer than 50.
+        raise ValueError(f"k must be at most {RRF_DEPTH} for hybrid search")
     filters = dict(filters or {})
     if set(filters) - FILTER_KEYS:
         raise ValueError(f"unknown filter: {', '.join(sorted(set(filters) - FILTER_KEYS))}")

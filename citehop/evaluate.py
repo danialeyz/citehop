@@ -34,6 +34,9 @@ from pathlib import Path
 SCHEMA = "citehop-eval-v1"
 K = 5
 CANDIDATE_DEPTHS = (50, 100)  # chunk depths tried in turn; 100 is search.MAX_K
+# hybrid fuses fixed top-50 inputs, so 50 fused rows is its whole list (search.RRF_DEPTH);
+# fewer means both inputs returned every eligible row
+METHOD_DEPTHS = {"hybrid": (50,)}
 TEST_REPEATS = 3
 REVIEW_ANSWERS = 10
 REVIEW_UNANSWERABLE = 3
@@ -161,7 +164,8 @@ def evaluate(questions, *, search_fn, embed_fn, generator=None, splits=("dev", "
             for method in methods:
                 hits, ranking, info = retrieve_articles(
                     lambda depth, q=q, m=method, v=vector: search_fn(q["question"], m,
-                                                                     q["filters"], depth, v))
+                                                                     q["filters"], depth, v),
+                    depths=METHOD_DEPTHS.get(method, CANDIDATE_DEPTHS))
                 record["methods"][method] = {
                     **info, "recall_at_5": recall_at_k(ranking, q["relevant_article_ids"]),
                     "article_ranking": ranking, "hits": [compact(h) for h in hits]}
@@ -400,6 +404,7 @@ def main(argv=None):
                     "test": ["keyword", "vector"] + ["hybrid"] * args.hybrid},
         **({"hybrid": {"fusion": "reciprocal rank fusion", "rrf_k": RRF_K,
                        "depth_per_list": RRF_DEPTH, "inputs": list(RRF_INPUTS),
+                       "candidate_depths": list(METHOD_DEPTHS["hybrid"]),
                        "ties": "chunk_id ascending"}} if args.hybrid else {}),
         "embedding_model": MODEL_ID, "embedding_model_revision": MODEL_REVISION,
         "embedding_config": embedding_config, "mariadb": state["mariadb"],

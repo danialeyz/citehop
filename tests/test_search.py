@@ -165,7 +165,10 @@ def test_hybrid_rejects_bad_input_before_sql():
     for args in (("", "hybrid"), ("q", "hybrid")):
         with pytest.raises(ValueError):
             s.search(*args, connection=conn, query_vector=[0.0] * 768)
+    with pytest.raises(ValueError, match="at most 50 for hybrid"):
+        s.search("q", "hybrid", k=s.RRF_DEPTH + 1, connection=conn, query_vector=AXIS)
     assert conn.log == []
+    assert s.validate("q", "hybrid", None, s.RRF_DEPTH)  # 50 itself is allowed
 
 
 # ---------- MariaDB fixtures ----------

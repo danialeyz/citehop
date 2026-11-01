@@ -202,6 +202,22 @@ def test_extra_methods_run_on_both_splits_with_one_embedding():
     assert s["latency"]["dev"]["retrieval_ms_hybrid"]["n"] == 3
 
 
+def test_hybrid_is_not_deepened_past_its_fixed_inputs():
+    calls = []
+
+    def one_article(query, method, filters, k, vector):  # always full, never 5 articles
+        calls.append((method, k))
+        return hits(*[1] * k)
+
+    records, _ = ev.evaluate(QUESTIONS[:1], search_fn=one_article, embed_fn=lambda q: [1.0],
+                             warm_up=False, extra_methods=("hybrid",))
+    assert calls == [("keyword", 50), ("keyword", 100), ("vector", 50), ("vector", 100),
+                     ("exact", 50), ("exact", 100), ("hybrid", 50)]
+    hybrid = records[0]["methods"]["hybrid"]
+    assert not hybrid["exhausted"] and not hybrid["cutoff_reached"]
+    assert len(hybrid["attempts"]) == 1
+
+
 def test_review_selection_is_deterministic_and_stratified():
     questions = [{"id": f"test-{i:02d}", "split": "test", "answerable": i not in (3, 8, 9, 12)}
                  for i in range(1, 15)] + [{"id": "dev-01", "split": "dev", "answerable": True}]
