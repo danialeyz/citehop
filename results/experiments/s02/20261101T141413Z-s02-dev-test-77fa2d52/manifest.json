@@ -1,0 +1,373 @@
+{
+  "schema": "citehop-s02-v1",
+  "card": "S02",
+  "run_id": "20261101T141413Z-s02-dev-test-77fa2d52",
+  "created_at": "2026-11-01T14:14:13+00:00",
+  "status": "provisional: question labels are not all approved",
+  "final_claims_allowed": false,
+  "question_set": {
+    "path": "eval/questions.json",
+    "corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "labels_sha256": "23e52d6ac35a3e5f820fccaef74d3427b8856cca2f7942359809979fcfa23375",
+    "label_review": {
+      "unreviewed": 30
+    }
+  },
+  "splits": {
+    "dev": 10,
+    "test": 20
+  },
+  "corpus": {
+    "version_id": 1,
+    "id": "corpus:1",
+    "content_sha256": "d491fa4bb36d0859bd9a497a9ea45d8c50ca58f61b8d516e75c4ba09f407df32",
+    "source_corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "subset": "full",
+    "articles": 100
+  },
+  "chunk_configs": [
+    {
+      "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+      "chunk_config": "f19b156fec90a21af279bc335c6cee40754f31cca7a3389324f2c96da2bf3f0b",
+      "chunks": 1776
+    }
+  ],
+  "graph": {
+    "before": {
+      "status": "ready",
+      "source_version": "corpus:1",
+      "imported_version": "corpus:1",
+      "imported_at": "2026-10-31T17:42:42+00:00",
+      "counts": {
+        "articles": 100,
+        "categories": 456,
+        "links": 917,
+        "memberships": 1101
+      },
+      "detail": null
+    },
+    "after": {
+      "status": "ready",
+      "source_version": "corpus:1",
+      "imported_version": "corpus:1",
+      "imported_at": "2026-10-31T17:42:42+00:00",
+      "counts": {
+        "articles": 100,
+        "categories": 456,
+        "links": 917,
+        "memberships": 1101
+      },
+      "detail": null
+    }
+  },
+  "config_id": "77fa2d5251d37974c2a6bba86437cb484bb422b6a89706f93b63662850565414",
+  "config": {
+    "k": 5,
+    "max_seeds": 10,
+    "max_neighbors": 100,
+    "seed_chunks": 100,
+    "graph_weight": 0.05,
+    "expansion": "one undirected LINKS_TO hop; categories not traversed",
+    "ranking": "exact cosine + graph_weight * support / seeds; ties by chunk_id",
+    "baseline": "core search(method='vector')",
+    "test_repeats": 3,
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+    "mariadb": {
+      "version": "11.8.9-MariaDB-ubu2404",
+      "mhnsw_ef_search": 20,
+      "mhnsw_default_m": 6
+    },
+    "graph_version": "corpus:1"
+  },
+  "warm_up": "one untimed embedding, vector search and graph search before timed calls; one process, one MariaDB connection, one Neo4j driver",
+  "latency": {
+    "unit": "ms",
+    "boundaries": {
+      "embedding_ms": "embed_query(question), shared by both methods",
+      "retrieval_ms_vector": "core search(method='vector') with the precomputed vector; summed over candidate-depth attempts",
+      "retrieval_ms_graph": "graph_search() with the same vector: seed SQL + graph status + Neo4j expansion + candidate SQL; summed over candidate-depth attempts",
+      "stage_ms": "graph_search stages of the last candidate-depth attempt: seed_ms (core vector search, 100 chunks), graph_ms (status check + two Cypher reads), candidate_ms (exact ranking SQL)"
+    },
+    "statistics": "median and nearest-rank p95 over every timed call"
+  },
+  "hardware": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M6",
+    "memory_bytes": 25769803776,
+    "database": "MariaDB in local Docker on the same machine"
+  },
+  "code": {
+    "commit": "b4b4f7edbed8c8246a5c3f7e7b7c1b6af13b1527",
+    "dirty": true
+  },
+  "files": {
+    "retrieval": "retrieval.jsonl"
+  },
+  "summary": {
+    "retrieval": {
+      "dev": {
+        "vector": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          }
+        },
+        "graph": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          }
+        },
+        "per_question": {
+          "graph_higher": 0,
+          "graph_lower": 0,
+          "equal": 8
+        }
+      },
+      "test": {
+        "vector": {
+          "all_answerable": {
+            "n": 17,
+            "recall_at_5": 0.9765,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 12,
+            "recall_at_5": 0.9667,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 5,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          }
+        },
+        "graph": {
+          "all_answerable": {
+            "n": 17,
+            "recall_at_5": 0.9765,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 12,
+            "recall_at_5": 0.9667,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 5,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          }
+        },
+        "per_question": {
+          "graph_higher": 0,
+          "graph_lower": 0,
+          "equal": 17
+        }
+      }
+    },
+    "graph": {
+      "dev": {
+        "questions": 10,
+        "expanded": 10,
+        "fallbacks": {},
+        "graph_versions": [
+          "corpus:1"
+        ],
+        "mean_seeds": 9.4,
+        "mean_neighbors": 64.9,
+        "max_neighbors": 82,
+        "truncated": 0,
+        "seeds_missing": 0,
+        "mean_article_overlap_at_5": 0.9,
+        "stage_seed_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 14.197,
+          "p95": 319.573
+        },
+        "stage_graph_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 7.51,
+          "p95": 11.73
+        },
+        "stage_candidate_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 163.834,
+          "p95": 193.109
+        },
+        "neighbor_articles_in_top_5": 0
+      },
+      "test": {
+        "questions": 20,
+        "expanded": 20,
+        "fallbacks": {},
+        "graph_versions": [
+          "corpus:1"
+        ],
+        "mean_seeds": 9.55,
+        "mean_neighbors": 68.6,
+        "max_neighbors": 83,
+        "truncated": 0,
+        "seeds_missing": 0,
+        "mean_article_overlap_at_5": 0.93,
+        "stage_seed_ms": {
+          "n": 20,
+          "unit": "ms",
+          "median": 13.416,
+          "p95": 53.678
+        },
+        "stage_graph_ms": {
+          "n": 20,
+          "unit": "ms",
+          "median": 7.397,
+          "p95": 11.124
+        },
+        "stage_candidate_ms": {
+          "n": 20,
+          "unit": "ms",
+          "median": 175.526,
+          "p95": 227.963
+        },
+        "neighbor_articles_in_top_5": 0
+      }
+    },
+    "latency": {
+      "dev": {
+        "samples": {
+          "questions": 10,
+          "records": 10
+        },
+        "embedding_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 16.301,
+          "p95": 25.625
+        },
+        "retrieval_ms_vector": {
+          "n": 10,
+          "unit": "ms",
+          "median": 8.713,
+          "p95": 248.32
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 8.585,
+          "p95": 14.509
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 27.013,
+          "p95": 248.32
+        },
+        "retrieval_ms_graph": {
+          "n": 10,
+          "unit": "ms",
+          "median": 203.848,
+          "p95": 483.063
+        },
+        "retrieval_ms_graph_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 209.175,
+          "p95": 215.405
+        },
+        "retrieval_ms_graph_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 56.344,
+          "p95": 483.063
+        }
+      },
+      "test": {
+        "samples": {
+          "questions": 20,
+          "records": 54
+        },
+        "embedding_ms": {
+          "n": 54,
+          "unit": "ms",
+          "median": 16.665,
+          "p95": 29.509
+        },
+        "retrieval_ms_vector": {
+          "n": 54,
+          "unit": "ms",
+          "median": 9.654,
+          "p95": 79.656
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 38,
+          "unit": "ms",
+          "median": 8.153,
+          "p95": 11.797
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 16,
+          "unit": "ms",
+          "median": 39.026,
+          "p95": 99.122
+        },
+        "retrieval_ms_graph": {
+          "n": 54,
+          "unit": "ms",
+          "median": 199.818,
+          "p95": 265.694
+        },
+        "retrieval_ms_graph_unfiltered": {
+          "n": 38,
+          "unit": "ms",
+          "median": 209.928,
+          "p95": 315.175
+        },
+        "retrieval_ms_graph_filtered": {
+          "n": 16,
+          "unit": "ms",
+          "median": 93.131,
+          "p95": 216.286
+        }
+      }
+    }
+  }
+}

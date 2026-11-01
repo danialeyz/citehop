@@ -1,6 +1,8 @@
 """Retrieval tests. Unit tests need no database; `db` tests use CITEHOP_TEST_DB_NAME."""
 
 import math
+from dataclasses import asdict
+from fractions import Fraction
 
 import pytest
 from corpus_fixtures import corpus
@@ -48,7 +50,7 @@ def test_rejects_bad_query_vectors(vector):
 def test_filters_are_sql_predicates_before_limit_and_values_are_parameters():
     filters = {"category": "x' OR '1'='1", "min_length_chars": 1, "max_length_chars": 9,
                "linked_from": 7}
-    for method in s.METHODS:
+    for method in s.SQL_METHODS:
         sql, params = s.build_sql(method, filters, 5)
         assert "x' OR" not in sql and sql.count("?") == len(params)
         assert sql.index("EXISTS") < sql.index("ORDER BY") < sql.index("LIMIT ?")
@@ -78,6 +80,95 @@ def test_overlap_at_k():
     hit = lambda cid: s.Hit(cid, 1, "t", "u", "p", 1, 0.5, "vector")  # noqa: E731
     assert s.overlap_at_k([hit("a"), hit("b")], [hit("a"), hit("c")]) == 0.5
     assert s.overlap_at_k([hit("a")], []) is None
+
+
+# ---------- reciprocal rank fusion (S01) ----------
+
+def ranked(method, chunk_ids):
+    return [s.Hit(cid, 1, "t", "u", "p", rank, 10.0 - rank, method)
+            for rank, cid in enumerate(chunk_ids, 1)]
+
+
+def test_rrf_scores_are_exact_reciprocal_rank_sums():
+    fused = s.rrf([ranked("keyword", ["a", "b", "c"]), ranked("vector", ["c", "a", "d"])], k=10)
+    assert [h.chunk_id for h in fused] == ["a", "c", "b", "d"]
+    assert [h.score for h in fused] == [float(Fraction(1, 61) + Fraction(1, 62)),
+                                        float(Fraction(1, 61) + Fraction(1, 63)),
+                                        float(Fraction(1, 62)), float(Fraction(1, 63))]
+    assert [h.rank for h in fused] == [1, 2, 3, 4] and {h.method for h in fused} == {"hybrid"}
+    assert s.RRF_K == 60 and s.RRF_DEPTH == 50
+
+
+def test_rrf_overlap_is_one_hit_with_every_source():
+    fused = s.rrf([ranked("keyword", ["a", "b"]), ranked("vector", ["b"])], k=10)
+    assert [h.chunk_id for h in fused] == ["b", "a"]  # 1/62 + 1/61 beats 1/61
+    assert fused[0].sources == (s.Source("keyword", 2, 8.0), s.Source("vector", 1, 9.0))
+    assert fused[1].sources == (s.Source("keyword", 1, 9.0),)
+    assert asdict(fused[0])["sources"] == ({"method": "keyword", "rank": 2, "score": 8.0},
+                                           {"method": "vector", "rank": 1, "score": 9.0})
+
+
+def test_rrf_ties_break_on_chunk_id_and_sums_tie_exactly():
+    # Single-list rank 1 in either list ties; so do (2, 3) and (3, 2) rank pairs.
+    fused = s.rrf([ranked("keyword", ["z", "p", "q"]), ranked("vector", ["y", "q", "p"])], k=10)
+    assert [h.chunk_id for h in fused] == ["p", "q", "y", "z"]
+    assert fused[0].score == fused[1].score and fused[2].score == fused[3].score == 1 / 61
+
+
+def test_rrf_truncates_to_k_and_handles_empty_lists():
+    fused = s.rrf([ranked("keyword", ["a", "b", "c"]), ranked("vector", [])], k=2)
+    assert [(h.chunk_id, h.rank) for h in fused] == [("a", 1), ("b", 2)]
+    assert s.rrf([[], []], k=5) == []
+
+
+class FakeCursor:
+    def __init__(self, log):
+        self.log, self.rows = log, []
+
+    def execute(self, sql, params=()):
+        self.log.append((sql, list(params)))
+        if sql.startswith("SELECT DISTINCT embedding_config"):
+            self.rows = [("e",)]
+        else:
+            ids = ["k1", "both"] if "MATCH(" in sql else ["both", "v2"]
+            self.rows = [(cid, 7, "Title", "url", "text", 0.5) for cid in ids]
+
+    def fetchall(self):
+        return self.rows
+
+
+class FakeConnection:
+    def __init__(self):
+        self.log = []
+
+    def cursor(self):
+        return FakeCursor(self.log)
+
+
+def test_hybrid_reuses_filters_at_depth_50_and_embeds_once():
+    conn, calls = FakeConnection(), []
+    filters = {"category": "Neural networks", "max_length_chars": 9000}
+    hits = s.search("backprop", "hybrid", filters, k=2, connection=conn,
+                    embedder=lambda q: calls.append(q) or AXIS, embedding_config="e")
+    assert calls == ["backprop"]
+    selects = [(sql, params) for sql, params in conn.log if "FROM chunks c" in sql]
+    assert [s.build_sql(m, filters, 50)[0] for m in ("keyword", "vector")] == [
+        sql for sql, _ in selects]
+    for _, params in selects:
+        assert params[-1] == s.RRF_DEPTH and "Neural networks" in params and 9000 in params
+    assert [(h.chunk_id, h.rank) for h in hits] == [("both", 1), ("k1", 2)]
+    assert hits[0].sources == (s.Source("keyword", 2, 0.5), s.Source("vector", 1, 0.5))
+
+
+def test_hybrid_rejects_bad_input_before_sql():
+    conn = FakeConnection()
+    for args in (("", "hybrid"), ("q", "hybrid")):
+        with pytest.raises(ValueError):
+            s.search(*args, connection=conn, query_vector=[0.0] * 768)
+    with pytest.raises(ValueError, match="at most 50 for hybrid"):
+        s.search("q", "hybrid", k=s.RRF_DEPTH + 1, connection=conn, query_vector=AXIS)
+    assert conn.log == []
+    assert s.validate("q", "hybrid", None, s.RRF_DEPTH)  # 50 itself is allowed
 
 
 # ---------- MariaDB fixtures ----------
@@ -231,3 +322,20 @@ def test_search_never_touches_neo4j(loaded, monkeypatch):
     monkeypatch.delenv("NEO4J_PASSWORD", raising=False)
     assert s.search("perceptron", "keyword", connection=loaded)
     assert s.search("q", "vector", connection=loaded, query_vector=AXIS)
+
+
+@pytest.mark.db
+def test_hybrid_fuses_filtered_keyword_and_vector_lists(loaded):
+    filters = {"category": "Neural networks"}
+    hits = s.search("backpropagation", "hybrid", filters, k=10, connection=loaded,
+                    query_vector=AXIS)
+    # keyword: c2-000, c2-001; vector over articles 2 and 3: c2-000, c2-001, c2-002, c3-000.
+    assert [(h.chunk_id, h.score) for h in hits] == [
+        ("c2-000", 2 / 61), ("c2-001", 2 / 62), ("c2-002", 1 / 63), ("c3-000", 1 / 64)]
+    assert [src.method for src in hits[0].sources] == ["keyword", "vector"]
+    assert hits[3].sources[0].method == "vector" and hits[3].title == "Perceptron"
+    inputs = [s.search("backpropagation", m, filters, k=s.RRF_DEPTH, connection=loaded,
+                       query_vector=AXIS) for m in s.RRF_INPUTS]
+    assert hits == s.rrf(inputs, 10)
+    assert s.search("backpropagation", "hybrid", {"category": "Classification algorithms"},
+                    k=5, connection=loaded, query_vector=AXIS)[0].chunk_id == "c3-000"
