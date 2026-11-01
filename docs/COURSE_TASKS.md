@@ -1,6 +1,6 @@
 # CiteHop: native vector RAG with a visual knowledge graph
 
-Current plan: Next.js/React + Tailwind CSS, FastAPI, MariaDB, and Neo4j, as requested. This supersedes the earlier 12-card plan: IDs have been revised, so use the matching current prompts. Core tasks C01–C14 are implemented; see [SUBMISSION.md](SUBMISSION.md) for the C14 reproduction, checks, and open items (human review, `main` branch). Optional tasks S01–S03 are not started.
+Current plan: Next.js/React + Tailwind CSS, FastAPI, MariaDB, and Neo4j, as requested. This supersedes the earlier 12-card plan: IDs have been revised, so use the matching current prompts. Core tasks C01–C14 are implemented; see [SUBMISSION.md](SUBMISSION.md) for the C14 reproduction, checks, and open items (human review, `main` branch). Optional tasks S01 (RRF, [RETRIEVAL.md](RETRIEVAL.md)) and S02 (graph-assisted retrieval experiment, [GRAPH_RETRIEVAL.md](GRAPH_RETRIEVAL.md)) are implemented; S03 is not started.
 
 ## Project definition
 
