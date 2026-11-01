@@ -1,3 +1,5 @@
+A project for area 4, "Vector search and RAG, natively" for the [MariaDB student database projects, 2026-09](https://mariadb.org/bachelor_hackathon_2026-09/).
+
 <h1 align="center">citehop.</h1>
 <p align="center"><strong>Big questions. Clear connections.</strong><br>Search the evidence. Generate a cited answer. Follow the thread.</p>
 
@@ -11,7 +13,8 @@
   <a href="#the-experience">Explore</a> ·
   <a href="#start-here">Run locally</a> ·
   <a href="#system-design">Architecture</a> ·
-  <a href="#measure-the-result">Evaluation</a> ·
+  <a href="#what-we-found">Findings</a> ·
+  <a href="#why-mariadb-and-neo4j">MariaDB + Neo4j</a> ·
   <a href="#project-guide">Documentation</a>
 </p>
 
@@ -37,6 +40,14 @@ Search, Library, Graph, and Dashboard are implemented. Question labels and answe
 | **Dashboard** · `/dashboard` | Inspect corpus and graph status, compare saved retrieval runs, review timing and grounding status, and export results. |
 
 The charcoal-and-lime workspace adapts to desktop and mobile, with keyboard navigation, visible focus states, collapsible filters, and expandable sample questions from the dev split. Loading, empty, stale-data, and service-failure states are part of the interface.
+
+| Search: cited answer and ranked sources | Graph: expanded neighborhood and a two-link path |
+|---|---|
+| ![Search view: an answer citing S1 above five ranked passages from MariaDB vector search](docs/screenshots/search-answer-1440.png) | ![Graph view: an expanded Neo4j neighborhood with a highlighted path and the inspector](docs/screenshots/graph-path-1440.png) |
+| **Dashboard: live counts and a saved run** | **Library: the pinned collection** |
+| ![Dashboard view: corpus and graph counts, Recall@5 and latency of the saved run](docs/screenshots/dashboard-1440.png) | ![Library view: article cards with categories](docs/screenshots/library-1440.png) |
+
+<sub>Captured by `make e2e` on real data from a clean setup (corpus:1, 1,776 chunks). More, including the citation inspector and 390 px views, in [`docs/screenshots/`](docs/screenshots/).</sub>
 
 **Try the flow:** ask a question → find sources → generate an answer → inspect a citation → explore connections.
 
@@ -345,6 +356,46 @@ erDiagram
 
 Neo4j projects article nodes, category nodes, `LINKS_TO`, and `IN_CATEGORY` relationships. It does not infer agreement or scholarly citations. See the [data model](docs/DATA_MODEL.md) and [graph documentation](docs/GRAPH.md) for constraints and import behavior.
 
+### Model, chunk, and index choices
+
+| Choice | Setting | Why |
+|---|---|---|
+| Embedding model | `BAAI/bge-base-en-v1.5` @ `a5beb1e3…`, 768 dimensions, `[CLS]` pooling, L2-normalized | Strong English retrieval model at base size, MIT license, ~440 MB, runs on a laptop CPU: the full corpus embeds in ~100 s of model time and a query in ~15 ms. One model serves passages (`"{title}\n\n{passage}"`) and queries (with BGE's retrieval instruction); no GPU or API key. |
+| Model limit | 512 tokens, `truncation=False` | Nothing is cut silently; an over-long input raises. The longest real input is 310 tokens. |
+| Chunks | 300 tokenizer tokens, 50 overlap, word-start boundaries | Long enough for a definition with its context, short enough that five passages fit the 1,800-token answer budget; the overlap keeps a sentence that straddles a boundary whole in one chunk. An initial project choice, not a tuned optimum: 1,776 chunks, 3–59 per article. |
+| Vector index | `VECTOR INDEX … M=16 DISTANCE=cosine` | Cosine matches normalized BGE vectors. `M=16` (server default 6) costs little at 1,776 rows and helps recall. |
+| Search depth | `mhnsw_ef_search` = 20 (default) | Kept because ANN and exact search returned identical top 5 chunks on every unfiltered dev question (finding 1 below). |
+| Filtered queries | `IGNORE INDEX`, exact cosine over eligible rows | In 11.8.9 the index applies `WHERE` after its bounded candidate list, so a filtered indexed query can silently return too few rows. |
+
+Every setting behind a vector (model revision, input format, library versions, device) is hashed into `embedding_config`, so any change produces new rows instead of mixing vector spaces. Details: [embeddings](docs/EMBEDDINGS.md), [retrieval and query plans](docs/RETRIEVAL.md).
+
+A filtered semantic query as CiteHop runs it (simplified from [`citehop/search.py`](citehop/search.py); runnable variants with `EXPLAIN` in [`sql/search_examples.sql`](sql/search_examples.sql)):
+
+```sql
+SELECT r.chunk_id, r.article_id, a.title, a.source_url, r.text, 1 - r.distance AS score
+FROM (
+  SELECT c.chunk_id, c.article_id, c.revision_id, c.text,
+         VEC_DISTANCE_COSINE(c.embedding, VEC_FromText(?)) AS distance
+  FROM chunks c IGNORE INDEX (vx_chunks_embedding)
+  WHERE c.embedding_config = ?
+    AND EXISTS (SELECT 1 FROM article_links l              -- linked from article X
+                WHERE l.source_article_id = ? AND l.target_article_id = c.article_id)
+    AND EXISTS (SELECT 1 FROM articles la                  -- article length
+                WHERE la.article_id = c.article_id AND la.length_chars <= ?)
+  ORDER BY distance, c.chunk_id
+  LIMIT 5
+) r
+JOIN articles a ON a.article_id = r.article_id AND a.revision_id = r.revision_id
+ORDER BY score DESC, r.chunk_id;
+```
+
+### What the database-native approach gave us
+
+- **One statement.** Semantic ranking, category / length / link predicates, and the join to article metadata are one SQL query, evaluated before `LIMIT`. With a separate vector store we would filter a global top-k in Python, which silently drops results, or copy every filterable attribute into that store.
+- **One transaction, one source of truth.** A chunk and its vector are written together; re-embedding replaces an article's rows in one transaction; the `(article_id, revision_id)` foreign key rejects vectors of a revision that is no longer loaded. There is no second store to sync, back up, or reconcile.
+- **Fair baselines.** FULLTEXT, ANN, and exact cosine run over the same rows, so comparisons isolate the method.
+- **What it did not give us:** filtered queries cannot use the vector index in 11.8.9. At 1,776 rows the exact scan is cheap; at millions of rows it would not be.
+
 ### Two kinds of graph relationship
 
 This is a structural example, not a claim about particular corpus articles. Path finding follows article links only; shared categories do not create path shortcuts.
@@ -382,17 +433,58 @@ stateDiagram-v2
     unavailable --> rebuilding: Service returns, incomplete import
 ```
 
-## Measure the result
+## Why MariaDB and Neo4j
 
-The repository includes a [saved provisional run](results/runs/20261031T162301Z-dev-test-15b1f5a1/manifest.json) over **100 articles and 1,776 chunks**, using **10 dev and 20 test questions**. It compares keyword and vector retrieval, checks indexed versus exact retrieval on dev, and saves 10 generated answers for grounding review.
+**MariaDB demonstrates the assignment:** native vectors, SQL-filtered semantic retrieval, joins, and measured recall and latency. Search, answers, the Library, and the Dashboard's corpus numbers need MariaDB only, and they keep working when Neo4j is down (checked in C14).
 
-**These are evaluation-harness results, not final quality claims.** The saved run marks all 30 question labels unreviewed and sets `final_claims_allowed: false`; none of its 10 answers has completed grounding review. The Dashboard exposes those review states alongside the measurements.
+**Neo4j powers derived relationship exploration:** bounded neighborhoods (one hop by default, two at most, 100 nodes / 200 edges hard caps) and shortest paths of at most three article links, with transaction timeouts. It is a projection of `article_links` and `article_categories` rebuilt by `make graph-import`; it stores no embeddings and serves no search.
 
-- Recall@5 is measured at article level after deduplicating chunk hits.
-- Answerable and unanswerable cases are reported separately.
-- Filtered exact scans and unfiltered indexed retrieval have separate timing summaries.
-- Query embedding, retrieval, and generation timing are kept separate.
-- Run manifests preserve corpus/configuration identity and measurement conditions.
+**Extra cost**, measured on the demo machine ([details](docs/SUBMISSION.md#cost-of-the-second-database)):
+
+| | MariaDB | Neo4j |
+|---|---|---|
+| Container memory | 0.13–0.18 GiB | 0.58–0.73 GiB (heap capped at 512 MB, page cache 256 MB) |
+| Data volume | 234 MB: text, chunks, vectors, indexes | 541 MB: 556 nodes, 2,018 edges, store files and logs |
+| Operations | — | an explicit import after every corpus change (2 s here), one more service, port, and password |
+
+**Snapshot consistency limitations.** No transaction spans both databases, and nothing syncs in the background. The import records the MariaDB `corpus_versions` ID it copied; when MariaDB moves on, the graph reports `stale` (within the five-second cache) and refuses traversal until reimported. Rebuilds happen in place, so a graph that is `rebuilding` has no current snapshot, and a failed import stays `rebuilding`. Version IDs count loads in one database: the same content is `corpus:1` on a fresh load and `corpus:2` where smoke was loaded first, so compare `content_sha256` across machines.
+
+The brief does not say whether a second database is acceptable, so Neo4j is disclosed here and the MariaDB demonstration stands without it.
+
+## What we found
+
+Run [`20261031T174404Z-dev-test-15b1f5a1`](results/runs/20261031T174404Z-dev-test-15b1f5a1/manifest.json), recorded during the C14 clean-setup reproduction: Apple M6, 24 GB, MariaDB 11.8.9 in local Docker, 100 articles, 1,776 chunks, 10 dev and 20 test questions. The earlier [development run](results/runs/20261031T162301Z-dev-test-15b1f5a1/manifest.json) on identical content (same `content_sha256` and config) gave the same recall. Where every figure comes from: [SUBMISSION.md](docs/SUBMISSION.md#where-the-numbers-come-from).
+
+> [!WARNING]
+> **Provisional.** All 30 question labels were drafted by an AI agent and are unreviewed, and none of the 10 saved answers has a grounding review (`final_claims_allowed: false`). These are harness results, not final quality claims; the Dashboard shows the same review states.
+
+**Recall@5**, article-level after deduplicating chunk hits, answerable questions only (unanswerable ones are reported separately):
+
+| Split | Keyword (FULLTEXT) | Vector (HNSW) | Exact cosine |
+|---|---|---|---|
+| dev, 8 answerable | 0.958 | 1.000 | 1.000 |
+| test, 17 answerable | 0.959 | 0.976 | — |
+| test, unfiltered (12) / filtered (5) | 0.942 / 1.000 | 0.967 / 1.000 | — |
+
+**Latency**, test split unless noted, ms, median / nearest-rank p95 over every timed call (3 repetitions), Python client round trip included:
+
+| Stage | n | Median | p95 |
+|---|---|---|---|
+| Keyword retrieval | 54 | 7.8 | 17.4 |
+| Vector retrieval, unfiltered (HNSW index) | 38 | 10.3 | 22.2 |
+| Vector retrieval, filtered (exact scan of eligible rows) | 16 | 42.2 | 82.8 |
+| Exact cosine, unfiltered, dev (no index) | 7 | 218.6 | 303.9 |
+| Query embedding (BGE on CPU) | 54 | 15.3 | 30.5 |
+| Answer generation (local Ollama) | 10 | 2,171 | 2,665 |
+
+1. **The HNSW index lost nothing here.** On dev, ANN and exact search returned the same top 5 chunks for all 7 unfiltered questions at the default `ef_search` 20, and the indexed query was 10–20× faster (dev medians 9–20 ms vs 185–219 ms across the two runs). On isotropic random vectors, the worst case, the same index needed `ef_search` ≈ 400 for 0.996 overlap ([RETRIEVAL.md](docs/RETRIEVAL.md#indexed-vs-exact-retrieval)), so this depends on real embeddings clustering.
+2. **Filters and the vector index interact.** Filtered vector queries run as an exact scan over the rows the SQL predicate admits (see the choices above). That is correct and still fast at this size, but it is a linear scan.
+3. **Meaning beats keywords slightly.** Vector search fell short on one test question (3 of 5 relevant articles); keyword search fell short on two test questions and one dev question. Every filtered question reached 1.0, but there are only 5 on test and 2 on dev.
+4. **Bounded answers behave as designed.** 7 of 7 answerable review questions were answered with valid citation labels and 3 of 3 unanswerable ones abstained. Whether the cited passages support the claims is not yet reviewed.
+
+Latency differs between the two runs (the C14 run shared the laptop with the embedding job, API, and browser); treat it as a spread on one machine, not a benchmark. A 100-article corpus validates the method; it does not establish performance at scale.
+
+**Known gaps.** The brief's "edited since that date" predicate is not offered as a filter, although `articles.revision_timestamp` is stored. Hidden Wikipedia maintenance categories are stored as ordinary categories; the graph view hides them by name pattern. Concurrent users and large corpora were not tested.
 
 ```mermaid
 flowchart TB
@@ -421,9 +513,12 @@ make check                        # live database connectivity and vector check
 make api-types                    # regenerate API contract and frontend types
 make test-model                   # real tokenizer/model tests; downloads weights
 make rag-validate                 # live search and generation validation
+make e2e                          # browser journey: search → answer → citation → graph → dashboard
 ```
 
-Database integration tests need disposable test instances; see the relevant subsystem docs before running them. `make test-graph` uses `CITEHOP_TEST_NEO4J_URI` and `CITEHOP_TEST_NEO4J_PASSWORD` and clears the test graph’s CiteHop namespace.
+`make e2e` ([`frontend/e2e/journey.mjs`](frontend/e2e/journey.mjs), Playwright) needs the API, a production frontend (`npm --prefix frontend run build && npm --prefix frontend run start`), the prepared corpus, an imported graph, and Ollama; it makes one generation call and writes screenshots to `.context/e2e/`. Run `npx --prefix frontend playwright install chromium` once. Use `make e2e FRONTEND_PORT=3001` for another port.
+
+Database integration tests need disposable test instances: `CITEHOP_TEST_DB_NAME=citehop_test .venv/bin/python -m pytest -m db` uses a separate database on the configured server (grant the app user rights on it first). `make test-graph` uses `CITEHOP_TEST_NEO4J_URI` and `CITEHOP_TEST_NEO4J_PASSWORD` and clears the test graph’s CiteHop namespace.
 
 Use `npm ci` and the locked uv environment for installs. `make locks` intentionally refreshes Python locks and exports after dependency edits; commit lockfiles with those changes.
 
@@ -460,6 +555,8 @@ docs/             Architecture, subsystem guides, course plan, design references
 | [Graph](docs/GRAPH.md) / [Graph explorer](docs/GRAPH_EXPLORER.md) | Import and freshness, visual exploration and bounds |
 | [API](docs/API.md) | Endpoint contract, errors, and typed client |
 | [Evaluation](docs/EVALUATION.md) | Measurement protocol, saved runs, provisional findings |
+| [Submission record](docs/SUBMISSION.md) | Clean reproduction log, checks, evidence trail, assignment checklist, open items |
+| [Demo script](docs/DEMO.md) | Five-minute walkthrough for reviewers |
 | [UI specification](docs/design/COURSE_UI.md) | Product flows and acceptance criteria |
 | [Course plan](docs/COURSE_TASKS.md) / [Agent prompts](docs/AGENT_PROMPTS.md) | Task scope, dependencies, and implementation guidance |
 
@@ -467,8 +564,8 @@ The live theme is defined in [`frontend/app/globals.css`](frontend/app/globals.c
 
 ## Course, sources, and credits
 
-**Databases · Constructor University · Danial and Akshat.** CiteHop follows area 4, “Vector search and RAG, natively,” of the [MariaDB student project brief](https://mariadb.org/bachelor_hackathon_2026-09/#4-vector-search-and-rag-natively).
+**Databases · Constructor University · Team: Danial and Akshat.** The implementation was built with AI coding agents working from the task cards in [docs/COURSE_TASKS.md](docs/COURSE_TASKS.md); the question set was drafted by an agent and still needs the team's review. CiteHop follows area 4, “Vector search and RAG, natively,” of the [MariaDB student project brief](https://mariadb.org/bachelor_hackathon_2026-09/#4-vector-search-and-rag-natively).
 
-Wikipedia text is attributed to its contributors, with pinned revision, history, and license URLs recorded during acquisition; see [provenance and attribution](eval/README.md#provenance-and-attribution). The corpus cache and model weights are downloaded separately. Saved evaluation artifacts include source passages and review metadata. The embedding model is `BAAI/bge-base-en-v1.5`; model configuration and revision are documented in the [embedding guide](docs/EMBEDDINGS.md).
+Wikipedia text is attributed to its contributors, with pinned revision, history, and license URLs recorded during acquisition; see [provenance and attribution](eval/README.md#provenance-and-attribution). The corpus cache and model weights are downloaded separately. Saved evaluation artifacts include source passages and review metadata. Article text is from English Wikipedia under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The embedding model is [`BAAI/bge-base-en-v1.5`](https://huggingface.co/BAAI/bge-base-en-v1.5) (MIT); model configuration and revision are documented in the [embedding guide](docs/EMBEDDINGS.md). Answers use [Qwen3.6-35B-A3B GGUF by Unsloth](https://huggingface.co/unsloth/Qwen3.6-35B-A3B-GGUF) through Ollama. MariaDB [vector documentation](https://mariadb.com/docs/server/reference/sql-structure/vectors).
 
 <p align="center"><strong>Every answer has a source. Every hop has a boundary.</strong></p>
