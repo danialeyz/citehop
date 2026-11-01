@@ -1,0 +1,28 @@
+{
+  "card": "S03",
+  "frozen_at": "2026-11-01T14:15:18+00:00",
+  "rule": "Primary metric: dev vector (ANN) article Recall@5 over all answerable questions. Adopt 200/50 only if its primary metric is strictly higher than 300/50 and its dev keyword Recall@5 is not lower. Otherwise keep 300/50, the current default, which has fewer chunks to embed and store. Chunk count, embedding effort and latency are recorded but do not decide: one laptop, few samples. The test split is never used for the choice.",
+  "chosen": "300-50",
+  "chosen_config": {
+    "chunk_tokens": 300,
+    "overlap_tokens": 50,
+    "database": "citehop_s03_300"
+  },
+  "reason": "200/50 vector Recall@5 is not higher (vector +0.0000, keyword +0.1250); keep 300/50",
+  "evidence": {
+    "comparison.json": "b4780e635d5c894fd4954e2184cef51cf6391afdad337a35e2eab1d326f39126",
+    "dev_runs": {
+      "300-50": [
+        "20261101T141444Z-dev-75d4babd",
+        "20261101T141459Z-dev-75d4babd",
+        "20261101T141504Z-dev-75d4babd"
+      ],
+      "200-50": [
+        "20261101T141448Z-dev-0b860b14",
+        "20261101T141454Z-dev-0b860b14",
+        "20261101T141508Z-dev-0b860b14"
+      ]
+    }
+  },
+  "test_runs_at_freeze": 0
+}

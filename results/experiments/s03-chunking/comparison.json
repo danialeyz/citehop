@@ -1,0 +1,354 @@
+{
+  "card": "S03",
+  "split": "dev",
+  "inputs": {
+    "content_sha256": "d491fa4bb36d0859bd9a497a9ea45d8c50ca58f61b8d516e75c4ba09f407df32",
+    "labels_sha256": "23e52d6ac35a3e5f820fccaef74d3427b8856cca2f7942359809979fcfa23375",
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a"
+  },
+  "hardware": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M6",
+    "memory_bytes": 25769803776,
+    "database": "MariaDB in local Docker on the same machine"
+  },
+  "warm_up": "one untimed embedding, one untimed search per method and (with answers) one untimed generator call before any timed call; all calls run in one process over one open MariaDB connection",
+  "latency_boundaries": {
+    "embedding_ms": "embed_query(question): BGE query instruction, tokenize, CPU forward pass",
+    "retrieval_ms": "search() with a precomputed query vector: SQL round trip on an open connection including Python client; summed over candidate-depth attempts",
+    "generation_ms": "rag.answer(): one non-streaming Ollama /api/chat call"
+  },
+  "label_review": {
+    "unreviewed": 30
+  },
+  "final_claims_allowed": false,
+  "arms": {
+    "300-50": {
+      "arm": "300-50",
+      "chunk_tokens": 300,
+      "overlap_tokens": 50,
+      "database": "citehop_s03_300",
+      "embedding_config": "35e53e16c6c319f89eefe375d7cee9d1493f60ea930bc2395af819d6fba82116",
+      "chunks": 1776,
+      "embedding": {
+        "articles_embedded": 100,
+        "articles_skipped": 0,
+        "chunks_written": 1776,
+        "token_count_min": 51,
+        "token_count_max": 300,
+        "input_tokens_max": 310,
+        "input_tokens_embedded": 530822,
+        "embed_seconds": 81.98,
+        "total_seconds": 86.54,
+        "wall_seconds": 91.85,
+        "peak_rss_bytes": 1499414528
+      },
+      "dev_runs": [
+        "20261101T141444Z-dev-75d4babd",
+        "20261101T141459Z-dev-75d4babd",
+        "20261101T141504Z-dev-75d4babd"
+      ],
+      "recall_at_5": {
+        "keyword": {
+          "n": 8,
+          "recall_at_5": 0.8333,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 8,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 8,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_unfiltered": {
+        "keyword": {
+          "n": 6,
+          "recall_at_5": 0.9444,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 6,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 6,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_filtered": {
+        "keyword": {
+          "n": 2,
+          "recall_at_5": 0.5,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 2,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 2,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_identical_across_runs": true,
+      "ann_vs_exact": {
+        "n_unfiltered": 7,
+        "mean_chunk_overlap_at_5_unfiltered": 1.0,
+        "min_chunk_overlap_at_5_unfiltered": 1.0,
+        "mean_article_overlap_at_5": 1.0
+      },
+      "latency": {
+        "embedding_ms": {
+          "n": 30,
+          "unit": "ms",
+          "median": 36.021,
+          "p95": 43.312
+        },
+        "retrieval_ms_exact": {
+          "n": 30,
+          "unit": "ms",
+          "median": 166.755,
+          "p95": 229.974
+        },
+        "retrieval_ms_exact_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 167.757,
+          "p95": 194.078
+        },
+        "retrieval_ms_exact_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 26.763,
+          "p95": 232.578
+        },
+        "retrieval_ms_keyword": {
+          "n": 30,
+          "unit": "ms",
+          "median": 5.669,
+          "p95": 10.942
+        },
+        "retrieval_ms_keyword_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 5.626,
+          "p95": 7.458
+        },
+        "retrieval_ms_keyword_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 6.773,
+          "p95": 13.413
+        },
+        "retrieval_ms_vector": {
+          "n": 30,
+          "unit": "ms",
+          "median": 7.47,
+          "p95": 242.966
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 7.217,
+          "p95": 9.941
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 25.859,
+          "p95": 285.256
+        }
+      },
+      "misses": {
+        "keyword": [
+          "dev-05",
+          "dev-08"
+        ],
+        "vector": [],
+        "exact": []
+      }
+    },
+    "200-50": {
+      "arm": "200-50",
+      "chunk_tokens": 200,
+      "overlap_tokens": 50,
+      "database": "citehop_s03_200",
+      "embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+      "chunks": 2937,
+      "embedding": {
+        "articles_embedded": 100,
+        "articles_skipped": 0,
+        "chunks_written": 2937,
+        "token_count_min": 53,
+        "token_count_max": 200,
+        "input_tokens_max": 210,
+        "input_tokens_embedded": 595589,
+        "embed_seconds": 85.97,
+        "total_seconds": 91.25,
+        "wall_seconds": 92.8,
+        "peak_rss_bytes": 1419427840
+      },
+      "dev_runs": [
+        "20261101T141448Z-dev-0b860b14",
+        "20261101T141454Z-dev-0b860b14",
+        "20261101T141508Z-dev-0b860b14"
+      ],
+      "recall_at_5": {
+        "keyword": {
+          "n": 8,
+          "recall_at_5": 0.9583,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 8,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 8,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_unfiltered": {
+        "keyword": {
+          "n": 6,
+          "recall_at_5": 0.9444,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 6,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 6,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_filtered": {
+        "keyword": {
+          "n": 2,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "vector": {
+          "n": 2,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        },
+        "exact": {
+          "n": 2,
+          "recall_at_5": 1.0,
+          "zero_hit": 0,
+          "short_list": 0
+        }
+      },
+      "recall_identical_across_runs": true,
+      "ann_vs_exact": {
+        "n_unfiltered": 7,
+        "mean_chunk_overlap_at_5_unfiltered": 1.0,
+        "min_chunk_overlap_at_5_unfiltered": 1.0,
+        "mean_article_overlap_at_5": 1.0
+      },
+      "latency": {
+        "embedding_ms": {
+          "n": 30,
+          "unit": "ms",
+          "median": 36.026,
+          "p95": 39.556
+        },
+        "retrieval_ms_exact": {
+          "n": 30,
+          "unit": "ms",
+          "median": 271.293,
+          "p95": 373.484
+        },
+        "retrieval_ms_exact_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 271.776,
+          "p95": 297.277
+        },
+        "retrieval_ms_exact_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 40.783,
+          "p95": 388.42
+        },
+        "retrieval_ms_keyword": {
+          "n": 30,
+          "unit": "ms",
+          "median": 7.874,
+          "p95": 13.228
+        },
+        "retrieval_ms_keyword_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 7.732,
+          "p95": 8.457
+        },
+        "retrieval_ms_keyword_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 8.364,
+          "p95": 13.595
+        },
+        "retrieval_ms_vector": {
+          "n": 30,
+          "unit": "ms",
+          "median": 7.891,
+          "p95": 373.296
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 21,
+          "unit": "ms",
+          "median": 7.401,
+          "p95": 8.37
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 9,
+          "unit": "ms",
+          "median": 39.999,
+          "p95": 383.35
+        }
+      },
+      "misses": {
+        "keyword": [
+          "dev-05"
+        ],
+        "vector": [],
+        "exact": []
+      }
+    }
+  }
+}

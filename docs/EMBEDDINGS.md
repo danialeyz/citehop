@@ -57,3 +57,5 @@ Each article commits separately, so an interrupted run keeps finished articles a
 | Full rerun | 0 / 100 | 0 | 0 s | 2.8 s |
 
 Totals: smoke 269 chunks; full corpus **1,776 chunks** over 100 articles (3–59 per article), passage lengths 51–300 tokens. All 1,776 stored vectors have 768 finite values with norm 1 ± 1e-6. Embedding the whole corpus from scratch on this machine therefore takes about 100 s of model time. Wall times include Python and tokenizer start-up; the first run also loaded the cached weights.
+
+Chunk size was compared against 200/50 on dev in S03 ([CHUNKING_EXPERIMENT.md](CHUNKING_EXPERIMENT.md)): same vector recall, 65% more chunks; 300/50 stays the default.

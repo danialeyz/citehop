@@ -228,19 +228,27 @@ def vector_text(vector):
 _embedder = None
 
 
-def default_embedder():
-    """(embed_query, embedding_config) from the C05 pinned BGE model, loaded once per process."""
+def default_embedder(chunk_tokens=None, overlap_tokens=None):
+    """(embed_query, embedding_config) from the C05 pinned BGE model, loaded once per process.
+
+    The chunk sizes only select which stored configuration the query vector is compared with
+    (S03 experiment databases); queries are embedded identically. None means the C05 default.
+    """
     global _embedder
     if _embedder is None:
         try:
-            from citehop.embed import Embedder, configs
+            from citehop.embed import Embedder
 
-            model = Embedder()
+            _embedder = Embedder()
         except ImportError as exc:
             raise EmbedderUnavailable("vector search needs citehop.embed (C05) and the ml "
                                       f"extra: {exc}") from exc
-        _embedder = (model.embed_query, configs(model.versions)[1])
-    return _embedder
+    from citehop.embed import configs
+
+    sizes = {key: value for key, value in (("chunk_tokens", chunk_tokens),
+                                           ("overlap_tokens", overlap_tokens))
+             if value is not None}
+    return _embedder.embed_query, configs(_embedder.versions, **sizes)[1]
 
 
 def search(query, method="vector", filters=None, k=5, *, connection=None, embedder=None,

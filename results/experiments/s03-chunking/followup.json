@@ -1,0 +1,70 @@
+{
+  "card": "S03",
+  "decision_sha256": "012546ebc780f7d6d11fa221d3cb98f0e02b4bffb8a30d0e9343e65d7d9565cf",
+  "arm": "300-50",
+  "run_id": "20261101T141540Z-test-75d4babd",
+  "final_claims_allowed": false,
+  "recall_at_5": {
+    "keyword": {
+      "n": 17,
+      "recall_at_5": 0.9588,
+      "zero_hit": 0,
+      "short_list": 0
+    },
+    "vector": {
+      "n": 17,
+      "recall_at_5": 0.9765,
+      "zero_hit": 0,
+      "short_list": 0
+    }
+  },
+  "latency": {
+    "samples": {
+      "questions": 20,
+      "records": 54
+    },
+    "embedding_ms": {
+      "n": 54,
+      "unit": "ms",
+      "median": 11.229,
+      "p95": 13.98
+    },
+    "retrieval_ms_keyword": {
+      "n": 54,
+      "unit": "ms",
+      "median": 4.98,
+      "p95": 5.835
+    },
+    "retrieval_ms_keyword_unfiltered": {
+      "n": 38,
+      "unit": "ms",
+      "median": 5.251,
+      "p95": 5.845
+    },
+    "retrieval_ms_keyword_filtered": {
+      "n": 16,
+      "unit": "ms",
+      "median": 4.707,
+      "p95": 5.159
+    },
+    "retrieval_ms_vector": {
+      "n": 54,
+      "unit": "ms",
+      "median": 7.213,
+      "p95": 74.297
+    },
+    "retrieval_ms_vector_unfiltered": {
+      "n": 38,
+      "unit": "ms",
+      "median": 6.947,
+      "p95": 7.518
+    },
+    "retrieval_ms_vector_filtered": {
+      "n": 16,
+      "unit": "ms",
+      "median": 31.79,
+      "p95": 76.353
+    }
+  },
+  "note": "confirmation only; recorded after the freeze and not used for the choice"
+}

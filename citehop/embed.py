@@ -3,6 +3,7 @@
     python -m citehop.embed run --subset smoke   # 10 smoke articles
     python -m citehop.embed run                  # every loaded article
     python -m citehop.embed status
+    python -m citehop.embed run --chunk-tokens 200   # S03 experiment, in a separate database
 
 Each article is committed in its own transaction together with all its chunks and vectors.
 An article whose stored chunk IDs and configuration hashes already match is skipped, so an
@@ -180,10 +181,15 @@ def record_config(connection, chunk_config, embedding_config, record):
 
 
 def run(connection, embedder, subset="all", limit=None, batch_size=16, device="cpu",
-        log=lambda message: None):
-    """Chunk and embed articles; skip those already current. Returns a report dict."""
+        log=lambda message: None, chunk_tokens=CHUNK_TOKENS, overlap_tokens=OVERLAP_TOKENS):
+    """Chunk and embed articles; skip those already current. Returns a report dict.
+
+    Non-default chunk sizes produce a different configuration, so they replace the stored
+    chunks of every processed article: run them only in a separate database (S03).
+    """
     began = time.perf_counter()
-    chunk_config, embedding_config, record = configs(embedder.versions, device)
+    chunk_config, embedding_config, record = configs(embedder.versions, device, chunk_tokens,
+                                                     overlap_tokens)
     record_config(connection, chunk_config, embedding_config, record)
     cursor = connection.cursor()
     query = "SELECT article_id, title, revision_id, text_sha256 FROM articles"
@@ -199,17 +205,20 @@ def run(connection, embedder, subset="all", limit=None, batch_size=16, device="c
         existing.setdefault(aid, set()).add((cid, cconf, econf))
 
     report = {"chunk_config": chunk_config, "embedding_config": embedding_config,
+              "chunk_tokens": chunk_tokens, "overlap_tokens": overlap_tokens,
               "subset": subset, "articles": len(articles), "articles_embedded": 0,
               "articles_skipped": 0, "chunks_written": 0, "chunks_deleted": 0,
               "chunks_current": 0, "token_count_min": None, "token_count_max": None,
-              "input_tokens_max": None, "chunks_over_size": 0, "embed_seconds": 0.0}
+              "input_tokens_max": None, "chunks_over_size": 0, "input_tokens_embedded": 0,
+              "embed_seconds": 0.0}
     lengths, inputs = [], []
     for position, article in enumerate(articles, 1):
         cursor.execute("SELECT text FROM articles WHERE article_id = ?", (article["article_id"],))
         article["text"] = cursor.fetchone()[0]
-        chunks = chunk_article(article, embedder.tokenize, chunk_config, count=embedder.count)
+        chunks = chunk_article(article, embedder.tokenize, chunk_config, chunk_tokens,
+                               overlap_tokens, count=embedder.count)
         lengths += [c.token_count for c in chunks]
-        report["chunks_over_size"] += sum(c.token_count > CHUNK_TOKENS for c in chunks)
+        report["chunks_over_size"] += sum(c.token_count > chunk_tokens for c in chunks)
         report["chunks_current"] += len(chunks)
         if is_current(existing.get(article["article_id"], set()), chunks, chunk_config,
                       embedding_config):
@@ -232,6 +241,7 @@ def run(connection, embedder, subset="all", limit=None, batch_size=16, device="c
         report["token_count_min"], report["token_count_max"] = min(lengths), max(lengths)
     if inputs:
         report["input_tokens_max"] = max(inputs)
+        report["input_tokens_embedded"] = sum(inputs)
     report["embed_seconds"] = round(report["embed_seconds"], 2)
     report["total_seconds"] = round(time.perf_counter() - began, 2)
     return report
@@ -273,18 +283,23 @@ def main():
     parser.add_argument("--limit", type=int, help="first N articles by ID (smoke batches)")
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--device", default="cpu", help="torch device; part of the config hash")
+    parser.add_argument("--chunk-tokens", type=int, default=CHUNK_TOKENS,
+                        help="experiments only (S03); replaces chunks of the default size")
+    parser.add_argument("--overlap-tokens", type=int, default=OVERLAP_TOKENS)
     args = parser.parse_args()
     from citehop.db import connect  # lazy so unit tests need no driver
 
     try:
         with connect() as connection:
             if args.command == "status":
-                chunk_config, embedding_config, _ = configs(installed_versions(), args.device)
+                chunk_config, embedding_config, _ = configs(installed_versions(), args.device,
+                                                            args.chunk_tokens, args.overlap_tokens)
                 result = status(connection, chunk_config, embedding_config)
             else:
                 result = run(connection, Embedder(args.device), args.subset, args.limit,
                              args.batch_size, args.device,
-                             log=lambda message: print(message, file=sys.stderr))
+                             log=lambda message: print(message, file=sys.stderr),
+                             chunk_tokens=args.chunk_tokens, overlap_tokens=args.overlap_tokens)
                 result["status"] = status(connection, result["chunk_config"],
                                           result["embedding_config"])
     except ImportError as exc:  # includes PackageNotFoundError from installed_versions()
