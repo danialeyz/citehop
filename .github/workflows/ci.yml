@@ -38,9 +38,8 @@ jobs:
           k = c.cursor();
           k.execute('CREATE DATABASE IF NOT EXISTS citehop_test');
           k.execute(\"GRANT ALL ON citehop_test.* TO 'citehop'@'%'\")"
-      # M2 adds sql/schema.sql and sql/kg_schema.sql (make schema kg-schema) to both runs.
-      - run: make sql FILE=sql/corpus_schema.sql
-      - run: make sql FILE=sql/corpus_schema.sql  # idempotency
+      - run: make sql FILE=sql/corpus_schema.sql && make schema kg-schema
+      - run: make sql FILE=sql/corpus_schema.sql && make schema kg-schema  # idempotency
       - run: make test-db
 
   frontend:
