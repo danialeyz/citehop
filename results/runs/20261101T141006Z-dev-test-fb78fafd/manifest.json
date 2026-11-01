@@ -1,8 +1,8 @@
 {
   "schema": "citehop-eval-v1",
   "card": "S01",
-  "run_id": "20261101T140542Z-dev-test-211053ad",
-  "created_at": "2026-11-01T14:05:42+00:00",
+  "run_id": "20261101T141006Z-dev-test-fb78fafd",
+  "created_at": "2026-11-01T14:10:06+00:00",
   "status": "provisional: question labels are not all approved",
   "final_claims_allowed": false,
   "question_set": {
@@ -33,7 +33,7 @@
       "chunks": 1776
     }
   ],
-  "config_id": "211053ad814ab40d91402a7c2304712d41c468c089792e0ca5dd2d45ac9e77a4",
+  "config_id": "fb78fafd2e5ce28c29a7c17af23e33f2f392b340b3c5eef37a8df03322e62949",
   "config": {
     "k": 5,
     "recall": "article-level; chunks deduplicated by best chunk rank before the five-article cutoff",
@@ -62,6 +62,9 @@
       "inputs": [
         "keyword",
         "vector"
+      ],
+      "candidate_depths": [
+        50
       ],
       "ties": "chunk_id ascending"
     },
@@ -101,7 +104,7 @@
     "database": "MariaDB in local Docker on the same machine"
   },
   "code": {
-    "commit": "d6f9e6c9ce1b85f63b9627f28dd480883abb94ea",
+    "commit": "0dc048abdd76ace86153ccb8c4b0ef0e322c2de2",
     "dirty": true
   },
   "files": {
@@ -244,7 +247,7 @@
             "n": 17,
             "recall_at_5": 0.9882,
             "zero_hit": 0,
-            "short_list": 0
+            "short_list": 1
           },
           "unfiltered": {
             "n": 12,
@@ -256,7 +259,7 @@
             "n": 5,
             "recall_at_5": 1.0,
             "zero_hit": 0,
-            "short_list": 0
+            "short_list": 1
           },
           "rankings_identical_across_repeats": true
         }
@@ -327,8 +330,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 7.913,
-            "retrieval_ms_exact": 162.445
+            "retrieval_ms_vector": 6.948,
+            "retrieval_ms_exact": 160.218
           },
           {
             "question_id": "dev-02",
@@ -337,8 +340,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 7.932,
-            "retrieval_ms_exact": 163.722
+            "retrieval_ms_vector": 8.175,
+            "retrieval_ms_exact": 163.934
           },
           {
             "question_id": "dev-03",
@@ -347,8 +350,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 7.406,
-            "retrieval_ms_exact": 163.809
+            "retrieval_ms_vector": 6.874,
+            "retrieval_ms_exact": 165.151
           },
           {
             "question_id": "dev-04",
@@ -357,8 +360,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 8.428,
-            "retrieval_ms_exact": 163.364
+            "retrieval_ms_vector": 6.708,
+            "retrieval_ms_exact": 164.129
           },
           {
             "question_id": "dev-05",
@@ -367,8 +370,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 7.279,
-            "retrieval_ms_exact": 162.046
+            "retrieval_ms_vector": 7.047,
+            "retrieval_ms_exact": 163.508
           },
           {
             "question_id": "dev-06",
@@ -377,8 +380,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 7.364,
-            "retrieval_ms_exact": 162.884
+            "retrieval_ms_vector": 6.923,
+            "retrieval_ms_exact": 175.231
           },
           {
             "question_id": "dev-07",
@@ -387,8 +390,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 24.131,
-            "retrieval_ms_exact": 24.159
+            "retrieval_ms_vector": 23.916,
+            "retrieval_ms_exact": 24.19
           },
           {
             "question_id": "dev-08",
@@ -397,8 +400,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": 1.0,
             "recall_exact": 1.0,
-            "retrieval_ms_vector": 221.624,
-            "retrieval_ms_exact": 227.409
+            "retrieval_ms_vector": 219.966,
+            "retrieval_ms_exact": 220.624
           },
           {
             "question_id": "dev-09",
@@ -407,8 +410,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": null,
             "recall_exact": null,
-            "retrieval_ms_vector": 7.517,
-            "retrieval_ms_exact": 162.055
+            "retrieval_ms_vector": 6.957,
+            "retrieval_ms_exact": 160.571
           },
           {
             "question_id": "dev-10",
@@ -417,8 +420,8 @@
             "article_overlap_at_5": 1.0,
             "recall_vector": null,
             "recall_exact": null,
-            "retrieval_ms_vector": 24.304,
-            "retrieval_ms_exact": 24.091
+            "retrieval_ms_vector": 23.576,
+            "retrieval_ms_exact": 23.714
           }
         ]
       },
@@ -433,80 +436,80 @@
         "embedding_ms": {
           "n": 10,
           "unit": "ms",
-          "median": 34.17,
-          "p95": 38.695
+          "median": 28.823,
+          "p95": 35.655
         },
         "retrieval_ms_keyword": {
           "n": 10,
           "unit": "ms",
-          "median": 6.846,
-          "p95": 10.077
+          "median": 5.149,
+          "p95": 9.572
         },
         "retrieval_ms_keyword_unfiltered": {
           "n": 7,
           "unit": "ms",
-          "median": 7.015,
-          "p95": 7.785
+          "median": 5.122,
+          "p95": 5.969
         },
         "retrieval_ms_keyword_filtered": {
           "n": 3,
           "unit": "ms",
-          "median": 6.678,
-          "p95": 10.077
+          "median": 5.753,
+          "p95": 9.572
         },
         "retrieval_ms_vector": {
           "n": 10,
           "unit": "ms",
-          "median": 7.923,
-          "p95": 221.624
+          "median": 7.002,
+          "p95": 219.966
         },
         "retrieval_ms_vector_unfiltered": {
           "n": 7,
           "unit": "ms",
-          "median": 7.517,
-          "p95": 8.428
+          "median": 6.948,
+          "p95": 8.175
         },
         "retrieval_ms_vector_filtered": {
           "n": 3,
           "unit": "ms",
-          "median": 24.304,
-          "p95": 221.624
+          "median": 23.916,
+          "p95": 219.966
         },
         "retrieval_ms_exact": {
           "n": 10,
           "unit": "ms",
-          "median": 162.664,
-          "p95": 227.409
+          "median": 163.721,
+          "p95": 220.624
         },
         "retrieval_ms_exact_unfiltered": {
           "n": 7,
           "unit": "ms",
-          "median": 162.884,
-          "p95": 163.809
+          "median": 163.934,
+          "p95": 175.231
         },
         "retrieval_ms_exact_filtered": {
           "n": 3,
           "unit": "ms",
-          "median": 24.159,
-          "p95": 227.409
+          "median": 24.19,
+          "p95": 220.624
         },
         "retrieval_ms_hybrid": {
           "n": 10,
           "unit": "ms",
-          "median": 18.064,
-          "p95": 239.231
+          "median": 16.523,
+          "p95": 227.765
         },
         "retrieval_ms_hybrid_unfiltered": {
           "n": 7,
           "unit": "ms",
-          "median": 17.921,
-          "p95": 18.394
+          "median": 14.342,
+          "p95": 18.474
         },
         "retrieval_ms_hybrid_filtered": {
           "n": 3,
           "unit": "ms",
-          "median": 31.487,
-          "p95": 239.231
+          "median": 30.192,
+          "p95": 227.765
         }
       },
       "test": {
@@ -517,62 +520,62 @@
         "embedding_ms": {
           "n": 54,
           "unit": "ms",
-          "median": 12.427,
-          "p95": 30.951
+          "median": 11.708,
+          "p95": 26.955
         },
         "retrieval_ms_keyword": {
           "n": 54,
           "unit": "ms",
-          "median": 4.918,
-          "p95": 6.6
+          "median": 4.531,
+          "p95": 5.596
         },
         "retrieval_ms_keyword_unfiltered": {
           "n": 38,
           "unit": "ms",
-          "median": 4.96,
-          "p95": 7.093
+          "median": 4.774,
+          "p95": 5.616
         },
         "retrieval_ms_keyword_filtered": {
           "n": 16,
           "unit": "ms",
-          "median": 4.546,
-          "p95": 6.229
+          "median": 4.242,
+          "p95": 5.315
         },
         "retrieval_ms_vector": {
           "n": 54,
           "unit": "ms",
-          "median": 7.061,
-          "p95": 72.112
+          "median": 6.721,
+          "p95": 70.846
         },
         "retrieval_ms_vector_unfiltered": {
           "n": 38,
           "unit": "ms",
-          "median": 6.769,
-          "p95": 8.86
+          "median": 6.641,
+          "p95": 7.344
         },
         "retrieval_ms_vector_filtered": {
           "n": 16,
           "unit": "ms",
-          "median": 30.264,
-          "p95": 74.827
+          "median": 31.152,
+          "p95": 73.053
         },
         "retrieval_ms_hybrid": {
           "n": 54,
           "unit": "ms",
-          "median": 12.927,
-          "p95": 76.248
+          "median": 11.665,
+          "p95": 76.727
         },
         "retrieval_ms_hybrid_unfiltered": {
           "n": 38,
           "unit": "ms",
-          "median": 11.264,
-          "p95": 16.947
+          "median": 11.279,
+          "p95": 12.895
         },
         "retrieval_ms_hybrid_filtered": {
           "n": 16,
           "unit": "ms",
-          "median": 39.163,
-          "p95": 78.696
+          "median": 20.627,
+          "p95": 78.616
         }
       }
     },

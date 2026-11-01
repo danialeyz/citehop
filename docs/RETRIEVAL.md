@@ -64,9 +64,9 @@ On the live corpus, the query *Which algorithm groups points by density?* with `
 
 ## Reciprocal rank fusion (S01)
 
-`method="hybrid"` runs `keyword` and `vector` at depth 50 on one connection, with the same filters and `embedding_config`, then fuses them with reciprocal rank fusion: `score = Σ 1 / (60 + rank)` over the lists that contain the chunk. The constant (60) and the depth (50) are fixed; no sweep was run. Sums are exact fractions, so equal sums tie exactly and ties break on `chunk_id`, as in SQL. A hybrid hit has the usual fields (`score` is the RRF sum, `method` is `hybrid`) plus `sources`, which lists `(method, rank, score)` for each input list that ranked it. The API does not expose `hybrid`; it is available from Python, the CLI and `python -m citehop.evaluate --hybrid`.
+`method="hybrid"` runs `keyword` and `vector` at depth 50 on one connection, with the same filters and `embedding_config`, then fuses them with reciprocal rank fusion: `score = Σ 1 / (60 + rank)` over the lists that contain the chunk. The constant (60) and the depth (50) are fixed; no sweep was run. Sums are exact fractions, so equal sums tie exactly and ties break on `chunk_id`, as in SQL. A hybrid hit has the usual fields (`score` is the RRF sum, `method` is `hybrid`) plus `sources`, which lists `(method, rank, score)` for each input list that ranked it. Because the inputs are fixed at 50 each, `k` is at most 50 for `hybrid`; a larger `k` raises `ValueError`. Deepening the inputs instead would reorder the top of the list, since a chunk at rank 51 in both lists (2/111) outscores a chunk at rank 1 in only one (1/61). The evaluator therefore runs hybrid at depth 50 only. Fewer than 50 fused rows means both inputs returned every eligible row, so `exhausted` stays accurate. The API does not expose `hybrid`; it is available from Python, the CLI and `python -m citehop.evaluate --hybrid`.
 
-Frozen-set comparison, run `20261101T140542Z-dev-test-211053ad` (Apple M6, MariaDB 11.8.9 in local Docker, `corpus:1` with 100 articles and 1,776 chunks, `mhnsw_ef_search` 20, no answers generated). Labels are still unreviewed, so these are provisional.
+Frozen-set comparison, run `20261101T141006Z-dev-test-fb78fafd` (Apple M6, MariaDB 11.8.9 in local Docker, `corpus:1` with 100 articles and 1,776 chunks, `mhnsw_ef_search` 20, no answers generated). Labels are still unreviewed, so these are provisional.
 
 | Recall@5 (answerable n) | keyword | vector | hybrid |
 |---|---|---|---|
@@ -75,10 +75,10 @@ Frozen-set comparison, run `20261101T140542Z-dev-test-211053ad` (Apple M6, Maria
 
 | Retrieval latency, test (ms, median / p95) | keyword | vector | hybrid |
 |---|---|---|---|
-| unfiltered (38 calls) | 4.96 / 7.09 | 6.77 / 8.86 | 11.26 / 16.95 |
-| filtered (16 calls) | 4.55 / 6.23 | 30.26 / 74.83 | 39.16 / 78.70 |
+| unfiltered (38 calls) | 4.77 / 5.62 | 6.64 / 7.34 | 11.28 / 12.90 |
+| filtered (16 calls) | 4.24 / 5.32 | 31.15 / 73.05 | 20.63 / 78.62 |
 
-Hybrid recovers both keyword misses that vector already got (dev-05, test-01). On test-03 it scores 0.8, against 0.8 for keyword and 0.6 for vector. Its retrieval latency is roughly the sum of its two queries. Query embedding (median 12.4 ms on test) is excluded from these timings, as for `vector`.
+Hybrid recovers both keyword misses that vector already got (dev-05, test-01). On test-03 it scores 0.8, against 0.8 for keyword and 0.6 for vector. Per call, hybrid latency is roughly keyword plus vector at depth 50. The filtered medians are not a like-for-like comparison: on test-14 (3 of the 16 calls) vector runs a second attempt at depth 100 because 50 chunks cover fewer than five articles, while hybrid stops at 50. Query embedding (median 11.7 ms on test) is excluded from these timings, as for `vector`.
 
 ## Commands
 
