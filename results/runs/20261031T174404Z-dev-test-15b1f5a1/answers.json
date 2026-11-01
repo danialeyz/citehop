@@ -1,0 +1,991 @@
+{
+  "run_id": "20261031T174404Z-dev-test-15b1f5a1",
+  "instructions": "Reviewer (not the author) sets review.status to approved/needs_changes, grounded/citations_support (answered) or correct_abstention (unanswerable) to true/false, reviewer and reviewed_at.",
+  "answers": [
+    {
+      "question_id": "test-01",
+      "split": "test",
+      "question": "Who formulated AdaBoost, and which prize did they win for this work?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "Yoav Freund and Robert Schapire (1995); they won the 2003 Gödel Prize.",
+      "relevant_article_ids": [
+        90500,
+        1645603
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "AdaBoost was formulated by Yoav Freund and Robert Schapire [S1]. They won the 2003 Gödel Prize for their work [S1].",
+      "citations": [
+        "S1"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "9bb92cfbb8987934f43c7af1f3a72a9b322c6a73f260905910c86872c0e4fb14",
+          "article_id": 1645603,
+          "title": "AdaBoost",
+          "source_url": "https://en.wikipedia.org/wiki/AdaBoost",
+          "passage": "AdaBoost (short for Adaptive Boosting) is a statistical classification meta-algorithm formulated by Yoav Freund and Robert Schapire in 1995, who won the 2003 Gödel Prize for their work. It can be used in conjunction with many types of learning algorithm to improve performance. The output of multiple weak learners is combined into a weighted sum that represents the final output of the boosted classifier. Usually, AdaBoost is presented for binary classification, although it can be generalized to multiple classes or bounded intervals of real values.\nAdaBoost is adaptive in the sense that subsequent weak learners (models) are adjusted in favor of instances misclassified by previous models. In some problems, it can be less susceptible to overfitting than other learning algorithms. The individual learners can be weak, but as long as the performance of each one is slightly better than random guessing, the final model can be proven to converge to a strong learner.\nAlthough AdaBoost is typically used to combine weak base learners (such as decision stumps), it has been shown to also effectively combine strong base learners (such as deeper decision trees), producing an even more accurate model.\nEvery learning algorithm tends to suit some problem types better than others, and typically has many different parameters and configurations to adjust before it achieves optimal performance on a dataset. AdaBoost (with decision trees as the weak learners) is often referred to as the best out-of-the-box classifier.",
+          "rank": 1,
+          "score": 0.7471029963489062,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "f18d5d2292a184edc2a392159ed19b576339b69e5bd6ef4b5554822fcd296b9e",
+          "article_id": 26649339,
+          "title": "Gradient boosting",
+          "source_url": "https://en.wikipedia.org/wiki/Gradient_boosting",
+          "passage": "Gradient boosting is a machine learning technique based on boosting in a functional space, where the target is pseudo-residuals instead of residuals as in traditional boosting. It gives a prediction model in the form of an ensemble of weak prediction models, i.e., models that make very few assumptions about the data, which are typically simple decision trees. When a decision tree is the weak learner, the resulting algorithm is called gradient-boosted trees; it usually outperforms random forest. As with other boosting methods, a gradient-boosted trees model is built in stages, but it generalizes the other methods by allowing optimization of an arbitrary differentiable loss function.\nHistory\nThe idea of gradient boosting originated in the observation by Leo Breiman that boosting can be interpreted as an optimization algorithm on a suitable cost function. Explicit regression gradient boosting algorithms were subsequently developed, by Jerome H. Friedman, (in 1999 and later in 2001) simultaneously with the more general functional gradient boosting perspective of Llew Mason, Jonathan Baxter, Peter Bartlett and Marcus Frean.\nThe latter two papers introduced the view of boosting algorithms as iterative functional gradient descent algorithms. That is, algorithms that optimize a cost function over function space by iteratively choosing a function (weak hypothesis) that points in the negative gradient direction. This functional gradient view of boosting has led to the development of boosting algorithms in many areas of machine learning and statistics beyond regression and classification.\nInformal",
+          "rank": 2,
+          "score": 0.588104245143239,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "b1b0309551910ca542852555c08ef99a3834b204e00c4459b4d111da984da927",
+          "article_id": 90500,
+          "title": "Boosting (machine learning)",
+          "source_url": "https://en.wikipedia.org/wiki/Boosting_%28machine_learning%29",
+          "passage": "In machine learning (ML), boosting is an ensemble learning method that combines a set of less accurate models (called \"weak learners\") to create a single, highly accurate model (a \"strong learner\"). Unlike other ensemble methods that build models in parallel (such as bagging), boosting algorithms build models sequentially. Each new model in the sequence is trained to correct the errors made by its predecessors. This iterative process allows the overall model to improve its accuracy, particularly by reducing bias. Boosting is a popular and effective technique used in supervised learning for both classification and regression tasks.\nThe theoretical foundation for boosting came from a question posed by Kearns and Valiant (1988, 1989): \"Can a set of weak learners create a single strong learner?\" A weak learner is defined as a classifier that performs only slightly better than random guessing, whereas a strong learner is a classifier that is highly correlated with the true classification. Robert Schapire's affirmative answer to this question in a 1990 paper led to the development of practical boosting algorithms. The first such algorithm was developed by Schapire, with Freund and Schapire later developing AdaBoost, which remains a foundational example of boosting.\nAlgorithms\nWhile boosting is not algorithmically constrained, most boosting algorithms consist of iteratively learning weak classifiers with respect to a distribution and adding them to a final strong classifier. When they are added",
+          "rank": 3,
+          "score": 0.5576683931456033,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "d74c752da09b688b6fc79cd223c29768b924246f9a0bd608fc43fef2190085d6",
+          "article_id": 172777,
+          "title": "Perceptron",
+          "source_url": "https://en.wikipedia.org/wiki/Perceptron",
+          "passage": "In machine learning, the perceptron is an algorithm for supervised learning of binary classifiers. A binary classifier is a function that can decide whether or not an input, represented by a vector of numbers, belongs to some specific class. It is a type of linear classifier, i.e. a classification algorithm that makes its predictions based on a linear predictor function combining a set of weights with the feature vector.\nHistory\nMark I Perceptron machine, the first implementation of the perceptron algorithm. It was connected to a camera with 20×20 cadmium sulfide photocells to make a 400-pixel image. The main visible feature is the sensory-to-association plugboard, which sets different combinations of input features. To the right are arrays of potentiometers that implemented the adaptive weights.\nThe Mark 1 Perceptron, being adjusted by Charles Wightman (Mark I Perceptron project engineer). Sensory units at left, association units in center, and control panel and response units at far right. The sensory-to-association plugboard is behind the closed panel to the right of the operator. The letter \"C\" on the front panel is a display of the current state of the sensory input.\nThe artificial neuron and artificial neural network were invented in 1943 by Warren McCulloch and Walter Pitts in their seminal paper \"A Logical Calculus of the Ideas Immanent in Nervous Activity\".\nIn 1957, Frank",
+          "rank": 4,
+          "score": 0.5550170716471314,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [
+        {
+          "chunk_id": "35e9a4b02f483eba6667f1bdb64aafc4453a8469563c4bdd628fc0250b3a58a9",
+          "article_id": 1645603,
+          "reason": "context token limit",
+          "tokens": 352
+        }
+      ],
+      "raw_output": "AdaBoost was formulated by Yoav Freund and Robert Schapire [S1]. They won the 2003 Gödel Prize for their work [S1].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1569,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1479,
+        "output_tokens": 36,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2241.7,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-02",
+      "split": "test",
+      "question": "Who introduced Q-learning, and who presented its convergence proof in 1992?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "Chris Watkins introduced it in 1989; Watkins and Peter Dayan presented the convergence proof in 1992.",
+      "relevant_article_ids": [
+        1281850
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "Q-learning was introduced by Chris Watkins in 1989 [S1]. A convergence proof was presented by Watkins and Peter Dayan in 1992 [S1].",
+      "citations": [
+        "S1"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "9e3d5b5359ddbdf2fea57c11b0b3de52ccaaaa7087e4979d6a0db0ca928e654c",
+          "article_id": 1281850,
+          "title": "Q-learning",
+          "source_url": "https://en.wikipedia.org/wiki/Q-learning",
+          "passage": "or not (Near, Far).\nHistory\nQ-learning was introduced by Chris Watkins in 1989. A convergence proof was presented by Watkins and Peter Dayan in 1992, building on Watkins' doctoral dissertation, Learning from Delayed Rewards. Eight years earlier in 1981, the same problem, under the name of \"Delayed reinforcement learning,\" was solved by Bozinovski's Crossbar Adaptive Array (CAA). The memory matrix was the same as the eight years later Q-table of Q-learning. The architecture introduced the term \"state evaluation\" in reinforcement learning. The crossbar learning algorithm, written in mathematical pseudocode in the paper, in each iteration performs the following computation:\nIn state s perform action a;\nReceive consequence state s';\nCompute state evaluation ⁠⁠;\nUpdate crossbar value .\nThe term \"secondary reinforcement\" is borrowed from animal learning theory, to model state values via backpropagation: the state value ⁠⁠ of the consequence situation is backpropagated to the previously encountered situations. CAA computes state values vertically and actions horizontally (the \"crossbar\"). Demonstration graphs showing delayed reinforcement learning contained states (desirable, undesirable, and neutral states), which were computed by the state evaluation function. This learning system was a forerunner of the Q-learning algorithm.\nIn 2014, Google DeepMind patented an application of Q-learning to deep learning, entitled \"deep reinforcement learning\" or \"deep Q-learning,\" that can play Atari 2600",
+          "rank": 1,
+          "score": 0.7034124742386556,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "3b03ac38ef33407d2a49de081c543e8e766729fa3a2c4e3d06f8757718fd8448",
+          "article_id": 32472154,
+          "title": "Deep learning",
+          "source_url": "https://en.wikipedia.org/wiki/Deep_learning",
+          "passage": "unfolded in time. The \"P\" in ChatGPT refers to such pre-training.\nSepp Hochreiter's diploma thesis (1991) implemented the neural history compressor, and identified and analyzed the vanishing gradient problem. Hochreiter proposed recurrent residual connections to solve the vanishing gradient problem. This led to the long short-term memory (LSTM), published in 1995. LSTM can learn \"very deep learning\" tasks with long credit assignment paths that require memories of events that happened thousands of discrete time steps before. That LSTM was not yet the modern architecture, which required a \"forget gate\", introduced in 1999, which became the standard RNN architecture.\nIn 1991, Jürgen Schmidhuber also published adversarial neural networks that contest with each other in the form of a zero-sum game, where one network's gain is the other network's loss. The first network is a generative model that models a probability distribution over output patterns. The second network learns by gradient descent to predict the reactions of the environment to these patterns. This was called \"artificial curiosity\". In 2014, this principle was used in generative adversarial networks (GANs).\nDuring 1985–1995, inspired by statistical mechanics, several architectures and methods were developed by Terry Sejnowski, Peter Dayan, Geoffrey Hinton, etc., including the Boltzmann machine, restricted Boltzmann machine, Helmholtz machine",
+          "rank": 2,
+          "score": 0.6299611368788575,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "ce97969f4ed8412e05572208e7047950db22ffaf896e85ad94c384f7258e1a0a",
+          "article_id": 233488,
+          "title": "Machine learning",
+          "source_url": "https://en.wikipedia.org/wiki/Machine_learning",
+          "passage": "program was introduced in the 1950s, when Samuel invented a computer program that calculated the chance of winning in checkers for each side, but the history of machine learning is rooted in decades of efforts to study human cognitive processes. In 1949, Canadian psychologist Donald Hebb published the book The Organization of Behavior, in which he introduced a theoretical neural structure formed by certain interactions among nerve cells. The Hebbian theory of neuron interaction set the groundwork for how many machine learning algorithms work, with connected artificial neurons changing the strength of their connections based on data. Other researchers who have studied human cognitive systems contributed to the modern machine learning technologies as well, including Walter Pitts and Warren McCulloch, who proposed the first mathematical model of neural networks including algorithms that mirror human thought processes.\nBy the early 1960s, an experimental \"learning machine\" with punched tape memory, called Cybertron, had been developed by Raytheon Company to analyse sonar signals, electrocardiograms, and speech patterns using rudimentary reinforcement learning. It was repetitively \"trained\" by a human operator/teacher to recognise patterns and equipped with a \"goof\" button to cause it to reevaluate incorrect decisions. A representative book on research into machine learning during the 1960s was Nils Nilsson's book \"Learning Machines\", dealing mostly with machine learning for pattern classification. Interest related to pattern recognition continued into the 1970s, as described by Duda and Hart in 1973. In 1981, a report was given",
+          "rank": 3,
+          "score": 0.6173266078430726,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "fa33b4a59abfc933ad8934f917f89b3adfdbc48bbe2f0c687fcfaced43c8e7a1",
+          "article_id": 1209759,
+          "title": "Temporal difference learning",
+          "source_url": "https://en.wikipedia.org/wiki/Temporal_difference_learning",
+          "passage": "estimates the state value function of a finite-state Markov decision process (MDP) under a policy . Let denote the state value function of the MDP with states , rewards and discount rate under the policy :\nWe drop the action from the notation for convenience. satisfies the Bellman Equation:\nso is an unbiased estimate for . This observation motivates the following algorithm for estimating .\nThe algorithm starts by initializing a table arbitrarily, with one value for each state of the MDP. A positive learning rate is chosen.\nWe then repeatedly evaluate the policy , obtain a reward and update the value function for the current state using the rule:\nwhere and are the current and next states, respectively. The value is known as the TD target, and is known as the TD error.\nTD-Lambda\nTD-Lambda is a learning algorithm invented by Richard S. Sutton based on earlier work on temporal difference learning by Arthur Samuel. This algorithm was famously applied by Gerald Tesauro to create TD-Gammon, a program that learned to play the game of backgammon at the level of expert human players.\nThe lambda () parameter refers to the trace decay parameter, with . Higher settings lead to longer lasting traces; that is, a larger proportion of credit from a reward can be given to more distant states and actions when is higher, with producing parallel learning to Monte Carlo RL algorithms.\nIn neuroscience\nThe TD algorithm has also received attention in the field of neuroscience",
+          "rank": 4,
+          "score": 0.6167304960668895,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [
+        {
+          "chunk_id": "637b5501453a0ea3a27f9bee1d0c5c9264eb6934acc050fc3b5e69b3c694515f",
+          "article_id": 1360091,
+          "reason": "context token limit",
+          "tokens": 364
+        }
+      ],
+      "raw_output": "Q-learning was introduced by Chris Watkins in 1989 [S1]. A convergence proof was presented by Watkins and Peter Dayan in 1992 [S1].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1573,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1556,
+        "output_tokens": 39,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2093.2,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-03",
+      "split": "test",
+      "question": "Who identified the vanishing gradient problem in 1991?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "Sepp Hochreiter (in his 1991 diploma thesis).",
+      "relevant_article_ids": [
+        21523,
+        2266644,
+        10711453,
+        32472154,
+        55867424
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "Sepp Hochreiter identified and analyzed the vanishing gradient problem in 1991 [S1]. This identification is also attributed to Sepp Hochreiter in the context of training deep networks [S3].",
+      "citations": [
+        "S1",
+        "S3"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "3b03ac38ef33407d2a49de081c543e8e766729fa3a2c4e3d06f8757718fd8448",
+          "article_id": 32472154,
+          "title": "Deep learning",
+          "source_url": "https://en.wikipedia.org/wiki/Deep_learning",
+          "passage": "unfolded in time. The \"P\" in ChatGPT refers to such pre-training.\nSepp Hochreiter's diploma thesis (1991) implemented the neural history compressor, and identified and analyzed the vanishing gradient problem. Hochreiter proposed recurrent residual connections to solve the vanishing gradient problem. This led to the long short-term memory (LSTM), published in 1995. LSTM can learn \"very deep learning\" tasks with long credit assignment paths that require memories of events that happened thousands of discrete time steps before. That LSTM was not yet the modern architecture, which required a \"forget gate\", introduced in 1999, which became the standard RNN architecture.\nIn 1991, Jürgen Schmidhuber also published adversarial neural networks that contest with each other in the form of a zero-sum game, where one network's gain is the other network's loss. The first network is a generative model that models a probability distribution over output patterns. The second network learns by gradient descent to predict the reactions of the environment to these patterns. This was called \"artificial curiosity\". In 2014, this principle was used in generative adversarial networks (GANs).\nDuring 1985–1995, inspired by statistical mechanics, several architectures and methods were developed by Terry Sejnowski, Peter Dayan, Geoffrey Hinton, etc., including the Boltzmann machine, restricted Boltzmann machine, Helmholtz machine",
+          "rank": 1,
+          "score": 0.6334095921961462,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "1d16561f4654584283f0ad61eb7e10ef7b22210f94c964f0dd180403bd476975",
+          "article_id": 201489,
+          "title": "Gradient descent",
+          "source_url": "https://en.wikipedia.org/wiki/Gradient_descent",
+          "passage": "Gradient descent in 2D\nGradient descent is a method for unconstrained mathematical optimization. It is a first-order iterative algorithm for minimizing a differentiable multivariate function.\nThe idea is to take repeated steps in the opposite direction of the gradient (or approximate gradient) of the function at the current point, because this is the direction of steepest descent. Conversely, stepping in the direction of the gradient will lead to a trajectory that maximizes that function; the procedure is then known as gradient ascent.\nGradient descent should not be confused with local search algorithms, although both are iterative methods for optimization.\nGradient descent is particularly useful in machine learning and artificial intelligence for minimizing the cost or loss function.\nGradient descent is generally attributed to Augustin-Louis Cauchy, who first suggested it in 1847. Jacques Hadamard independently proposed a similar method in 1907. Its convergence properties for non-linear optimization problems were first studied by Haskell Curry in 1944, with the method becoming increasingly well-studied and used in the following decades.\nA simple extension of gradient descent, stochastic gradient descent, serves as the most basic algorithm used for training most deep networks today.\nDescription\nIllustration of gradient descent on a series of level sets\nNegative gradient in direction of steepest descent.\nGradient descent is based on the observation that if the multi-variable function is defined and differentiable in a neighborhood of a point , then decreases fastest if one goes from in the direction of the negative gradient of",
+          "rank": 2,
+          "score": 0.6248019433622435,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "ebd90fe3ba5cf5d28bb53adeaf5a4edea1f620682d7e4b2cd35d84fc08c57cd1",
+          "article_id": 2266644,
+          "title": "Multilayer perceptron",
+          "source_url": "https://en.wikipedia.org/wiki/Multilayer_perceptron",
+          "passage": "neuron in one layer to neuron in the next, the gradient is proportional to the error term (the sensitivity of the loss to neuron 's activation) and the activation from the previous layer.\nTraining often utilizes adaptive optimization algorithms like Adam and RMSProp, which modify the basic SGD update rule to adapt the learning rate for each parameter individually, accelerating convergence and improving stability.\nTraining deep networks presents specific challenges. The vanishing gradient problem, identified by Sepp Hochreiter in 1991 and further analyzed by Bengio et al., occurs when sigmoidal activations saturate.\nSaturated activations produce near-zero derivatives; these small values multiply across layers, causing error signals to diminish exponentially.\nReLU activations address this problem: unlike sigmoidal units, rectified linear units preserve information as it travels through multiple layers.\nProper initialization is also critical; techniques like Glorot initialization and He initialization scale initial weights to preserve signal variance.\nTo prevent overfitting, regularization techniques are standard.\nWeight decay ( regularization) adds a penalty for large weights, while dropout randomly disables a fraction of neurons during each training step to enforce robust representations.\nEarly stopping halts training if validation performance degrades.\nAlthough the loss landscape is non-convex with multiple local minima, theoretical analysis suggests that in sufficiently large networks, most local minima achieve error rates comparable to global minima.\nApplications\nFor structured",
+          "rank": 3,
+          "score": 0.6176761866423416,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "9ffc3414bd22474ed0abf15fd8c07abddf62d4500e9179df42da78844576ab4e",
+          "article_id": 21523,
+          "title": "Neural network (machine learning)",
+          "source_url": "https://en.wikipedia.org/wiki/Neural_network_%28machine_learning%29",
+          "passage": "perceptrons to emulate human intelligence.\nHistorical foundations and the Dartmouth proposal\nArtificial neural networks were identified as a promising direction for artificial intelligence research in the 1955 proposal for the Dartmouth Summer Research Project on Artificial Intelligence. Neural network models initially faced major limitations. Hardware constraints limited network size and training efficiency, while theoretical understanding of learning algorithms remained incomplete. Many models used single-layer perceptrons, which were restricted to solving linearly separable problems. These limitations were highlighted in the book Perceptrons by Marvin Minsky and Seymour Papert, which deflated interest during the late 1960s and 1970s.\n1960s and 1970s\nFundamental research was conducted on NNs in the 1960s and 1970s. The first working deep learning algorithm was the group method of data handling, a method to train arbitrarily deep neural networks, published by Alexey Ivakhnenko and Valentin Lapa in the Soviet Union (1965). They regarded it as a form of polynomial regression, generalizing Rosenblatt's perceptron. A 1971 paper described a deep network with eight layers trained by this method, training layer by layer via regression analysis. Superfluous hidden units were pruned using a separate validation set. The activation functions of the nodes were Kolmogorov-Gabor polynomials, the first deep networks with multiplicative units or \"gates\".\nThe first deep learning multilayer perceptron (MLP) trained by stochastic gradient descent was published in 1967 by",
+          "rank": 4,
+          "score": 0.6001638791584127,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [
+        {
+          "chunk_id": "0191ed8376a74dea3b842f1200bf4389d6445338625771e446eced8179b5fa0b",
+          "article_id": 1360091,
+          "reason": "context token limit",
+          "tokens": 366
+        }
+      ],
+      "raw_output": "Sepp Hochreiter identified and analyzed the vanishing gradient problem in 1991 [S1]. This identification is also attributed to Sepp Hochreiter in the context of training deep networks [S3].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1629,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1552,
+        "output_tokens": 46,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2280.3,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-04",
+      "split": "test",
+      "question": "In which month and year was BERT introduced, and which transformer architecture does it use?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "October 2018, by researchers at Google; it uses an encoder-only transformer architecture.",
+      "relevant_article_ids": [
+        62026514
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "BERT was introduced in October 2018 [S2]. It uses the encoder-only transformer architecture [S2][S3].",
+      "citations": [
+        "S2",
+        "S3"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "ecbf964b81dbd74c8a8c9f8088eec4aecfa8e5e1aab3324ee6491c9935ce58cc",
+          "article_id": 61603971,
+          "title": "Transformer (deep learning)",
+          "source_url": "https://en.wikipedia.org/wiki/Transformer_%28deep_learning%29",
+          "passage": "transformer model. In October 2019, Google started using BERT to process search queries. In 2020, Google Translate replaced the previous RNN-encoder–RNN-decoder model by a transformer-encoder–RNN-decoder model.\nStarting in 2018, the OpenAI GPT series of decoder-only transformers became state of the art in natural language generation. At the end of 2022, ChatGPT, a chatbot based on a fine-tuned variant of GPT-3.5, became unexpectedly popular, triggering a boom around large language models.\nTransformers have been applied in modalities beyond text. Four days after the publication of \"Attention is All You Need\", a multimodal transformer architecture, MultiModel, was published by most authors of that paper. Other examples include the vision transformer, which has led to developments in convolutional neural networks. Image and video generators like DALL-E (2021), Stable Diffusion 3 (2024), and Sora (2024), use transformers to analyse input data (like text prompts) by breaking it down into \"tokens\" and then calculating the relevance between each token using self-attention, which helps the model simulate the context and relationships within the data.\nTraining\nMethods for stabilizing training\nThe plain transformer architecture had difficulty in converging. In the original paper, the authors recommended using learning rate warmup.",
+          "rank": 1,
+          "score": 0.7202029575501881,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "31269b76b3b66d2a2dbdbe4b9f8b455bf7f505ad9a863a27377688b2b517b24f",
+          "article_id": 62026514,
+          "title": "BERT (language model)",
+          "source_url": "https://en.wikipedia.org/wiki/BERT_%28language_model%29",
+          "passage": "Bidirectional encoder representations from transformers (BERT) is a language model introduced in October 2018 by researchers at Google. It learns to represent text as a sequence of vectors using self-supervised learning. It uses the encoder-only transformer architecture. BERT dramatically improved the state of the art for large language models. As of 2026, BERT is a common methodological component in natural language processing (NLP) research.\nBERT is trained by masked token prediction and next sentence prediction. With this training, BERT learns contextual, latent representations of tokens in their context, similar to ELMo and GPT-2. It found applications for many natural language processing tasks, such as coreference resolution and polysemy resolution. It improved on ELMo and spawned the study of \"BERTology\", which attempts to interpret what is learned by BERT.\nBERT was originally implemented in the English language at two model sizes, BERTBASE (110 million parameters) and BERTLARGE (340 million parameters). Both were trained on the Toronto BookCorpus (800M words) and English Wikipedia (2,500M words). The weights were released on GitHub. On March 11, 2020, 24 smaller models were released, the smallest being BERTTINY with just 4 million parameters.\nArchitecture\nHigh-level schematic diagram of BERT. It takes in a text, tokenizes it into a sequence of tokens, add in optional special tokens, and apply",
+          "rank": 2,
+          "score": 0.7044336394065207,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "faf77bc28570f4b5007f6d1d75b3b790ce1696825c95e155a10c56e59a08fab5",
+          "article_id": 73248112,
+          "title": "Large language model",
+          "source_url": "https://en.wikipedia.org/wiki/Large_language_model",
+          "passage": "development of word embeddings (e.g., Word2Vec by Mikolov in 2013) and sequence-to-sequence (seq2seq) models using LSTM. In 2016, Google transitioned its translation service to neural machine translation (NMT), replacing statistical phrase-based models with deep recurrent neural networks. These early NMT systems used LSTM-based encoder-decoder architectures, as they preceded the invention of transformers.\nAn illustration of the main components of the transformer model from the original paper, where layers were normalized after (instead of before) multiheaded attention\nAt the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper \"Attention Is All You Need\". This paper's goal was to improve upon 2014 seq2seq technology, and was based mainly on the attention mechanism developed by Bahdanau et al. in 2014. The following year in 2018, BERT was introduced and quickly became \"ubiquitous\". Though the original transformer has both encoder and decoder blocks, BERT is an encoder-only model. Academic and research usage of BERT began to decline in 2023, following rapid improvements in the abilities of decoder-only models (such as GPT) to solve tasks via prompting.\nAlthough decoder-only GPT-1 was introduced in 2018, it was GPT-2 in 2019 that caught widespread attention",
+          "rank": 3,
+          "score": 0.6866065018200839,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "63cbff0ef268204bf7a6170499598e56b57fced1038c7743f0b15f3fee83deb3",
+          "article_id": 62026514,
+          "title": "BERT (language model)",
+          "source_url": "https://en.wikipedia.org/wiki/BERT_%28language_model%29",
+          "passage": ". BERT considers the words surrounding the target word fine from the left and right side.\nHowever it comes at a cost: due to encoder-only architecture lacking a decoder, BERT cannot be easily prompted and cannot generate high-quality text. Bidirectional models in general do not work effectively without the right side, thus being difficult to prompt. As an illustrative example, if one wishes to use BERT to continue a sentence fragment \"Today, I went to\", then naively one would mask out all the tokens as \"Today, I went to [MASK] [MASK] [MASK] ... [MASK] .\" where the number of [MASK] is the length of the sentence one wishes to extend to. However, this constitutes a dataset shift, as during training, BERT has never seen sentences with that many tokens masked out. Consequently, its performance degrades. More sophisticated techniques allow text generation, but at a high computational cost.\nHistory\nBERT was originally published by Google researchers Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. The design has its origins from pre-training contextual representations, including semi-supervised sequence learning, generative pre-training, ELMo, and ULMFit. Unlike previous models, BERT is a deeply bidirectional, unsupervised language representation, pre-trained using only a plain text corpus. Context-free models such as word2vec or GloVe generate a single word embedding",
+          "rank": 4,
+          "score": 0.6661374919903206,
+          "method": "vector"
+        },
+        {
+          "label": "S5",
+          "chunk_id": "0328cd244a62f95caf7a22fffd8b8a7511b0de9622d0baae7dab1ad34d73aecd",
+          "article_id": 61603971,
+          "title": "Transformer (deep learning)",
+          "source_url": "https://en.wikipedia.org/wiki/Transformer_%28deep_learning%29",
+          "passage": "Attention is All you need\" paper. At the time, the focus of the research was on improving seq2seq for machine translation, by removing its recurrence to process all tokens in parallel, but preserving its dot-product attention mechanism to keep its text processing performance. This led to the introduction of a multi-head attention model that was easier to parallelize due to the use of independent heads and the lack of recurrence. Its parallelizability was an important factor to its widespread use in large neural networks.\nAI boom era\nIn spring 2017, before the \"Attention is All you need\" preprint was published, one of the co-authors applied the \"decoder-only\" variation of the architecture to generate fictitious Wikipedia articles. Transformer architecture is now used alongside many generative models that contribute to the ongoing AI boom.\nThe \"reference implementation\" of the original Transformer was written in a TensorFlow library. In language modelling, ELMo (2018) was a bi-directional LSTM that produces contextualized word embeddings, improving upon the line of research from bag of words and word2vec. It was followed by BERT (2018), an encoder-only transformer model. In October 2019, Google started using BERT to process search queries. In 2020, Google Translate replaced the previous RNN-encoder–RNN-decoder model by a transformer-encoder–RNN",
+          "rank": 5,
+          "score": 0.6570556146454897,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [],
+      "raw_output": "BERT was introduced in October 2018 [S2]. It uses the encoder-only transformer architecture [S2][S3].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1796,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1837,
+        "output_tokens": 29,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2207.2,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-05",
+      "split": "test",
+      "question": "Which researchers developed Word2Vec, and at which conference was it presented?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever and Jeff Dean at Google; presented at ICLR in 2013.",
+      "relevant_article_ids": [
+        47527969
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "Word2Vec was developed by Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever, and Jeff Dean at Google [S1]. It was presented at the ICLR conference in 2013 [S1].",
+      "citations": [
+        "S1"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "dced8d0744acf87ad4140770853a19b407069d6bb892bf7c9504eb44058bb830",
+          "article_id": 47527969,
+          "title": "Word2Vec",
+          "source_url": "https://en.wikipedia.org/wiki/Word2Vec",
+          "passage": "In natural language processing, Word2Vec is a technique for obtaining vector representations of words as word embeddings. These vectors capture information about the meaning of a word based on its surrounding words in a piece of text, following the principles of distributional semantics. Once trained, the model can be used to find words with similar meanings or usage, while its embeddings can serve as inputs to systems for search and classification.\nWord2Vec was developed by Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever and Jeff Dean at Google, published in preprints and presented at ICLR in 2013. Its computational efficiency made it practical to learn high-quality word embeddings from very large text corpora and contributed to their widespread adoption in natural language processing.\nApproach\nWord2Vec is a group of related models that are used to produce word embeddings. These models are shallow, two-layer neural networks that are trained to reconstruct linguistic contexts of words. Word2Vec takes as its input a large corpus of text and produces a mapping of the set of words to a vector space, typically of several hundred dimensions, with each unique word in the corpus being assigned a vector in the space.\nWord2Vec can use either of two model architectures to produce these distributed representations of words: continuous bag of words (CBOW) or continuously sliding skip-gram. In both architectures, Word2Vec",
+          "rank": 1,
+          "score": 0.7414049895825414,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "535a6386e4f2309319d729903e88c5a1ce307f73855eba9d3194f956bb2400b4",
+          "article_id": 47527969,
+          "title": "Word2Vec",
+          "source_url": "https://en.wikipedia.org/wiki/Word2Vec",
+          "passage": "Word2Vec is how to handle unknown or out-of-vocabulary (OOV) words and morphologically similar words. If the Word2Vec model has not encountered a particular word before, it will be forced to use a random vector, which is generally far from its ideal representation. This can particularly be an issue in domains like medicine where synonyms and related words can be used depending on the preferred style of radiologist, and words may have been used infrequently in a large corpus.\nIWE combines Word2Vec with a semantic dictionary mapping technique to tackle the major challenges of information extraction from clinical texts, which include ambiguity of free text narrative style, lexical variations, use of ungrammatical and telegraphic phases, arbitrary ordering of words, and frequent appearance of abbreviations and acronyms. Of particular interest, the IWE model (trained on the one institutional dataset) successfully translated to a different institutional dataset which demonstrates good generalizability of the approach across institutions.\nAnalysis\nThe reasons for successful word embedding learning in the Word2Vec framework are poorly understood. Goldberg and Levy point out that the Word2Vec objective function causes words that occur in similar contexts to have similar embeddings (as measured by cosine similarity) and note that this is in line with J. R. Firth's distributional hypothesis. However, they note that this explanation is \"very hand-wavy\" and argue that a more",
+          "rank": 2,
+          "score": 0.6377482693707416,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "d2812446ad8a556a5088accc09329905237227ee952fa8669d1b14fb61f5021c",
+          "article_id": 233488,
+          "title": "Machine learning",
+          "source_url": "https://en.wikipedia.org/wiki/Machine_learning",
+          "passage": "the ImageNet image recognition competition, contributing to the wider adoption of deep neural networks. In 2013, Tomáš Mikolov and colleagues introduced word2vec, techniques for efficiently learning distributed vector representations of words from large text corpora. In 2014, Ian Goodfellow and colleagues introduced generative adversarial networks (GANs), a framework for training generative models through an adversarial process. In 2016, AlphaGo became the first computer program to defeat a professional human Go player without handicaps on a full-sized board, using deep neural networks and reinforcement learning. In 2017, Ashish Vaswani and colleagues introduced the Transformer, a neural network architecture based primarily on attention rather than recurrence or convolution.\nRelationships to other fields\nArtificial intelligence\nDeep learning is a subset of machine learning, which is itself a subset of artificial intelligence.\nAs a scientific endeavour, machine learning grew out of the quest for artificial intelligence (AI). In the early days of AI as an academic discipline, some researchers were interested in having machines learn from data. They attempted to approach the problem with various symbolic methods, as well as what were then termed \"neural networks\"; these were mostly perceptrons and other models that were later found to be reinventions of the generalised linear models of statistics. Probabilistic reasoning was also employed, especially in automated medical diagnosis.\nHowever, an increasing emphasis on the logical, knowledge-based approach caused a rift",
+          "rank": 3,
+          "score": 0.6375280481764859,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "9319e514f3338c2ed99bf4bda30b441c878d9f2d936dade9493e19b7133ce773",
+          "article_id": 43561218,
+          "title": "Word embedding",
+          "source_url": "https://en.wikipedia.org/wiki/Word_embedding",
+          "passage": "Homemaker? Debiasing Word Embeddings\" that a publicly available (and popular) word2vec embedding trained on Google News texts (a commonly used data corpus), which consists of text written by professional journalists, still shows disproportionate word associations reflecting gender and racial biases when extracting word analogies. For example, one of the analogies generated using the aforementioned word embedding is \"man is to computer programmer as woman is to homemaker\".\nResearch done by Jieyu Zhao et al. shows that the applications of these trained word embeddings without careful oversight likely perpetuates existing bias in society, which is introduced through unaltered training data. Furthermore, word embeddings can even amplify these biases.",
+          "rank": 4,
+          "score": 0.6265326056733815,
+          "method": "vector"
+        },
+        {
+          "label": "S5",
+          "chunk_id": "342941cb8662829d0cef70caa1e2edd85c62cf2febf8461e4bc1c6de6a78686f",
+          "article_id": 47527969,
+          "title": "Word2Vec",
+          "source_url": "https://en.wikipedia.org/wiki/Word2Vec",
+          "passage": "to simply define , in which case there would no longer be a choice.\nEssentially, skip-gram and CBOW are exactly the same in architecture. They only differ in the objective function during training.\nHistory\nResearch on neural language models emerged during the 1980s. In 2003, Yoshua Bengio and colleagues introduced a neural probabilistic language model that jointly learned distributed word representations and probabilities over word sequences. In 2010, Tomáš Mikolov and colleagues introduced a recurrent neural-network language model for speech recognition that significantly improved performance over conventional n-gram language models.\nWord2Vec was introduced in two 2013 papers by Tomáš Mikolov and colleagues at Google. The first described the continuous bag-of-words and skip-gram architectures for efficiently learning word representations from large text corpora. A follow-up paper introduced techniques including negative sampling, sub-sampling of frequent words, and representations of multi-word phrases. The follow-up paper received the 2023 NeurIPS Test of Time Award.\nIn 2017, researchers at Facebook AI Research described an extension of the skip-gram model used in fastText, in which words are represented as combinations of character n-grams. This incorporates subword information into word representations and allows vectors to be constructed for words that did not appear in the training data.\nStatic embedding methods such as Word2Vec and fastText produce context-independent word representations. Contextual representations were later developed to account for how word meaning",
+          "rank": 5,
+          "score": 0.6114824730859667,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [],
+      "raw_output": "Word2Vec was developed by Tomáš Mikolov, Kai Chen, Greg Corrado, Ilya Sutskever, and Jeff Dean at Google [S1]. It was presented at the ICLR conference in 2013 [S1].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1784,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1653,
+        "output_tokens": 54,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2665.3,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-06",
+      "split": "test",
+      "question": "Where was GloVe developed, when was it launched, and what was it designed to compete with?",
+      "answerable": true,
+      "filters": {
+        "max_length_chars": 6000
+      },
+      "expected_answer": "At Stanford University as an open-source project, launched in 2014, as a competitor to word2vec.",
+      "relevant_article_ids": [
+        49489032
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "GloVe was developed as an open-source project at Stanford University and launched in 2014 [S1]. It was designed as a competitor to word2vec [S1].",
+      "citations": [
+        "S1"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "b3ad123f45eca455174dc5d34181223bf6a606af6c5e4bcecc32a738f77e96dc",
+          "article_id": 49489032,
+          "title": "GloVe",
+          "source_url": "https://en.wikipedia.org/wiki/GloVe",
+          "passage": "In natural language processing, GloVe (acronym for Global Vectors) is a model for distributed word representation. The model is an unsupervised learning algorithm for obtaining vector representations of words. This is achieved by mapping words into a meaningful space where the distance between words is related to semantic similarity. Training is performed on aggregated global word-word co-occurrence statistics from a corpus, and the resulting representations showcase interesting linear substructures of the word vector space. As log-bilinear regression model for unsupervised learning of word representations, it combines the features of two model families, namely the global matrix factorization and local context window methods.\nIt was developed as an open-source project at Stanford University and launched in 2014. It was designed as a competitor to word2vec, and the original paper noted multiple improvements of GloVe over word2vec. As of 2022, both approaches are outdated, and transformer-based models, such as BERT, which add multiple neural-network attention layers on top of a word embedding model similar to Word2vec, have come to be regarded as the state of the art in natural language processing (NLP).\nDefinition\nYou shall know a word by the company it keeps (Firth, J. R. 1957:11)\nThe idea of GloVe is to construct, for each word , two vectors , such that the relative positions of the vectors capture part of the statistical regularities of the word .",
+          "rank": 1,
+          "score": 0.6162217253004214,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "7f81504b9659ef195eea691bd0e1cf5f97d56dc9357bfca322f3ef17e66e30a9",
+          "article_id": 49489032,
+          "title": "GloVe",
+          "source_url": "https://en.wikipedia.org/wiki/GloVe",
+          "passage": "by the company it keeps (Firth, J. R. 1957:11)\nThe idea of GloVe is to construct, for each word , two vectors , such that the relative positions of the vectors capture part of the statistical regularities of the word . The statistical regularity is defined as the co-occurrence probabilities. Words that resemble each other in meaning should also resemble each other in co-occurrence probabilities.\nWord counting\nLet the vocabulary be , the set of all possible words (aka \"tokens\"). Punctuation is either ignored, or treated as vocabulary, and similarly for capitalization and other typographical details.\nIf two words occur close to each other, then we say that they occur in the context of each other. For example, if the context length is 3, then we say that in the following sentence\nGloVe1, coined2 from3 Global4 Vectors5, is6 a7 model8 for9 distributed10 word11 representation12\nthe word \"model8\" is in the context of \"word11\" but not the context of \"representation12\".\nA word is not in the context of itself, so \"model8\" is not in the context of the word \"model8\", although, if a word appears again in the same context, then it does count.\nLet be the number of times that the word appears in the context of the word over the entire corpus. For example, if the corpus is just \"I don'",
+          "rank": 2,
+          "score": 0.5460813475532498,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "9254e1a26a6b148e8156a5b947506ce3fa76d42441b48613212f0779df7d32a4",
+          "article_id": 49489032,
+          "title": "GloVe",
+          "source_url": "https://en.wikipedia.org/wiki/GloVe",
+          "passage": "authors recommended using as the final representation vector for word , because empirically it worked better than or alone.\nApplications\nGloVe can be used to find relations between words like synonyms, company-product relations, zip codes and cities, etc. However, the unsupervised learning algorithm is not effective in identifying homographs, i.e., words with the same spelling and different meanings. This is as the unsupervised learning algorithm calculates a single set of vectors for words with the same morphological structure. The algorithm is also used by the spaCy library to build semantic word embedding features, while computing the top list words that match with distance measures such as cosine similarity and Euclidean distance approach. GloVe was also used as the word representation framework for the online and offline systems designed to detect psychological distress in patient interviews.",
+          "rank": 3,
+          "score": 0.49069779967349925,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "1cef87f84b9c11076791e29d694cefa81abd51f096c0b18ecaa31f448ccbf096",
+          "article_id": 49489032,
+          "title": "GloVe",
+          "source_url": "https://en.wikipedia.org/wiki/GloVe",
+          "passage": "the words \"ice\" and \"steam\" are indistinguishable along the \"water\" (often co-occurring with both) and \"fashion\" (rarely co-occurring with either), but distinguishable along the \"solid\" (co-occurring more with \"ice\") and \"gas\" (co-occurring more with \"steam\").\nThe idea is to learn two vectors for each word , such that we have a multinomial logistic regression:and the terms are unimportant parameters.\nThis means that if the words have similar co-occurrence probabilities , then their vectors should also be similar: .\nLogistic regression\nNaively, logistic regression can be run by minimizing the squared loss:However, this would be noisy for rare co-occurrences. To fix the issue, the squared loss is weighted so that the loss is slowly ramped-up as the absolute number of co-occurrences increases:whereand are hyperparameters. In the original paper, the authors found that seem to work well in practice.\nUse\nOnce a model is trained, we have 4 trained parameters for each word: . The parameters are irrelevant, and only are relevant.\nThe authors recommended using as the final representation vector for word , because empirically it worked better than or alone.\nApplications\nGloVe can be used to find relations between words like synonyms, company-product relations, zip codes and cities, etc. However, the",
+          "rank": 4,
+          "score": 0.4498484984082032,
+          "method": "vector"
+        },
+        {
+          "label": "S5",
+          "chunk_id": "1a83a8560536c2c9535b40e48481475ef837d61f863a1e8eb63820069dbc7f5c",
+          "article_id": 49489032,
+          "title": "GloVe",
+          "source_url": "https://en.wikipedia.org/wiki/GloVe",
+          "passage": "although, if a word appears again in the same context, then it does count.\nLet be the number of times that the word appears in the context of the word over the entire corpus. For example, if the corpus is just \"I don't think that that is a problem.\" we have since the first \"that\" appears in the second one's context, and vice versa.\nLet be the number of words in the context of all instances of word . By counting, we have(except for words occurring right at the start and end of the corpus)\nProbabilistic modelling\nLet be the co-occurrence probability. That is, if one samples a random occurrence of the word in the entire document, and a random word within its context, that word is with probability . Note that in general. For example, in a typical modern English corpus, is close to one, but is close to zero. This is because the word \"ado\" is almost only used in the context of the archaic phrase \"much ado about\", but the word \"much\" occurs in all kinds of contexts.\nFor example, in a 6 billion token corpus, we have\nTable 1 of\nProbability and Ratio\nInspecting the table, we see that the words \"ice\" and \"steam\" are indistinguishable along the \"water\" (often co-occurring with both) and \"fashion\" (rarely co-occurring with either), but distinguishable along the \"solid\"",
+          "rank": 5,
+          "score": 0.44565024715414314,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [],
+      "raw_output": "GloVe was developed as an open-source project at Stanford University and launched in 2014 [S1]. It was designed as a competitor to word2vec [S1].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1623,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1714,
+        "output_tokens": 40,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2643.3,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-07",
+      "split": "test",
+      "question": "Who introduced batch normalization, and in what year?",
+      "answerable": true,
+      "filters": {},
+      "expected_answer": "Sergey Ioffe and Christian Szegedy, in 2015.",
+      "relevant_article_ids": [
+        57222123
+      ],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "answered",
+      "text": "Batch normalization was introduced by Sergey Ioffe and Christian Szegedy in 2015 [S1].",
+      "citations": [
+        "S1"
+      ],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "3eb7896bf7d1b92421cbe77b85d52e3ba5f928749f5f8e1b4a80ff10a982ae6a",
+          "article_id": 57222123,
+          "title": "Batch normalization",
+          "source_url": "https://en.wikipedia.org/wiki/Batch_normalization",
+          "passage": "In artificial neural networks, batch normalization (also known as batch norm) is a normalization technique used to make training faster and more stable by adjusting the inputs to each layer—re-centering them around zero and re-scaling them to a standard size. It was introduced by Sergey Ioffe and Christian Szegedy in 2015.\nExperts still debate why batch normalization works so well. It was initially thought to tackle internal covariate shift, a problem where parameter initialization and changes in the distribution of the inputs of each layer affect the learning rate of the network. However, newer research suggests it does not fix this shift but instead smooths the objective function—a mathematical guide the network follows to improve—enhancing performance. In very deep networks, batch normalization can initially cause a severe gradient explosion—where updates to the network grow uncontrollably large—but this is managed with shortcuts called skip connections in residual networks. Another theory is that batch normalization adjusts data by handling its size and path separately, speeding up training.\nInternal covariate shift\nEach layer in a neural network has inputs that follow a specific distribution, which shifts during training due to two main factors: the random starting values of the network’s settings (parameter initialization) and the natural variation in the input data. This shifting pattern affecting the inputs to the network’s inner layers is called internal covariate shift. While a strict definition is not fully agreed upon, experiments show",
+          "rank": 1,
+          "score": 0.7163578533227514,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "4a7ff219f65b105098c0854f899e1f598fccea295ebe97def1c7fb62a4f2015c",
+          "article_id": 1180641,
+          "title": "Stochastic gradient descent",
+          "source_url": "https://en.wikipedia.org/wiki/Stochastic_gradient_descent",
+          "passage": "iteration or update step, the gradient is only evaluated at a single . This is the key difference between stochastic gradient descent and batched gradient descent.\nIn general, given a linear regression problem, stochastic gradient descent behaves differently when (underparameterized) and (overparameterized). In the overparameterized case, stochastic gradient descent converges to . That is, SGD converges to the interpolation solution with minimum distance from the starting . This is true even when the learning rate remains constant. In the underparameterized case, SGD does not converge if learning rate remains constant.\nHistory\nIn 1951, Herbert Robbins and Sutton Monro introduced the earliest stochastic approximation methods, preceding stochastic gradient descent. Building on this work one year later, Jack Kiefer and Jacob Wolfowitz published an optimization algorithm very close to stochastic gradient descent, using central differences as an approximation of the gradient. Later in the 1950s, Frank Rosenblatt used SGD to optimize his perceptron model, demonstrating the first applicability of stochastic gradient descent to neural networks.\nBackpropagation was first described in 1986, with stochastic gradient descent being used to efficiently optimize parameters across neural networks with multiple hidden layers. Soon after, another improvement was developed: mini-batch gradient descent, where small batches of data are substituted for single samples. In 1997, the practical performance benefits",
+          "rank": 2,
+          "score": 0.6483955735206157,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "75c09a312afbe7d80138ab07d6e5f0eba2cdbe872e3a91bab80290a8706ac94f",
+          "article_id": 57222123,
+          "title": "Batch normalization",
+          "source_url": "https://en.wikipedia.org/wiki/Batch_normalization",
+          "passage": "decouples the length and direction of the weight vectors and thus facilitates better training.\nBy interpreting batch norm as a reparametrization of weight space, it can be shown that the length and the direction of the weights are separated and can thus be trained separately. For a particular neural network unit with input and weight vector , denote its output as , where is the activation function, and denote . Assume that , and that the spectrum of the matrix is bounded as , , such that is symmetric positive definite. Adding batch normalization to this unit thus results in\n, by definition.\nThe variance term can be simplified such that . Assume that has zero mean and can be omitted, then it follows that\n, where is the induced norm of , .\nHence, it could be concluded that , where , and and account for its length and direction separately. This property could then be used to prove the faster convergence of problems with batch normalization.\nLinear convergence\nLeast-square problem\nWith the reparametrization interpretation, it could then be proved that applying batch normalization to the ordinary least squares problem achieves a linear convergence rate in gradient descent, which is faster than the regular gradient descent with only sub-linear convergence.\nDenote the objective of minimizing an ordinary least squares problem as\n, where and .\nSince , the objective thus becomes\n, where 0 is excluded to avoid 0 in the denominator.\nSince the objective is convex with respect to , its optimal value could be calculated by setting the partial derivative of the objective",
+          "rank": 3,
+          "score": 0.6270025988338813,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "e472e7dff4ce84fbbd46c6512ea506f7cf1bc6b3d606bd093aa49cf03d792bc7",
+          "article_id": 21523,
+          "title": "Neural network (machine learning)",
+          "source_url": "https://en.wikipedia.org/wiki/Neural_network_%28machine_learning%29",
+          "passage": ", which allowed multi-layer neural networks to be trained efficiently by propagating error gradients backward (from output back to input) through network layers. Backpropagation is an efficient application of the chain rule derived by Gottfried Wilhelm Leibniz in 1673 to networks of differentiable nodes. The terminology \"back-propagating errors\" was introduced in 1962 by Rosenblatt, but he did not describe how to implement this. Henry J. Kelley developed a precursor of backpropagation in 1960 in the context of control theory. In 1970, Seppo Linnainmaa published the modern form of backpropagation in his master's thesis (1970). G.M. Ostrovski et al. republished it in 1971. Paul Werbos applied backpropagation to neural networks in 1982 (his 1974 PhD thesis, reprinted in a 1994 book, did not describe the algorithm). In 1986, David E. Rumelhart, et al., popularized backpropagation but did not cite the original work.\nConvolutional neural networks\nDeep learning architectures for convolutional neural networks (CNNs) with convolutional layers and downsampling layers and weight replication began with the neocognitron introduced by Kunihiko Fukushima in 1979. Fukushima's CNN architecture also introduced max pooling, a popular downsampling procedure for CNNs. CNNs have become an essential tool for",
+          "rank": 4,
+          "score": 0.6264950167591135,
+          "method": "vector"
+        }
+      ],
+      "reason": null,
+      "omitted": [
+        {
+          "chunk_id": "d0bc96af618aab73935f98a16fbffbf3ff81da31f79988d735e1e45ddb0ac570",
+          "article_id": 2266644,
+          "reason": "context token limit",
+          "tokens": 352
+        }
+      ],
+      "raw_output": "Batch normalization was introduced by Sergey Ioffe and Christian Szegedy in 2015 [S1].",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1561,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1491,
+        "output_tokens": 25,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2109.6,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-18",
+      "split": "test",
+      "question": "According to Kaggle, how many winning competition solutions in 2015 used XGBoost?",
+      "answerable": false,
+      "filters": {},
+      "expected_answer": null,
+      "relevant_article_ids": [],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "insufficient_evidence",
+      "text": null,
+      "citations": [],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "9bb92cfbb8987934f43c7af1f3a72a9b322c6a73f260905910c86872c0e4fb14",
+          "article_id": 1645603,
+          "title": "AdaBoost",
+          "source_url": "https://en.wikipedia.org/wiki/AdaBoost",
+          "passage": "AdaBoost (short for Adaptive Boosting) is a statistical classification meta-algorithm formulated by Yoav Freund and Robert Schapire in 1995, who won the 2003 Gödel Prize for their work. It can be used in conjunction with many types of learning algorithm to improve performance. The output of multiple weak learners is combined into a weighted sum that represents the final output of the boosted classifier. Usually, AdaBoost is presented for binary classification, although it can be generalized to multiple classes or bounded intervals of real values.\nAdaBoost is adaptive in the sense that subsequent weak learners (models) are adjusted in favor of instances misclassified by previous models. In some problems, it can be less susceptible to overfitting than other learning algorithms. The individual learners can be weak, but as long as the performance of each one is slightly better than random guessing, the final model can be proven to converge to a strong learner.\nAlthough AdaBoost is typically used to combine weak base learners (such as decision stumps), it has been shown to also effectively combine strong base learners (such as deeper decision trees), producing an even more accurate model.\nEvery learning algorithm tends to suit some problem types better than others, and typically has many different parameters and configurations to adjust before it achieves optimal performance on a dataset. AdaBoost (with decision trees as the weak learners) is often referred to as the best out-of-the-box classifier.",
+          "rank": 1,
+          "score": 0.5533186081867084,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "c2b79f412284da00b4588578227422561386f633c35693a91b93d235d4ab7d4f",
+          "article_id": 40528449,
+          "title": "Monte Carlo tree search",
+          "source_url": "https://en.wikipedia.org/wiki/Monte_Carlo_tree_search",
+          "passage": "Monte Carlo method to game-tree search and coined the name Monte Carlo tree search, L. Kocsis and Cs. Szepesvári developed the UCT (Upper Confidence bounds applied to Trees) algorithm, and S. Gelly et al. implemented UCT in their program MoGo. In 2008, MoGo achieved dan (master) level in 9×9 Go, and the Fuego program began to win against strong amateur players in 9×9 Go.\nIn January 2012, the Zen program won 3:1 in a Go match on a 19×19 board with an amateur 2 dan player. Google Deepmind developed the program AlphaGo, which in October 2015 became the first Computer Go program to beat a professional human Go player without handicaps on a full-sized 19x19 board. In March 2016, AlphaGo was awarded an honorary 9-dan (master) level in 19×19 Go for defeating Lee Sedol in a five-game match with a final score of four games to one. AlphaGo represents a significant improvement over previous Go programs as well as a milestone in machine learning as it uses Monte Carlo tree search with artificial neural networks (a deep learning method) for policy (move selection) and value, giving it efficiency far surpassing previous programs.\nThe MCTS algorithm has also been used in programs that play other board games (for example Hex, Havannah, Game of the Amazons, and Arimaa), real-time video",
+          "rank": 2,
+          "score": 0.5520148450340224,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "03d5d76bc7ad0077ae743c6348032d40894841a02170d36dfde2a0e45f14db06",
+          "article_id": 596646,
+          "title": "Recommender system",
+          "source_url": "https://en.wikipedia.org/wiki/Recommender_system",
+          "passage": "recommender system. This competition energized the search for new and more accurate algorithms. On September 21, 2009, the grand prize of US$1,000,000 was given to the BellKor's Pragmatic Chaos team using tiebreaking rules.\nThe most accurate algorithm in 2007 used an ensemble method of 107 different algorithmic approaches, blended into a single prediction. As stated by the winners, Bell et al.:\nPredictive accuracy is substantially improved when blending multiple predictors. Our experience is that most efforts should be concentrated in deriving substantially different approaches, rather than refining a single technique. Consequently, our solution is an ensemble of many methods.\nMany benefits accrued to the web due to the Netflix project. Some teams have taken their technology and applied it to other markets. Some members from the team that finished second place founded Gravity R&D, a recommendation engine that's active in the RecSys community. 4-Tell, Inc. created a Netflix project–derived solution for ecommerce websites.\nA number of privacy issues arose around the dataset offered by Netflix for the Netflix Prize competition. Although the data sets were anonymized in order to preserve customer privacy, in 2007 two researchers from the University of Texas were able to identify individual users by matching the data sets with film ratings on the Internet Movie Database (IMDb). As a result, in December 2009, an anonymous Netflix user sued Netflix in Doe v. Netflix, alleging that Netflix",
+          "rank": 3,
+          "score": 0.540820527698039,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "d2812446ad8a556a5088accc09329905237227ee952fa8669d1b14fb61f5021c",
+          "article_id": 233488,
+          "title": "Machine learning",
+          "source_url": "https://en.wikipedia.org/wiki/Machine_learning",
+          "passage": "the ImageNet image recognition competition, contributing to the wider adoption of deep neural networks. In 2013, Tomáš Mikolov and colleagues introduced word2vec, techniques for efficiently learning distributed vector representations of words from large text corpora. In 2014, Ian Goodfellow and colleagues introduced generative adversarial networks (GANs), a framework for training generative models through an adversarial process. In 2016, AlphaGo became the first computer program to defeat a professional human Go player without handicaps on a full-sized board, using deep neural networks and reinforcement learning. In 2017, Ashish Vaswani and colleagues introduced the Transformer, a neural network architecture based primarily on attention rather than recurrence or convolution.\nRelationships to other fields\nArtificial intelligence\nDeep learning is a subset of machine learning, which is itself a subset of artificial intelligence.\nAs a scientific endeavour, machine learning grew out of the quest for artificial intelligence (AI). In the early days of AI as an academic discipline, some researchers were interested in having machines learn from data. They attempted to approach the problem with various symbolic methods, as well as what were then termed \"neural networks\"; these were mostly perceptrons and other models that were later found to be reinventions of the generalised linear models of statistics. Probabilistic reasoning was also employed, especially in automated medical diagnosis.\nHowever, an increasing emphasis on the logical, knowledge-based approach caused a rift",
+          "rank": 4,
+          "score": 0.5384368845993603,
+          "method": "vector"
+        }
+      ],
+      "reason": "model reported insufficient evidence",
+      "omitted": [
+        {
+          "chunk_id": "1d2f6b5e70c2d474558289613da6ba23b894e3319f294513e8a2465898ec61f3",
+          "article_id": 21523,
+          "reason": "context token limit",
+          "tokens": 376
+        }
+      ],
+      "raw_output": "INSUFFICIENT_EVIDENCE",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1536,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1550,
+        "output_tokens": 7,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2036.9,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-19",
+      "split": "test",
+      "question": "What top-5 error rate did the original ResNet ensemble achieve on the ImageNet test set?",
+      "answerable": false,
+      "filters": {},
+      "expected_answer": null,
+      "relevant_article_ids": [],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "insufficient_evidence",
+      "text": null,
+      "citations": [],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "b2b25403315155c12079d3ac18d023ce4874410c2b9a7e61f12912719615e184",
+          "article_id": 40409788,
+          "title": "Convolutional neural network",
+          "source_url": "https://en.wikipedia.org/wiki/Convolutional_neural_network",
+          "passage": "to represent shapes.\nApplications\nImage recognition\nCNNs are often used in image recognition systems. In 2012, an error rate of 0.23% on the MNIST database was reported. Another paper on using CNN for image classification reported that the learning process was \"surprisingly fast\"; in the same paper, the best published results as of 2011 were achieved in the MNIST database and the NORB database. Subsequently, a similar CNN called AlexNet won the ImageNet Large Scale Visual Recognition Challenge 2012.\nWhen applied to facial recognition, CNNs achieved a large decrease in error rate. Another paper reported a 97.6% recognition rate on \"5,600 still images of more than 10 subjects\". CNNs were used to assess video quality in an objective way after manual training; the resulting system had a very low root mean square error.\nThe ImageNet Large Scale Visual Recognition Challenge is a benchmark in object classification and detection, with millions of images and hundreds of object classes. In the ILSVRC 2014, a large-scale visual recognition challenge, almost every highly ranked team used CNN as their basic framework. The winner GoogLeNet (the foundation of DeepDream) increased the mean average precision of object detection to 0.439329, and reduced classification error to 0.06656, the best result to date. Its network applied more than 30 layers. That performance of convolutional neural networks on the ImageNet tests was close to that of humans. The best",
+          "rank": 1,
+          "score": 0.5841725565771225,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "8637afc3744178977b8b17e7c14ce6f17a8c56511a7c1f1864259ff8665bbd1d",
+          "article_id": 22212276,
+          "title": "Ensemble learning",
+          "source_url": "https://en.wikipedia.org/wiki/Ensemble_learning",
+          "passage": "is illustrated below with an ensemble of four decision trees. The query example is classified by each tree. Because three of the four predict the positive class, the ensemble's overall classification is positive. Random forests like the one shown are a common application of bagging.\nAn example of the aggregation process for an ensemble of decision trees. Individual classifications are aggregated, and an overall classification is derived.\nBoosting\nBoosting involves training successive models by emphasizing training data mis-classified by previously learned models. Initially, all data (D1) has equal weight and is used to learn a base model M1. The examples mis-classified by M1 are assigned a weight greater than correctly classified examples. This boosted data (D2) is used to train a second base model M2, and so on. Inference is done by voting.\nIn some cases, boosting has yielded better accuracy than bagging, but tends to over-fit more. The most common implementation of boosting is Adaboost, but some newer algorithms are reported to achieve better results.\nBayesian model averaging\nBayesian model averaging (BMA) makes predictions by averaging the predictions of models weighted by their posterior probabilities given the data. BMA is known to generally give better answers than a single model, obtained, e.g., via stepwise regression, especially where very different models have nearly identical performance in the training set but may otherwise perform quite differently.\nThe question with any use of Bayes' theorem is the prior,",
+          "rank": 2,
+          "score": 0.5834001696356181,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "1af110b53bfa4ee0298f8eb7958ae5eabd54f8f55b52f8cab4de96284ae87f01",
+          "article_id": 22212276,
+          "title": "Ensemble learning",
+          "source_url": "https://en.wikipedia.org/wiki/Ensemble_learning",
+          "passage": "probability. Given the growth of satellite data over time, the past decade sees more use of time series methods for continuous change detection from image stacks. One example is a Bayesian ensemble changepoint detection method called BEAST, with the software available as a package Rbeast in R, Python, and Matlab.\nComputer security\nDistributed denial of service\nDistributed denial of service is one of the most threatening cyber-attacks that may happen to an internet service provider. By combining the output of single classifiers, ensemble classifiers reduce the total error of detecting and discriminating such attacks from legitimate flash crowds.\nMalware Detection\nClassification of malware codes such as computer viruses, computer worms, trojans, ransomware and spywares with the usage of machine learning techniques, is inspired by the document categorization problem. Ensemble learning systems have shown a proper efficacy in this area.\nModel Hardening\nMalware detection models, like all machine learning models, are vulnerable to adversarial machine learning attacks where an attacker pushes the boundary of what is classified as malware. By rotating through an ensemble of models using moving target defense, the attacker has a diminished knowledge advantage.\nIntrusion detection\nAn intrusion detection system monitors computer network or computer systems to identify intruder codes like an anomaly detection process. Ensemble learning successfully aids such monitoring systems to reduce their total error.\nFace recognition\nFace recognition, which recently has become one of the most popular research areas of pattern recognition, copes with identification or verification of a person by their digital images",
+          "rank": 3,
+          "score": 0.5774457617456321,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "c0627937e88f5d28498f78bef5fcc4043185a92eb4fcebdb05b4c0bd39fc070f",
+          "article_id": 55867424,
+          "title": "Residual neural network",
+          "source_url": "https://en.wikipedia.org/wiki/Residual_neural_network",
+          "passage": "A residual block in a deep residual network. Here, the residual connection skips two layers.\nA residual neural network (also referred to as a residual network or ResNet) is a deep learning architecture in which the layers learn residual functions with reference to the layer inputs. It was developed in 2015 for image recognition, and won the ImageNet Large Scale Visual Recognition Challenge (ILSVRC) of that year.\nAs a point of terminology, \"residual connection\" refers to the specific architectural motif of , where is an arbitrary neural network module. The motif had been used previously (see §History for details). However, the publication of ResNet made it widely popular for feedforward networks, appearing in neural networks that are seemingly unrelated to ResNet.\nThe residual connection stabilizes the training and convergence of deep neural networks with hundreds of layers, and is a common motif in deep neural networks, such as transformer models (e.g., BERT, and GPT models such as ChatGPT), the AlphaGo Zero system, the AlphaStar system, and the AlphaFold system.\nMathematics\nResidual connection\nIn a multilayer neural network model, consider a (non-residual) subnetwork with a certain number of stacked layers (e.g., 2 or 3). Let denote the subnetwork, where is the input and is the set of parameters. Suppose is the desired optimal output of this subnetwork. Residual learning simply adds directly to the output, such",
+          "rank": 4,
+          "score": 0.5756267110858876,
+          "method": "vector"
+        }
+      ],
+      "reason": "model reported insufficient evidence",
+      "omitted": [
+        {
+          "chunk_id": "545ca6374d9e580de07b893c23e8211da9f8e9cc9d778810706e1a936977ec0b",
+          "article_id": 1307911,
+          "reason": "context token limit",
+          "tokens": 381
+        }
+      ],
+      "raw_output": "INSUFFICIENT_EVIDENCE",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1605,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1557,
+        "output_tokens": 7,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 1884.6,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    },
+    {
+      "question_id": "test-20",
+      "split": "test",
+      "question": "Who introduced batch normalization?",
+      "answerable": false,
+      "filters": {
+        "max_length_chars": 6000
+      },
+      "expected_answer": null,
+      "relevant_article_ids": [],
+      "retrieval": {
+        "method": "vector",
+        "k": 5,
+        "repetition": 1
+      },
+      "status": "insufficient_evidence",
+      "text": null,
+      "citations": [],
+      "sources": [
+        {
+          "label": "S1",
+          "chunk_id": "e2a423555eede62cdc87312a825bc894eaffc0d055897516dbfa8aaf3ba29e1a",
+          "article_id": 34061548,
+          "title": "Feature scaling",
+          "source_url": "https://en.wikipedia.org/wiki/Feature_scaling",
+          "passage": "Standardization (Z-score Normalization)\nThe effect of z-score normalization on k-means clustering. 4 gaussian clusters of points are generated, then squashed along the y-axis, and a clustering was computed. Without normalization, the clusters were arranged along the x-axis, since it is the axis with most of variation. After normalization, the clusters are recovered as expected.\nIn machine learning, we can handle various types of data, e.g. audio signals and pixel values for image data, and this data can include multiple dimensions. Feature standardization makes the values of each feature in the data have zero-mean (when subtracting the mean in the numerator) and unit-variance. This method is widely used for normalization in many machine learning algorithms (e.g., support vector machines, logistic regression, and artificial neural networks). The general method of calculation is to determine the distribution mean and standard deviation for each feature. Next we subtract the mean from each feature. Then we divide the values (mean is already subtracted) of each feature by its standard deviation.\nWhere is the original feature vector, is the mean of that feature vector, and is its standard deviation.\nRobust Scaling\nRobust scaling, also known as standardization using median and interquartile range (IQR), is designed to be robust to outliers. It scales features using the median and IQR as reference points instead of the",
+          "rank": 1,
+          "score": 0.5610986992434039,
+          "method": "vector"
+        },
+        {
+          "label": "S2",
+          "chunk_id": "c0833369a1593c7e322cba8af25a57e6e3416fe2d146a9561786a44a61005387",
+          "article_id": 34061548,
+          "title": "Feature scaling",
+          "source_url": "https://en.wikipedia.org/wiki/Feature_scaling",
+          "passage": "Feature scaling is a method used to normalize the range of independent variables or features of data. In data processing, it is also known as data normalization and is generally performed during the data preprocessing step.\nMotivation\nSince the range of values of raw data varies widely, in some machine learning algorithms, objective functions will not work properly without normalization. For example, many classifiers calculate the distance between two points by the Euclidean distance. If one of the features has a broad range of values, the distance will be governed by this particular feature. Therefore, the range of all features should be normalized so that each feature contributes approximately proportionately to the final distance.\nAnother reason why feature scaling is applied is that gradient descent converges much faster with feature scaling than without it.\nIt's also important to apply feature scaling if regularization is used as part of the loss function (so that coefficients are penalized appropriately).\nEmpirically, feature scaling can improve the convergence speed of stochastic gradient descent. In support vector machines, it can reduce the time to find support vectors. Feature scaling is also often used in applications involving distances and similarities between data points, such as clustering and similarity search. As an example, the K-means clustering algorithm is sensitive to feature scales.\nMethods\nRescaling (min-max normalization)\nAlso known as min-max scaling or min-max normalization, rescaling is the simplest method and consists in rescaling the range",
+          "rank": 2,
+          "score": 0.551163219659325,
+          "method": "vector"
+        },
+        {
+          "label": "S3",
+          "chunk_id": "b600c575e50c8d4125d651f0d598946b1fcf7ab0d944a963b9f991e1756ad4a7",
+          "article_id": 34061548,
+          "title": "Feature scaling",
+          "source_url": "https://en.wikipedia.org/wiki/Feature_scaling",
+          "passage": "means clustering algorithm is sensitive to feature scales.\nMethods\nRescaling (min-max normalization)\nAlso known as min-max scaling or min-max normalization, rescaling is the simplest method and consists in rescaling the range of features to scale the range in [0, 1] or [−1, 1]. Selecting the target range depends on the nature of the data. The general formula for a min-max of [0, 1] is given as:\nwhere is an original value, is the normalized value. For example, suppose that we have the students' weight data, and the students' weights span [160 pounds, 200 pounds]. To rescale this data, we first subtract 160 from each student's weight and divide the result by 40 (the difference between the maximum and minimum weights).\nTo rescale a range between an arbitrary set of values [a, b], the formula becomes:\nwhere are the min-max values.\nMean normalization\nwhere is an original value, is the normalized value, is the mean of that feature vector. There is another form of the means normalization which divides by the standard deviation which is also called standardization.\nStandardization (Z-score Normalization)\nThe effect of z-score normalization on k-means clustering. 4 gaussian clusters of points are generated, then squashed along the y-axis, and a clustering was computed. Without",
+          "rank": 3,
+          "score": 0.5488880686341782,
+          "method": "vector"
+        },
+        {
+          "label": "S4",
+          "chunk_id": "823b18e0560a0ff198cd2c2595df7e8dbf054642fe1870b66d97867b88e4db54",
+          "article_id": 41416740,
+          "title": "Deep belief network",
+          "source_url": "https://en.wikipedia.org/wiki/Deep_belief_network",
+          "passage": "turn, starting from the \"lowest\" pair of layers (the lowest visible layer is a training set).\nThe observation that DBNs can be trained greedily, one layer at a time, led to one of the first effective deep learning algorithms. Overall, there are many attractive implementations and uses of DBNs in real-life applications and scenarios (e.g., electroencephalography, drug discovery).\nTraining\nThe training method for RBMs proposed by Geoffrey Hinton for use with training \"Product of Experts\" models is called contrastive divergence (CD). CD provides an approximation to the maximum likelihood method that would ideally be applied for learning the weights. In training a single RBM, weight updates are performed with gradient descent via the following equation:\nwhere, is the probability of a visible vector, which is given by . is the partition function (used for normalizing) and is the energy function assigned to the state of the network. A lower energy indicates the network is in a more \"desirable\" configuration. The gradient has the simple form where represent averages with respect to distribution . The issue arises in sampling because this requires extended alternating Gibbs sampling. CD replaces this step by running alternating Gibbs sampling for steps (values of perform well). After steps, the data are sampled and that sample is used in place of . The CD procedure works as follows:\nInitialize the visible units to a training vector.\nUpdate the hidden units in parallel given the visible units: . is the",
+          "rank": 4,
+          "score": 0.53891788418311,
+          "method": "vector"
+        },
+        {
+          "label": "S5",
+          "chunk_id": "cb0fc65ffdc657f5da165ca7c4d23d51fe28f795b9a0ad862422b09ede9d4fb9",
+          "article_id": 47349395,
+          "title": "Dropout (neural networks)",
+          "source_url": "https://en.wikipedia.org/wiki/Dropout_%28neural_networks%29",
+          "passage": "Because dropout removes a whole row from the vector matrix, the previous (unlisted) assumptions for weak dilution and the use of mean field theory are not applicable.\nThe process by which the node is driven to zero, whether by setting the weights to zero, by “removing the node”, or by some other means, does not impact the end result and does not create a new and unique case. If the neural net is processed by a high-performance digital array-multiplicator, then it is likely more effective to drive the value to zero late in the process graph. If the net is processed by a constrained processor, perhaps even an analog neuromorphic processor, then it is likely a more power-efficient solution is to drive the value to zero early in the process graph.\nGoogle's patent\nAlthough there have been examples of randomly removing connections between neurons in a neural network to improve models, this technique was first introduced with the name dropout by Geoffrey Hinton, et al. in 2012. Google currently holds the patent for the dropout technique.",
+          "rank": 5,
+          "score": 0.5314376186465322,
+          "method": "vector"
+        }
+      ],
+      "reason": "model reported insufficient evidence",
+      "omitted": [],
+      "raw_output": "INSUFFICIENT_EVIDENCE",
+      "model": "ollama:hf.co/unsloth/Qwen3.6-35B-A3B-GGUF:UD-IQ3_XXS",
+      "prompt_version": "citehop-rag-v1",
+      "usage": {
+        "context_tokens_estimated": 1795,
+        "token_estimator": "max(ceil(chars/4), ceil(words*1.4))",
+        "prompt_tokens": 1697,
+        "output_tokens": 7,
+        "finish_reason": "stop"
+      },
+      "generation_ms": 2135.3,
+      "truncated": false,
+      "review": {
+        "status": "unreviewed",
+        "grounded": null,
+        "citations_support": null,
+        "correct_abstention": null,
+        "reviewer": null,
+        "reviewed_at": null,
+        "notes": ""
+      }
+    }
+  ]
+}

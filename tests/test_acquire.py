@@ -101,6 +101,18 @@ def test_rendering_drift_is_not_accepted(tmp_path):
     assert not (tmp_path / "raw/1001.json").exists()
 
 
+def test_volatile_rerender_keeps_pinned_record(tmp_path):
+    manifest = fixture_manifest(tmp_path)
+    original = load_article(manifest["articles"][0], tmp_path)
+    (tmp_path / "raw/1001.json").unlink()
+    rerendered = source(1)
+    rerendered["parse"]["text"] += "<!-- Parsed by another host; Cached time: 20261031 -->"
+    report = acquire(manifest, tmp_path, "smoke", fetch=lambda **_: deepcopy(rerendered))
+    assert report["rerendered"] == ["Article 1"] and not report["failures"]
+    assert read(tmp_path / "smoke.json")["articles"][0] == original
+    assert acquire(manifest, tmp_path, "smoke", offline=True)["rerendered"] == []
+
+
 def test_revision_mismatch_and_text_config_invalidate(tmp_path):
     manifest = fixture_manifest(tmp_path)
     pin = deepcopy(manifest["articles"][0])

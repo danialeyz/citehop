@@ -20,7 +20,7 @@ python -m citehop.acquire fetch --offline           # cache only, never touches 
 python -m citehop.questions                         # validate questions against data/wikipedia/full.json
 ```
 
-`pin` fails and writes no manifest if any title is missing, a redirect, or not in the article namespace. It never substitutes another page. Redirects are replaced by hand in `article_titles.txt`. `fetch` requests only `oldid=<pinned revision>` and rejects any response whose hash differs from the pin. If MediaWiki re-renders an old revision differently (for example after a template change), the run fails with a report. Restore the original cache or pin a new corpus version. Set `WIKIPEDIA_USER_AGENT` to identify yourself to Wikimedia.
+`pin` fails and writes no manifest if any title is missing, a redirect, or not in the article namespace. It never substitutes another page. Redirects are replaced by hand in `article_titles.txt`. `fetch` requests only `oldid=<pinned revision>` and rejects any response whose hash differs from the pin. If MediaWiki re-renders an old revision and only volatile HTML changes (the parser report comment), the extracted record must still equal the pin; it is accepted and listed under `rerendered` in the report. Any content change (for example after a template change) fails the run with a report. Restore the original cache or pin a new corpus version. Set `WIKIPEDIA_USER_AGENT` to identify yourself to Wikimedia.
 
 ## Provenance and attribution
 

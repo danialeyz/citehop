@@ -3,7 +3,7 @@ PY = .venv/bin/python
 API_PORT ?= 8000
 FRONTEND_PORT ?= 3000
 
-.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check test test-graph test-model graph-import graph-status api-types venv-ml embed-smoke embed embed-status rag-validate eval lint locks
+.PHONY: help venv frontend-install db-up db-down db-restart db-shell check sql api frontend frontend-check e2e test test-graph test-model graph-import graph-status api-types venv-ml embed-smoke embed embed-status rag-validate eval lint locks
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*##/ -/'
 venv: ## install locked Python runtime and dev dependencies (requires uv, Connector/C)
@@ -38,6 +38,8 @@ frontend-check: ## lint, typecheck, unit tests and production build
 	npm --prefix frontend run typecheck
 	npm --prefix frontend test
 	npm --prefix frontend run build
+e2e: ## browser journey search → answer → citation → graph → dashboard (needs a running stack; one generator call)
+	BASE=http://127.0.0.1:$(FRONTEND_PORT) npm --prefix frontend run e2e
 test: ## backend smoke/unit tests without databases
 	$(PY) -m pytest -m 'not db and not neo4j and not model'
 test-model: ## real BGE tokenizer/model tests (needs venv-ml; downloads the pinned model once)

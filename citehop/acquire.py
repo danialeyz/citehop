@@ -222,14 +222,29 @@ def record(raw, pin):
     }
 
 
-def load_article(pin, cache):
-    raw = read(Path(cache) / "raw" / f"{pin['revision_id']}.json")
-    if digest(raw) != pin["raw_sha256"]:
-        raise ValueError(f"raw snapshot hash mismatch: {pin['title']}")
+def pinned_record(raw, pin):
+    """Extract `raw` and check it against the pinned record.
+
+    MediaWiki re-parses an old revision when its parser cache expires; the HTML then differs in
+    volatile comments (parser host, timings), so the raw hash changes. Such a re-render is accepted
+    only when the extracted record (text, categories, links, URLs) is identical to the pin, and it
+    keeps the pinned raw hash so the corpus content hash does not change.
+    """
     result = record(raw, pin)
+    result["provenance"]["raw_sha256"] = pin["raw_sha256"]
     if digest(result) != pin["record_sha256"]:
         raise ValueError(f"extracted snapshot hash mismatch: {pin['title']}")
     return result
+
+
+def load_article(pin, cache):
+    raw = read(Path(cache) / "raw" / f"{pin['revision_id']}.json")
+    try:
+        return pinned_record(raw, pin)
+    except ValueError:
+        if digest(raw) != pin["raw_sha256"]:
+            raise ValueError(f"raw snapshot hash mismatch: {pin['title']}") from None
+        raise
 
 
 def pin_snapshot(titles, manifest_path, cache, fetch=api):
@@ -309,7 +324,7 @@ def acquire(manifest, cache, subset="full", offline=False, fetch=api):
     if len(pins) != 100 or sum(p["smoke"] for p in pins) != 10:
         raise ValueError("manifest must contain 100 articles and 10 smoke articles")
     selected = [p for p in pins if subset == "full" or p["smoke"]]
-    articles, failures, downloaded = [], [], 0
+    articles, failures, rerendered, downloaded = [], [], [], 0
     for pin in selected:
         try:
             path = Path(cache) / "raw" / f"{pin['revision_id']}.json"
@@ -323,9 +338,13 @@ def acquire(manifest, cache, subset="full", offline=False, fetch=api):
                     disableeditsection=1,
                 )
                 if digest(raw) != pin["raw_sha256"]:
-                    raise ValueError(
-                        "source rendering changed; restore original cache or pin NEW snapshot"
-                    )
+                    try:
+                        pinned_record(raw, pin)
+                    except ValueError:
+                        raise ValueError(
+                            "source rendering changed; restore original cache or pin NEW snapshot"
+                        ) from None
+                    rerendered.append(pin["title"])
                 write(path, raw)
                 downloaded += 1
             articles.append(load_article(pin, cache))
@@ -338,6 +357,7 @@ def acquire(manifest, cache, subset="full", offline=False, fetch=api):
         "records": len(articles),
         "downloaded": downloaded,
         "cache_hits": len(articles) - downloaded,
+        "rerendered": rerendered,
         "failures": failures,
     }
     write(Path(cache) / f"{subset}-report.json", report)
