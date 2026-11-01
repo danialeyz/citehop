@@ -1,0 +1,396 @@
+{
+  "schema": "citehop-eval-v1",
+  "card": "C08",
+  "run_id": "20261101T141508Z-dev-0b860b14",
+  "label": "S03 dev 200-50 round 3/3",
+  "created_at": "2026-11-01T14:15:08+00:00",
+  "status": "provisional: question labels are not all approved",
+  "final_claims_allowed": false,
+  "question_set": {
+    "path": "eval/questions.json",
+    "corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "labels_sha256": "23e52d6ac35a3e5f820fccaef74d3427b8856cca2f7942359809979fcfa23375",
+    "status": "draft",
+    "label_review": {
+      "unreviewed": 30
+    }
+  },
+  "splits": {
+    "dev": 10
+  },
+  "corpus": {
+    "version_id": 1,
+    "id": "corpus:1",
+    "content_sha256": "d491fa4bb36d0859bd9a497a9ea45d8c50ca58f61b8d516e75c4ba09f407df32",
+    "source_corpus_id": "deb00bb71de0e4253edcd77dc3f8a9be526c7d8268b1e37390413f97ec3dde4c",
+    "subset": "full",
+    "articles": 100
+  },
+  "chunk_configs": [
+    {
+      "embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+      "chunk_config": "be2a7699fb5386caa568637226d92ce105bab2de2c37069ae7cc476f58e678b1",
+      "chunks": 2937
+    }
+  ],
+  "config_id": "0b860b148cd632ac98e8e25965de4f7032fcf0e62b5037aa0169fbcfc14e7c08",
+  "config": {
+    "k": 5,
+    "recall": "article-level; chunks deduplicated by best chunk rank before the five-article cutoff",
+    "candidate_depths": [
+      50,
+      100
+    ],
+    "test_repeats": 3,
+    "methods": {
+      "dev": [
+        "keyword",
+        "vector",
+        "exact"
+      ],
+      "test": [
+        "keyword",
+        "vector"
+      ]
+    },
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "embedding_model_revision": "a5beb1e3e68b9ab74eb54cfd186867f64f240e1a",
+    "embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+    "mariadb": {
+      "version": "11.8.9-MariaDB-ubu2404",
+      "mhnsw_ef_search": 20,
+      "mhnsw_default_m": 6
+    },
+    "generator": null,
+    "prompt_version": null,
+    "system_prompt_sha256": null,
+    "rag_limits": {
+      "passages": 5,
+      "context_tokens": 1800,
+      "output_tokens": 300
+    },
+    "answer_passages": "first 5 chunk hits of repetition 1 of the vector search"
+  },
+  "warm_up": "one untimed embedding, one untimed search per method and (with answers) one untimed generator call before any timed call; all calls run in one process over one open MariaDB connection",
+  "latency": {
+    "unit": "ms",
+    "boundaries": {
+      "embedding_ms": "embed_query(question): BGE query instruction, tokenize, CPU forward pass",
+      "retrieval_ms": "search() with a precomputed query vector: SQL round trip on an open connection including Python client; summed over candidate-depth attempts",
+      "generation_ms": "rag.answer(): one non-streaming Ollama /api/chat call"
+    },
+    "statistics": "median and nearest-rank p95 over every timed call, including repetitions"
+  },
+  "hardware": {
+    "platform": "macOS-27.2-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu": "Apple M6",
+    "memory_bytes": 25769803776,
+    "database": "MariaDB in local Docker on the same machine"
+  },
+  "code": {
+    "commit": "b4b4f7edbed8c8246a5c3f7e7b7c1b6af13b1527",
+    "dirty": true
+  },
+  "files": {
+    "retrieval": "retrieval.jsonl",
+    "answers": "answers.json"
+  },
+  "summary": {
+    "retrieval": {
+      "dev": {
+        "keyword": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 0.9583,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 0.9444,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "vector": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        },
+        "exact": {
+          "all_answerable": {
+            "n": 8,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "unfiltered": {
+            "n": 6,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "filtered": {
+            "n": 2,
+            "recall_at_5": 1.0,
+            "zero_hit": 0,
+            "short_list": 0
+          },
+          "rankings_identical_across_repeats": true
+        }
+      }
+    },
+    "unanswerable": {
+      "dev": {
+        "keyword": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "vector": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        },
+        "exact": {
+          "n": 2,
+          "filtered": 1,
+          "zero_hit": 0,
+          "note": "no relevant labels; excluded from recall"
+        }
+      }
+    },
+    "ann_vs_exact": {
+      "dev": {
+        "n": 10,
+        "n_unfiltered": 7,
+        "note": "filtered vector search skips the HNSW index, so filtered cases compare an exact computation with itself; the unfiltered means are the ANN comparison",
+        "mean_chunk_overlap_at_5": 1.0,
+        "mean_chunk_overlap_at_5_unfiltered": 1.0,
+        "min_chunk_overlap_at_5_unfiltered": 1.0,
+        "mean_article_overlap_at_5": 1.0,
+        "cases": [
+          {
+            "question_id": "dev-01",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.304,
+            "retrieval_ms_exact": 274.737
+          },
+          {
+            "question_id": "dev-02",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.2,
+            "retrieval_ms_exact": 271.376
+          },
+          {
+            "question_id": "dev-03",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.615,
+            "retrieval_ms_exact": 299.01
+          },
+          {
+            "question_id": "dev-04",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.272,
+            "retrieval_ms_exact": 285.737
+          },
+          {
+            "question_id": "dev-05",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 7.226,
+            "retrieval_ms_exact": 295.428
+          },
+          {
+            "question_id": "dev-06",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 8.886,
+            "retrieval_ms_exact": 297.277
+          },
+          {
+            "question_id": "dev-07",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 40.244,
+            "retrieval_ms_exact": 40.443
+          },
+          {
+            "question_id": "dev-08",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": 1.0,
+            "recall_exact": 1.0,
+            "retrieval_ms_vector": 383.35,
+            "retrieval_ms_exact": 388.42
+          },
+          {
+            "question_id": "dev-09",
+            "filtered": false,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": null,
+            "recall_exact": null,
+            "retrieval_ms_vector": 7.174,
+            "retrieval_ms_exact": 269.045
+          },
+          {
+            "question_id": "dev-10",
+            "filtered": true,
+            "chunk_overlap_at_5": 1.0,
+            "article_overlap_at_5": 1.0,
+            "recall_vector": null,
+            "recall_exact": null,
+            "retrieval_ms_vector": 39.39,
+            "retrieval_ms_exact": 40.351
+          }
+        ]
+      }
+    },
+    "latency": {
+      "dev": {
+        "samples": {
+          "questions": 10,
+          "records": 10
+        },
+        "embedding_ms": {
+          "n": 10,
+          "unit": "ms",
+          "median": 12.609,
+          "p95": 38.746
+        },
+        "retrieval_ms_keyword": {
+          "n": 10,
+          "unit": "ms",
+          "median": 7.707,
+          "p95": 13.595
+        },
+        "retrieval_ms_keyword_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 7.548,
+          "p95": 8.997
+        },
+        "retrieval_ms_keyword_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 8.364,
+          "p95": 13.595
+        },
+        "retrieval_ms_vector": {
+          "n": 10,
+          "unit": "ms",
+          "median": 7.46,
+          "p95": 383.35
+        },
+        "retrieval_ms_vector_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 7.272,
+          "p95": 8.886
+        },
+        "retrieval_ms_vector_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 40.244,
+          "p95": 383.35
+        },
+        "retrieval_ms_exact": {
+          "n": 10,
+          "unit": "ms",
+          "median": 280.237,
+          "p95": 388.42
+        },
+        "retrieval_ms_exact_unfiltered": {
+          "n": 7,
+          "unit": "ms",
+          "median": 285.737,
+          "p95": 299.01
+        },
+        "retrieval_ms_exact_filtered": {
+          "n": 3,
+          "unit": "ms",
+          "median": 40.443,
+          "p95": 388.42
+        }
+      }
+    },
+    "generation": {
+      "answers": 0,
+      "statuses": null,
+      "answerable": 0,
+      "unanswerable": 0,
+      "unanswerable_abstained": null,
+      "generation_ms": {
+        "n": 0,
+        "unit": "ms",
+        "median": null,
+        "p95": null
+      },
+      "prompt_tokens": {
+        "n": 0,
+        "unit": "tokens",
+        "median": null,
+        "p95": null
+      }
+    },
+    "answer_review": {
+      "prepared": 0,
+      "reviewed": 0,
+      "grounded": null,
+      "denominator": null
+    }
+  }
+}

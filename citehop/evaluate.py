@@ -1,7 +1,8 @@
 """Retrieval and answer-grounding evaluation over the frozen question set (C08).
 
     python -m citehop.evaluate [--splits dev test] [--repeats 3] [--answers 10] [--no-answers]
-                               [--out results/runs]
+                               [--out results/runs] [--chunk-tokens N --overlap-tokens N]
+                               [--label TEXT]
 
 Writes results/runs/<run_id>/ with raw per-question retrieval records (retrieval.jsonl), the
 answers prepared for human review (answers.json), and a versioned manifest (manifest.json)
@@ -346,6 +347,10 @@ def main(argv=None):
     parser.add_argument("--answers", type=int, default=REVIEW_ANSWERS)
     parser.add_argument("--no-answers", action="store_true", help="skip generation")
     parser.add_argument("--out", type=Path, default=Path("results/runs"))
+    parser.add_argument("--chunk-tokens", type=int, help="evaluate chunks of this size "
+                        "(S03 experiment database); default: the C05 configuration")
+    parser.add_argument("--overlap-tokens", type=int)
+    parser.add_argument("--label", help="free-text run label stored in the manifest")
     args = parser.parse_args(argv)
 
     from citehop import rag
@@ -356,7 +361,7 @@ def main(argv=None):
     questions = document["questions"]
     label_review = Counter(q["review"]["status"] for q in questions)
     final = all(q["review"]["status"] == "approved" for q in questions)
-    embed_query, embedding_config = default_embedder()
+    embed_query, embedding_config = default_embedder(args.chunk_tokens, args.overlap_tokens)
     generator = None if args.no_answers or "test" not in args.splits else rag.OllamaGenerator()
     created = datetime.now(UTC)
 
@@ -412,7 +417,7 @@ def main(argv=None):
          "(unanswerable) to true/false, reviewer and reviewed_at.", "answers": answers},
         indent=2, ensure_ascii=False, default=str) + "\n")
     manifest = {
-        "schema": SCHEMA, "card": "C08", "run_id": run_id,
+        "schema": SCHEMA, "card": "C08", "run_id": run_id, "label": args.label,
         "created_at": created.isoformat(timespec="seconds"),
         "status": "final" if final else "provisional: question labels are not all approved",
         "final_claims_allowed": final,

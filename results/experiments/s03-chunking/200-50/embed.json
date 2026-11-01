@@ -1,0 +1,41 @@
+{
+  "chunk_config": "be2a7699fb5386caa568637226d92ce105bab2de2c37069ae7cc476f58e678b1",
+  "embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+  "chunk_tokens": 200,
+  "overlap_tokens": 50,
+  "subset": "all",
+  "articles": 100,
+  "articles_embedded": 100,
+  "articles_skipped": 0,
+  "chunks_written": 2937,
+  "chunks_deleted": 0,
+  "chunks_current": 2937,
+  "token_count_min": 53,
+  "token_count_max": 200,
+  "input_tokens_max": 210,
+  "chunks_over_size": 0,
+  "input_tokens_embedded": 595589,
+  "embed_seconds": 85.97,
+  "total_seconds": 91.25,
+  "status": {
+    "articles": 100,
+    "smoke_articles": 10,
+    "active_chunk_config": "be2a7699fb5386caa568637226d92ce105bab2de2c37069ae7cc476f58e678b1",
+    "active_embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+    "covered_articles": 100,
+    "active_chunks": 2937,
+    "stale_chunks": 0,
+    "by_config": [
+      {
+        "chunk_config": "be2a7699fb5386caa568637226d92ce105bab2de2c37069ae7cc476f58e678b1",
+        "embedding_config": "d842c3133c9ba051891e9313a42cc8262b083de0bcffd6691a553e88fafd69f0",
+        "chunks": 2937,
+        "articles": 100,
+        "token_count_min": 53,
+        "token_count_max": 200
+      }
+    ]
+  },
+  "wall_seconds": 92.8,
+  "peak_rss_bytes": 1419427840
+}

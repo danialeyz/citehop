@@ -88,3 +88,21 @@ def test_interrupted_run_resumes_without_redoing_committed_articles(db):  # noqa
     assert rows(db, "SELECT COUNT(DISTINCT article_id) FROM chunks") == [(2,)]
     resumed = run(db, FakeEmbedder())
     assert (resumed["articles_skipped"], resumed["articles_embedded"]) == (2, 1)
+
+
+def test_experiment_chunk_size_is_a_separate_configuration(db):  # noqa: F811
+    from citehop.embed import configs, run, status
+
+    load(db, *corpus())
+    default = run(db, FakeEmbedder())
+    small = run(db, FakeEmbedder(), chunk_tokens=4, overlap_tokens=1)
+    assert small["chunk_config"] != default["chunk_config"]
+    assert small["embedding_config"] == configs(VERSIONS, chunk_tokens=4, overlap_tokens=1)[1]
+    assert small["chunks_written"] > default["chunks_written"]
+    assert small["token_count_max"] <= 4 and small["chunks_over_size"] == 0
+    assert small["input_tokens_embedded"] > 0
+    # It replaces the default rows (hence: a separate database per arm in S03).
+    assert rows(db, "SELECT DISTINCT embedding_config FROM chunks") \
+        == [(small["embedding_config"],)]
+    assert status(db, default["chunk_config"], default["embedding_config"])["stale_chunks"] \
+        == small["chunks_written"]
