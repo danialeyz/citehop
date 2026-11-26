@@ -562,6 +562,21 @@ docs/             Architecture, subsystem guides, course plan, design references
 
 The live theme is defined in [`frontend/app/globals.css`](frontend/app/globals.css). Older design mockups and concept illustrations are historical references, not screenshots or sources of corpus facts.
 
+## Licence
+
+The code in this repository is released under the [MIT Licence](LICENSE).
+
+Third-party content keeps its own licence and is not covered by it:
+
+| Content | Where | Licence |
+|---|---|---|
+| English Wikipedia article text, as evidence passages and saved answer sources | `eval/questions.json`, `results/runs/*/answers.json` | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| `BAAI/bge-base-en-v1.5` embedding model | downloaded at run time, not in this repository | MIT |
+| Qwen3.6-35B-A3B GGUF (Unsloth) | downloaded at run time, not in this repository | see the model card |
+
+Reusing the Wikipedia passages requires attribution and share-alike; see
+[provenance and attribution](eval/README.md#provenance-and-attribution).
+
 ## Course, sources, and credits
 
 **Databases · Constructor University · Team: Danial and Akshat.** The implementation was built with AI coding agents working from the task cards in [docs/COURSE_TASKS.md](docs/COURSE_TASKS.md); the question set was drafted by an agent and still needs the team's review. CiteHop follows area 4, “Vector search and RAG, natively,” of the [MariaDB student project brief](https://mariadb.org/bachelor_hackathon_2026-09/#4-vector-search-and-rag-natively).
