@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # mariadb==1.1.14 has no Linux wheel; it builds against MariaDB Connector/C.
+      - name: Install MariaDB Connector/C
+        run: sudo apt-get update && sudo apt-get install -y libmariadb-dev
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
+      - name: Install locked dependencies
+        run: make venv
+
+      - name: Unit tests and lint
+        run: make test lint
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --prefix frontend
+
+      - name: Lint, typecheck, test, build
+        run: make frontend-check
